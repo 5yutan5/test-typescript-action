@@ -14,7 +14,6 @@ export async function run() {
     await import("setup-python/src/cache-save");
 
     const cachePaths = JSON.parse(core.getState(State.CACHE_PATHS)) as string[];
-    core.info(`${cachePaths}`)
     const searchKey = core.getState(State.CACHE_SEARCH_KEY);
     const matchedKey = core.getState(State.CACHE_MATCHED_KEY);
     if (searchKey == matchedKey) {

@@ -25,8 +25,8 @@ async function createCacheSearchKey(poetryVersion: string): Promise<string> {
   return (
     "setup-poetry-env" +
     `-${process.env["RUNNER_OS"]}` +
-    `-system-python-${pythonVersion}` +
-    `-pipx-${pipxVersion}` +
+    `-system-python-${pythonVersion}`.replace("\n", "") +
+    `-pipx-${pipxVersion}`.replace("\n", "") +
     `-poetry-${poetryVersion}`
   );
 }

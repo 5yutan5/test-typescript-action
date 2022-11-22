@@ -70973,7 +70973,7 @@ function createCacheSearchKey(poetryVersion) {
   return __async(this, null, function* () {
     const pythonVersion = yield getPythonVersion();
     const pipxVersion = yield getPipxVersion();
-    return `setup-poetry-env-${process.env["RUNNER_OS"]}-system-python-${pythonVersion}-pipx-${pipxVersion}-poetry-${poetryVersion}`;
+    return `setup-poetry-env-${process.env["RUNNER_OS"]}` + `-system-python-${pythonVersion}`.replace("\n", "") + `-pipx-${pipxVersion}`.replace("\n", "") + `-poetry-${poetryVersion}`;
   });
 }
 function getPipxVariables() {
