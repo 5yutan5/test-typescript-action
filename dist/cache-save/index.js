@@ -65267,6 +65267,7 @@ function run2() {
       hackSetupPython();
       yield Promise.resolve().then(() => (init_cache_save(), cache_save_exports));
       const cachePaths = JSON.parse(core3.getState("poetry-cache-paths" /* CACHE_PATHS */));
+      core3.info(`${cachePaths}`);
       const searchKey = core3.getState("poetry-cache-search-key" /* CACHE_SEARCH_KEY */);
       const matchedKey = core3.getState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */);
       if (searchKey == matchedKey) {
