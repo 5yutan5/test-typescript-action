@@ -71006,7 +71006,6 @@ function getCacheDirectories() {
 }
 function handleMatchResult(matchedKey, searchKey) {
   if (matchedKey) {
-    core3.saveState("poetry-cache-search-key" /* CACHE_SEARCH_KEY */, searchKey);
     core3.saveState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */, matchedKey);
     core3.info(`Cache of Poetry installation restored from key: ${matchedKey}`);
   } else {
@@ -71019,6 +71018,7 @@ function tryRestoringCache(poetryVersion) {
     const searchKey = yield createCacheSearchKey(poetryVersion);
     const cachePath = yield getCacheDirectories();
     core3.saveState("poetry-cache-paths" /* CACHE_PATHS */, cachePath);
+    core3.saveState("poetry-cache-search-key" /* CACHE_SEARCH_KEY */, searchKey);
     const matchedKey = yield cache2.restoreCache(cachePath, searchKey);
     handleMatchResult(matchedKey, searchKey);
     return matchedKey ? true : false;
