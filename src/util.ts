@@ -1,5 +1,5 @@
 export enum State {
-  CACHE_SEARCH_KEY = "",
+  CACHE_SEARCH_KEY = "poetry-cache-search-key",
   CACHE_MATCHED_KEY = "poetry-cache-matched-key",
   CACHE_PATHS = "poetry-cache-paths",
 }
