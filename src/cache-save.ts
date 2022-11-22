@@ -18,7 +18,7 @@ export async function run() {
     const matchedKey = core.getState(State.CACHE_MATCHED_KEY);
     if (searchKey == matchedKey) {
       core.info(
-        `Cache hit occurred on the primary key ${searchKey}, not saving cache.`
+        `Cache hit occurred on the key ${searchKey}, not saving cache.`
       );
       return;
     }
