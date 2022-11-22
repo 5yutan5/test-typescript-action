@@ -41,8 +41,8 @@ async function getPipxVariables() {
       "Could not get a list of variables used in pipx.constants."
     );
 
-  const lines = stdout.trim().split("\n").splice(-2, 2);
-  core.info(`${lines}`)
+  const lines = stdout.trim().split("\n");
+  lines.splice(-2, 2)
   const variables: any = {};
 
   for (const line of lines) {
@@ -58,7 +58,6 @@ async function getPipxVariables() {
 
 async function getCacheDirectories(): Promise<Array<string>> {
   const pipxVariables = await getPipxVariables();
-  core.info(`${pipxVariables}`)
   const poetryBinPath = core.toPlatformPath(
     IS_WINDOWS
       ? `${pipxVariables["PIPX_BIN_DIR"]}/poetry.exe`
