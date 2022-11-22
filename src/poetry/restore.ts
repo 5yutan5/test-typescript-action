@@ -68,7 +68,6 @@ async function getCacheDirectories(): Promise<Array<string>> {
 
 function handleMatchResult(matchedKey: string | undefined, searchKey: string) {
   if (matchedKey) {
-    core.saveState(State.CACHE_SEARCH_KEY, searchKey);
     core.saveState(State.CACHE_MATCHED_KEY, matchedKey);
     core.info(`Cache of Poetry installation restored from key: ${matchedKey}`);
   } else {
@@ -83,6 +82,7 @@ export async function tryRestoringCache(
   const searchKey = await createCacheSearchKey(poetryVersion);
   const cachePath = await getCacheDirectories();
   core.saveState(State.CACHE_PATHS, cachePath);
+  core.saveState(State.CACHE_SEARCH_KEY, searchKey);
 
   const matchedKey = await cache.restoreCache(cachePath, searchKey);
 
