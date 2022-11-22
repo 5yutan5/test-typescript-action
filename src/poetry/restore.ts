@@ -4,7 +4,7 @@ import * as core from "@actions/core";
 import { IS_WINDOWS, State } from "../util";
 
 async function getPythonVersion(): Promise<string> {
-  const { stdout, stderr, exitCode } = await exec.getExecOutput("python", [
+  const { stdout, stderr, exitCode } = await exec.getExecOutput("python3", [
     "--version",
   ]);
   if (exitCode && stderr) throw new Error("Could not get python version");

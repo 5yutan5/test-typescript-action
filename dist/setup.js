@@ -70951,7 +70951,7 @@ function setInput(name, value) {
 // src/poetry/restore.ts
 function getPythonVersion() {
   return __async(this, null, function* () {
-    const { stdout, stderr, exitCode } = yield exec5.getExecOutput("python", [
+    const { stdout, stderr, exitCode } = yield exec5.getExecOutput("python3", [
       "--version"
     ]);
     if (exitCode && stderr)
