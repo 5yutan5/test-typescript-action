@@ -2,7 +2,7 @@ import * as io from "@actions/io";
 import * as exec from "@actions/exec";
 
 import { Configuration, configurePoetry } from "./config";
-import { tryRestoringCache } from "./restuore";
+import { tryRestoringCache } from "./restore";
 
 async function installPoetry(version: string): Promise<void> {
   const pythonLocation = await io.which("python", true);

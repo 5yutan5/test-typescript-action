@@ -2,7 +2,9 @@ import fs from "node:fs";
 import os from "node:os";
 import * as io from "@actions/io";
 import * as core from "@actions/core";
+
 import { InstallOption } from "./poetry/install";
+import { setInput } from "./util"
 
 interface Inputs {
   readonly architecture: string;
@@ -39,10 +41,6 @@ async function createHackDependencyFile(
   }
 }
 
-// https://github.com/actions/toolkit/blob/819157bf872a49cfcc085190da73894e7091c83c/packages/core/src/core.ts#L126
-function setInput(name: string, value: string) {
-  process.env[`INPUT_${name.replace(/ /g, "_").toUpperCase()}`] = value;
-}
 function overrideInput(inputs: Inputs, hackPath: string): void {
   let cacheDependencyPath = "**/poetry.lock";
   if (inputs.cacheDependencyPath)

@@ -83,7 +83,7 @@ outputs:
       "A boolean value to indicate a poetry program cache entry was found"
 
   # Wrapper around `setup-python`
-  python-cache-hit:
+  cache-hit:
     description: 'Wrapper around `cache-hit` output of actions/setup-python.'
   python-path:
     description: 'Wrapper around `python-path` output of actions/setup-python.'
@@ -93,5 +93,6 @@ outputs:
 
 runs:
   using: 'node16'
-  main: ''
+  main: 'dist/setup.js'
+  post: 'dist/cache-save.js'
   post-if: success()
