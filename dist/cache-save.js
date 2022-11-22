@@ -65277,9 +65277,9 @@ function run2() {
       }
       const cacheId = yield cache3.saveCache(cachePaths, searchKey);
       if (cacheId == -1)
-        core3.warning("Failed to cache Poetry program.");
+        core3.warning("Failed to cache of Poetry installation.");
       else
-        core3.info(`Poetry program saved with the key: ${searchKey}`);
+        core3.info(`Poetry installation saved with the key: ${searchKey}`);
     } catch (error) {
       if (error instanceof Error)
         core3.setFailed(error.message);

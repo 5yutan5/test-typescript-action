@@ -70,9 +70,9 @@ function handleMatchResult(matchedKey: string | undefined, searchKey: string) {
   if (matchedKey) {
     core.saveState(State.CACHE_SEARCH_KEY, searchKey);
     core.saveState(State.CACHE_MATCHED_KEY, matchedKey);
-    core.info(`Poetry program cache restored from key: ${matchedKey}`);
+    core.info(`Cache of Poetry installation restored from key: ${matchedKey}`);
   } else {
-    core.info("Poetry program cache is not found");
+    core.info("Cache of Poetry installation is not found");
   }
   core.setOutput("poetry-cache-hit", matchedKey === searchKey);
 }

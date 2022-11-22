@@ -1,4 +1,4 @@
-import * as core from "@actions/core"
+import * as core from "@actions/core";
 import * as exec from "@actions/exec";
 
 import { State } from "setup-python/src/cache-distributions/cache-distributor";
@@ -20,7 +20,7 @@ export async function installDependencies(
   const primaryKey = core.getState(State.STATE_CACHE_PRIMARY_KEY);
   const matchedKey = core.getState(State.CACHE_MATCHED_KEY);
   if (primaryKey == matchedKey) {
-    "Already cached python dependencies.";
+    ("Already cached python dependencies.");
     return;
   }
 

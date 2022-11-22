@@ -2,7 +2,7 @@
 name: 'Setup Poetry environment'
 description: >-
   This action allows setting up Python and Poetry, installing dependencies,
-  and caching dependencies and Poetry all at once.
+  and caching dependencies and Poetry installation all at once.
 author: 'Yunosuke Ohsugi'
 branding:
   icon: 'code'
@@ -41,7 +41,6 @@ inputs:
     description: 'Wrapper around `version` input of actions/setup-python.'
   python-version-file:
     description: 'Wrapper around `version-file` input of actions/setup-python.'
-    default: '**/poetry.lock'
 
   # Wrapper around `poetry config` command.
   poetry-cache-dir:
@@ -80,7 +79,7 @@ inputs:
 outputs:
   poetry-cache-hit:
     description: |
-      "A boolean value to indicate a poetry program cache entry was found"
+      'A boolean value to indicate a cache entry of poetry installation was found'
 
   # Wrapper around `setup-python`
   cache-hit:

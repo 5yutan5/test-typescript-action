@@ -4,7 +4,7 @@ import * as io from "@actions/io";
 import * as core from "@actions/core";
 
 import { InstallOption } from "./poetry/install";
-import { setInput } from "./util"
+import { setInput } from "./util";
 
 interface Inputs {
   readonly architecture: string;

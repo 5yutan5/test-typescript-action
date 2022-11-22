@@ -71008,9 +71008,9 @@ function handleMatchResult(matchedKey, searchKey) {
   if (matchedKey) {
     core3.saveState("" /* CACHE_SEARCH_KEY */, searchKey);
     core3.saveState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */, matchedKey);
-    core3.info(`Poetry program cache restored from key: ${matchedKey}`);
+    core3.info(`Cache of Poetry installation restored from key: ${matchedKey}`);
   } else {
-    core3.info("Poetry program cache is not found");
+    core3.info("Cache of Poetry installation is not found");
   }
   core3.setOutput("poetry-cache-hit", matchedKey === searchKey);
 }
@@ -71028,16 +71028,15 @@ function tryRestoringCache(poetryVersion) {
 // src/poetry/setup.ts
 function installPoetry(version) {
   return __async(this, null, function* () {
-    const pythonLocation = yield io.which("python", true);
+    const pythonLocation = yield io.which("python3", true);
     const { exitCode, stderr } = yield exec6.getExecOutput(
       "pipx",
       pythonLocation ? ["install", `poetry==${version}`, "--python", pythonLocation] : ["install", `poetry==${version}`]
     );
-    if (exitCode && stderr) {
+    if (exitCode && stderr)
       throw new Error(
-        `Could not install poetry v(${version}) with pipx: ${stderr}`
+        `Failed to install poetry v(${version}): ${stderr}`
       );
-    }
   });
 }
 function setupPoetry(version, config) {
