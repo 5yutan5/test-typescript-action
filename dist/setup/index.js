@@ -70997,7 +70997,9 @@ function getPipxVariables() {
 function getCacheDirectories() {
   return __async(this, null, function* () {
     const pipxVariables = yield getPipxVariables();
-    const poetryBinPath = IS_WINDOWS ? `${pipxVariables["PIPX_BIN_DIR"]}\\poetry.exe` : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
+    const poetryBinPath = core3.toPlatformPath(
+      IS_WINDOWS ? `${pipxVariables["PIPX_BIN_DIR"]}/poetry.exe` : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`
+    );
     const poetryVenvPath = core3.toPlatformPath(
       `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`
     );
@@ -71034,9 +71036,7 @@ function installPoetry(version) {
       pythonLocation ? ["install", `poetry==${version}`, "--python", pythonLocation] : ["install", `poetry==${version}`]
     );
     if (exitCode && stderr)
-      throw new Error(
-        `Failed to install poetry v(${version}): ${stderr}`
-      );
+      throw new Error(`Failed to install poetry v(${version}): ${stderr}`);
   });
 }
 function setupPoetry(version, config) {

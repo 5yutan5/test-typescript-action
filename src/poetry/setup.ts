@@ -14,9 +14,7 @@ async function installPoetry(version: string): Promise<void> {
   );
 
   if (exitCode && stderr)
-    throw new Error(
-      `Failed to install poetry v(${version}): ${stderr}`
-    );
+    throw new Error(`Failed to install poetry v(${version}): ${stderr}`);
 }
 
 export async function setupPoetry(

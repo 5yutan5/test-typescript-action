@@ -57,9 +57,11 @@ async function getPipxVariables() {
 
 async function getCacheDirectories(): Promise<Array<string>> {
   const pipxVariables = await getPipxVariables();
-  const poetryBinPath = IS_WINDOWS
-    ? `${pipxVariables["PIPX_BIN_DIR"]}\\poetry.exe`
-    : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
+  const poetryBinPath = core.toPlatformPath(
+    IS_WINDOWS
+      ? `${pipxVariables["PIPX_BIN_DIR"]}/poetry.exe`
+      : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`
+  );
   const poetryVenvPath = core.toPlatformPath(
     `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`
   );
