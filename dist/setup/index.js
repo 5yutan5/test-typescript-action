@@ -70986,6 +70986,7 @@ function getPipxVariables() {
         "Could not get a list of variables used in pipx.constants."
       );
     const lines = stdout.trim().split("\n").splice(-2, 2);
+    core3.info(`${lines}`);
     const variables = {};
     for (const line of lines) {
       const [key, value] = line.split("=");
@@ -70997,6 +70998,7 @@ function getPipxVariables() {
 function getCacheDirectories() {
   return __async(this, null, function* () {
     const pipxVariables = yield getPipxVariables();
+    core3.info(`${pipxVariables}`);
     const poetryBinPath = core3.toPlatformPath(
       IS_WINDOWS ? `${pipxVariables["PIPX_BIN_DIR"]}/poetry.exe` : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`
     );
