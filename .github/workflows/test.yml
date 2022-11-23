@@ -20,18 +20,18 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Poetry env
-        uses: ./
-        with:
-          python-version: 3.x
       - name: Move test app to cwd
         run: |
           mv ./__tests__/data/pyproject.toml .
           mv ./__tests__/data/poetry.lock .
           mv ./__tests__/data/test_python_app .
       - run: poetry run python test_python_app/__init__.py
+      - name: Setup Poetry env
+        uses: ./
+        with:
+          python-version: 3.x
 
-  test-this-action-without-dependency:
+  test-this-action-no-install-dependency:
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3
@@ -40,6 +40,24 @@ jobs:
         with:
           python-version: 3.x
           cache-dependencies: 'false'
+          poetry-install-dependencies: 'false'
+      - run: poetry install
+
+  test-this-action-no-dependency-cache:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Move test app to cwd
+        run: |
+          mv ./__tests__/data/pyproject.toml .
+          mv ./__tests__/data/poetry.lock .
+          mv ./__tests__/data/test_python_app .
+      - name: Setup Poetry env
+        uses: ./
+        with:
+          python-version: 3.x
+          cache-dependencies: 'false'
+      - run: poetry install
 
   test-this-action-old-poetry-version:
     runs-on: 'ubuntu-latest'
@@ -55,46 +73,46 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Poetry env
-        uses: ./
-        with:
-          python-version: 3.x
-          poetry-virtualenvs-in-project: 'true'
       - name: Move test app to cwd
         run: |
           mv ./__tests__/data/pyproject.toml .
           mv ./__tests__/data/poetry.lock .
           mv ./__tests__/data/test_python_app .
+      - name: Setup Poetry env
+        uses: ./
+        with:
+          python-version: 3.x
+          poetry-virtualenvs-in-project: 'true'
       - run: poetry run python test_python_app/__init__.py
 
   test-this-action-input--only-root:
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Poetry env
-        uses: ./
-        with:
-          python-version: 3.x
-          poetry-install--only-root: 'true'
       - name: Move test app to cwd
         run: |
           mv ./__tests__/data/pyproject.toml .
           mv ./__tests__/data/poetry.lock .
           mv ./__tests__/data/test_python_app .
+      - name: Setup Poetry env
+        uses: ./
+        with:
+          python-version: 3.x
+          poetry-install--only-root: 'true'
       - run: poetry run python test_python_app/__init__.py
 
   test-this-action-input--add-args:
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Poetry env
-        uses: ./
-        with:
-          python-version: 3.x
-          poetry-install-additional-args: '-vvv'
       - name: Move test app to cwd
         run: |
           mv ./__tests__/data/pyproject.toml .
           mv ./__tests__/data/poetry.lock .
           mv ./__tests__/data/test_python_app .
+      - name: Setup Poetry env
+        uses: ./
+        with:
+          python-version: 3.x
+          poetry-install-additional-args: '-vvv'
       - run: poetry run python test_python_app/__init__.py
