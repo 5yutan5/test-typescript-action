@@ -9,10 +9,8 @@
     "build-cache": "esbuild src/cache-save.ts --bundle --platform=node --outfile=dist/cache-save/index.js",
     "build": "npm run build-setup & npm run build-cache",
     "format": "prettier --write '**/*.ts'",
-    "format-check": "prettier --check '**/*.ts'",
     "lint": "eslint src/**/*.ts",
-    "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",

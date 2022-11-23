@@ -19,7 +19,7 @@ jobs:
         id: setup-python
         run: |
           pip install lastversion
-          VERSION=$(python -m lastversion https://github.com/actions/setup-python)
+          VERSION=$(python -m lastversion actions/setup-python)
           echo version=$VERSION >> $GITHUB_OUTPUT
           echo $VERSION
       - name: Update actions/setup-python
@@ -33,8 +33,11 @@ jobs:
           from pathlib import Path
 
           path = Path("./node_modules/setup-python/src/setup-python.ts")
-          text_fixed = path.read_text().replace("run();", "")
-          path.write_text(text_fixed)
+          text_changed = path.read_text().replace("run();", "")
+          text_changed = text_changed.replace(
+            "async function run()", "export async function run()"
+          )
+          path.write_text(text_changed)
 
       - run: npm run build
 
