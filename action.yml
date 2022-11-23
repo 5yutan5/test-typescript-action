@@ -14,6 +14,7 @@ inputs:
     default: 'true'
   poetry-version:
     description: 'The Poetry version to install.'
+    # {{ poetry-version }}
     default: '1.2.2'
   poetry-install-dependencies:
     description: |

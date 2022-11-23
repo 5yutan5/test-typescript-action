@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import * as cache from "@actions/cache";
 
-import { IS_WINDOWS, setInput, State } from "./util";
+import { setInput, State } from "./util";
 
 function hackSetupPython(): void {
   const cache = core.getInput("cache-dependencies") == "true" ? "poetry" : "";

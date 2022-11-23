@@ -1,5 +1,5 @@
 ---
-name: Automated actions/setup-python update
+name: Automated update GitHub dependencies
 
 on:  # yamllint disable-line rule:truthy
   schedule:
@@ -48,3 +48,39 @@ jobs:
           title: Automated update of actions/setup-python
           body: This is an auto-generated PR with external GitHub repo updates.
           branch: auto-update-setup-python
+
+  update-poetry-latest-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - run: npm ci
+      - name: Get last version of Poetry
+        id: poetry
+        run: |
+          pip install lastversion
+          VERSION=$(python -m lastversion python-poetry/poetry)
+          echo version=$VERSION >> $GITHUB_OUTPUT
+          echo $VERSION
+      - name: Edit and update inputs.poetry-version in action.yml
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path("action.yml")
+          source = path.read_text().split()
+          target = source.split("{{ poetry-version }}")[1]
+          target = target.split("\n")[1]
+          match = re.search(r"default: '.*?'", target)
+          result = source.replace(match.group(), "default: new")
+          path.write_text(result)
+
+      - uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: Update poetry latest version
+          title: Automated update of inputs.poetry-version in action.yml
+          body: This is an auto-generated PR with poetry latest version updates.
+          branch: auto-update-poetry-latest
