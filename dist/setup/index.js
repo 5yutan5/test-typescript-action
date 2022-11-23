@@ -69948,6 +69948,7 @@ function installDependencies(option) {
   return __async(this, null, function* () {
     const primaryKey = core2.getState("cache-primary-key" /* STATE_CACHE_PRIMARY_KEY */);
     const matchedKey = core2.getState("cache-matched-key" /* CACHE_MATCHED_KEY */);
+    core2.info(primaryKey, matchedKey);
     if (primaryKey === matchedKey) {
       core2.info("Already cached python dependencies.");
       return;
