@@ -30,10 +30,11 @@ export async function configurePoetry(config: Configuration): Promise<void> {
   if (config.virtualenvsCreate == "false")
     setSetting("virtualenvs.in-project", "false");
 
+  console.log(config.virtualenvsInProject == "true")
   if (config.virtualenvsInProject == "true")
+    console.log("config.virtualenvsInProject")
     setSetting("virtualenvs.in-project", "true");
 
   if (config.virtualenvsPath)
     setSetting("virtualenvs.path", config.virtualenvsPath);
-  await exec.exec("poetry", ["config", "--list"]);
 }
