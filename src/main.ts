@@ -40,9 +40,10 @@ async function run(): Promise<void> {
       versionFile: core.getInput("python-version-file"),
     });
 
-    if (core.getInput("poetry-install-dependencies") == "true")
+    if (core.getInput("poetry-install-dependencies") == "true") {
       core.info("----Installing dependencies----");
-    await installDependencies(poetryInstallOption);
+      await installDependencies(poetryInstallOption);
+    }
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);
   }

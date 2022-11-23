@@ -25,11 +25,11 @@ jobs:
           mv ./__tests__/data/pyproject.toml .
           mv ./__tests__/data/poetry.lock .
           mv ./__tests__/data/test_python_app .
-      - run: poetry run python test_python_app/__init__.py
       - name: Setup Poetry env
         uses: ./
         with:
           python-version: 3.x
+      - run: poetry run python test_python_app/__init__.py
 
   test-this-action-no-install-dependency:
     runs-on: 'ubuntu-latest'
@@ -63,6 +63,11 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3
+      - name: Move test app to cwd
+        run: |
+          mv ./__tests__/data/pyproject.toml .
+          mv ./__tests__/data/poetry.lock .
+          mv ./__tests__/data/test_python_app .
       - name: Setup Poetry env
         uses: ./
         with:

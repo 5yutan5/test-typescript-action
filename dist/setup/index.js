@@ -71090,9 +71090,10 @@ function run2() {
         version: core13.getInput("python-version"),
         versionFile: core13.getInput("python-version-file")
       });
-      if (core13.getInput("poetry-install-dependencies") == "true")
+      if (core13.getInput("poetry-install-dependencies") == "true") {
         core13.info("----Installing dependencies----");
-      yield installDependencies(poetryInstallOption);
+        yield installDependencies(poetryInstallOption);
+      }
     } catch (error2) {
       if (error2 instanceof Error)
         core13.setFailed(error2.message);
