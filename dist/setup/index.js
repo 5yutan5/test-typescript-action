@@ -107,11 +107,11 @@ var require_command = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.issue = exports.issueCommand = void 0;
-    var os6 = __importStar(require("os"));
+    var os5 = __importStar(require("os"));
     var utils_1 = require_utils();
     function issueCommand(command, properties, message) {
       const cmd = new Command(command, properties, message);
-      process.stdout.write(cmd.toString() + os6.EOL);
+      process.stdout.write(cmd.toString() + os5.EOL);
     }
     exports.issueCommand = issueCommand;
     function issue(name, message = "") {
@@ -686,7 +686,7 @@ var require_file_command = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.prepareKeyValueMessage = exports.issueFileCommand = void 0;
     var fs6 = __importStar(require("fs"));
-    var os6 = __importStar(require("os"));
+    var os5 = __importStar(require("os"));
     var uuid_1 = require_dist();
     var utils_1 = require_utils();
     function issueFileCommand(command, message) {
@@ -697,7 +697,7 @@ var require_file_command = __commonJS({
       if (!fs6.existsSync(filePath)) {
         throw new Error(`Missing file at path: ${filePath}`);
       }
-      fs6.appendFileSync(filePath, `${utils_1.toCommandValue(message)}${os6.EOL}`, {
+      fs6.appendFileSync(filePath, `${utils_1.toCommandValue(message)}${os5.EOL}`, {
         encoding: "utf8"
       });
     }
@@ -711,7 +711,7 @@ var require_file_command = __commonJS({
       if (convertedValue.includes(delimiter)) {
         throw new Error(`Unexpected input: value should not contain the delimiter "${delimiter}"`);
       }
-      return `${key}<<${delimiter}${os6.EOL}${convertedValue}${os6.EOL}${delimiter}`;
+      return `${key}<<${delimiter}${os5.EOL}${convertedValue}${os5.EOL}${delimiter}`;
     }
     exports.prepareKeyValueMessage = prepareKeyValueMessage;
   }
@@ -2036,7 +2036,7 @@ var require_core = __commonJS({
     var command_1 = require_command();
     var file_command_1 = require_file_command();
     var utils_1 = require_utils();
-    var os6 = __importStar(require("os"));
+    var os5 = __importStar(require("os"));
     var path10 = __importStar(require("path"));
     var oidc_utils_1 = require_oidc_utils();
     var ExitCode;
@@ -2104,7 +2104,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       if (filePath) {
         return file_command_1.issueFileCommand("OUTPUT", file_command_1.prepareKeyValueMessage(name, value));
       }
-      process.stdout.write(os6.EOL);
+      process.stdout.write(os5.EOL);
       command_1.issueCommand("set-output", { name }, utils_1.toCommandValue(value));
     }
     exports.setOutput = setOutput5;
@@ -2138,7 +2138,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
     }
     exports.notice = notice;
     function info10(message) {
-      process.stdout.write(message + os6.EOL);
+      process.stdout.write(message + os5.EOL);
     }
     exports.info = info10;
     function startGroup(name) {
@@ -2720,7 +2720,7 @@ var require_toolrunner = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.argStringToArray = exports.ToolRunner = void 0;
-    var os6 = __importStar(require("os"));
+    var os5 = __importStar(require("os"));
     var events = __importStar(require("events"));
     var child = __importStar(require("child_process"));
     var path10 = __importStar(require("path"));
@@ -2775,12 +2775,12 @@ var require_toolrunner = __commonJS({
       _processLineBuffer(data, strBuffer, onLine) {
         try {
           let s = strBuffer + data.toString();
-          let n = s.indexOf(os6.EOL);
+          let n = s.indexOf(os5.EOL);
           while (n > -1) {
             const line = s.substring(0, n);
             onLine(line);
-            s = s.substring(n + os6.EOL.length);
-            n = s.indexOf(os6.EOL);
+            s = s.substring(n + os5.EOL.length);
+            n = s.indexOf(os5.EOL);
           }
           return s;
         } catch (err) {
@@ -2940,7 +2940,7 @@ var require_toolrunner = __commonJS({
             }
             const optionsNonNull = this._cloneExecOptions(this.options);
             if (!optionsNonNull.silent && optionsNonNull.outStream) {
-              optionsNonNull.outStream.write(this._getCommandString(optionsNonNull) + os6.EOL);
+              optionsNonNull.outStream.write(this._getCommandString(optionsNonNull) + os5.EOL);
             }
             const state = new ExecState(optionsNonNull, this.toolPath);
             state.on("debug", (message) => {
@@ -4499,7 +4499,7 @@ var require_internal_pattern = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Pattern = void 0;
-    var os6 = __importStar(require("os"));
+    var os5 = __importStar(require("os"));
     var path10 = __importStar(require("path"));
     var pathHelper = __importStar(require_internal_path_helper());
     var assert_1 = __importDefault(require("assert"));
@@ -4580,7 +4580,7 @@ var require_internal_pattern = __commonJS({
         if (pattern === "." || pattern.startsWith(`.${path10.sep}`)) {
           pattern = Pattern.globEscape(process.cwd()) + pattern.substr(1);
         } else if (pattern === "~" || pattern.startsWith(`~${path10.sep}`)) {
-          homedir2 = homedir2 || os6.homedir();
+          homedir2 = homedir2 || os5.homedir();
           assert_1.default(homedir2, "Unable to determine HOME directory");
           assert_1.default(pathHelper.hasAbsoluteRoot(homedir2), `Expected HOME directory to be a rooted path. Actual '${homedir2}'`);
           pattern = Pattern.globEscape(homedir2) + pattern.substr(1);
@@ -13519,9 +13519,9 @@ var require_dist5 = __commonJS({
       return ex && typeof ex === "object" && "default" in ex ? ex["default"] : ex;
     }
     var util = _interopDefault(require("util"));
-    var os6 = require("os");
+    var os5 = require("os");
     function log(message, ...args) {
-      process.stderr.write(`${util.format(message, ...args)}${os6.EOL}`);
+      process.stderr.write(`${util.format(message, ...args)}${os5.EOL}`);
     }
     var debugEnvVariable = typeof process !== "undefined" && process.env && process.env.DEBUG || void 0;
     var enabledString;
@@ -39485,7 +39485,7 @@ var require_dist8 = __commonJS({
     var coreUtil = require_dist4();
     var logger$1 = require_dist5();
     var coreAuth = require_dist6();
-    var os6 = require("os");
+    var os5 = require("os");
     var http = require("http");
     var https = require("https");
     var tough = require_cookie();
@@ -39519,7 +39519,7 @@ var require_dist8 = __commonJS({
       return Object.freeze(n);
     }
     var xml2js__namespace = /* @__PURE__ */ _interopNamespace(xml2js);
-    var os__namespace = /* @__PURE__ */ _interopNamespace(os6);
+    var os__namespace = /* @__PURE__ */ _interopNamespace(os5);
     var http__namespace = /* @__PURE__ */ _interopNamespace(http);
     var https__namespace = /* @__PURE__ */ _interopNamespace(https);
     var tough__namespace = /* @__PURE__ */ _interopNamespace(tough);
@@ -44212,7 +44212,7 @@ var require_dist11 = __commonJS({
     var coreTracing = require_dist7();
     var logger$1 = require_dist5();
     var abortController = require_dist3();
-    var os6 = require("os");
+    var os5 = require("os");
     var crypto = require("crypto");
     var stream = require("stream");
     require_dist9();
@@ -44241,7 +44241,7 @@ var require_dist11 = __commonJS({
       return Object.freeze(n);
     }
     var coreHttp__namespace = /* @__PURE__ */ _interopNamespace(coreHttp);
-    var os__namespace = /* @__PURE__ */ _interopNamespace(os6);
+    var os__namespace = /* @__PURE__ */ _interopNamespace(os5);
     var fs__namespace = /* @__PURE__ */ _interopNamespace(fs6);
     var util__namespace = /* @__PURE__ */ _interopNamespace(util);
     var BlobServiceProperties = {
@@ -67579,12 +67579,12 @@ var require_manifest = __commonJS({
     exports._readLinuxVersionFile = exports._getOsVersion = exports._findMatch = void 0;
     var semver5 = __importStar(require_semver());
     var core_1 = require_core();
-    var os6 = require("os");
+    var os5 = require("os");
     var cp = require("child_process");
     var fs6 = require("fs");
     function _findMatch(versionSpec, stable, candidates, archFilter) {
       return __awaiter(this, void 0, void 0, function* () {
-        const platFilter = os6.platform();
+        const platFilter = os5.platform();
         let result;
         let match;
         let file;
@@ -67621,7 +67621,7 @@ var require_manifest = __commonJS({
     }
     exports._findMatch = _findMatch;
     function _getOsVersion() {
-      const plat = os6.platform();
+      const plat = os5.platform();
       let version = "";
       if (plat === "darwin") {
         version = cp.execSync("sw_vers -productVersion").toString();
@@ -68349,7 +68349,7 @@ var require_tool_cache = __commonJS({
     var io4 = __importStar(require_io());
     var fs6 = __importStar(require("fs"));
     var mm = __importStar(require_manifest());
-    var os6 = __importStar(require("os"));
+    var os5 = __importStar(require("os"));
     var path10 = __importStar(require("path"));
     var httpm2 = __importStar(require_http_client());
     var semver5 = __importStar(require_semver());
@@ -68628,7 +68628,7 @@ var require_tool_cache = __commonJS({
     function cacheDir2(sourceDir, tool, version, arch2) {
       return __awaiter(this, void 0, void 0, function* () {
         version = semver5.clean(version) || version;
-        arch2 = arch2 || os6.arch();
+        arch2 = arch2 || os5.arch();
         core14.debug(`Caching tool ${tool} ${version} ${arch2}`);
         core14.debug(`source dir: ${sourceDir}`);
         if (!fs6.statSync(sourceDir).isDirectory()) {
@@ -68647,7 +68647,7 @@ var require_tool_cache = __commonJS({
     function cacheFile(sourceFile, targetFile, tool, version, arch2) {
       return __awaiter(this, void 0, void 0, function* () {
         version = semver5.clean(version) || version;
-        arch2 = arch2 || os6.arch();
+        arch2 = arch2 || os5.arch();
         core14.debug(`Caching tool ${tool} ${version} ${arch2}`);
         core14.debug(`source file: ${sourceFile}`);
         if (!fs6.statSync(sourceFile).isFile()) {
@@ -68669,7 +68669,7 @@ var require_tool_cache = __commonJS({
       if (!versionSpec) {
         throw new Error("versionSpec parameter is required");
       }
-      arch2 = arch2 || os6.arch();
+      arch2 = arch2 || os5.arch();
       if (!isExplicitVersion(versionSpec)) {
         const localVersions = findAllVersions(toolName, arch2);
         const match = evaluateVersions(localVersions, versionSpec);
@@ -68692,7 +68692,7 @@ var require_tool_cache = __commonJS({
     exports.find = find3;
     function findAllVersions(toolName, arch2) {
       const versions = [];
-      arch2 = arch2 || os6.arch();
+      arch2 = arch2 || os5.arch();
       const toolPath = path10.join(_getCacheDirectory(), toolName);
       if (fs6.existsSync(toolPath)) {
         const children2 = fs6.readdirSync(toolPath);
@@ -68743,7 +68743,7 @@ var require_tool_cache = __commonJS({
       });
     }
     exports.getManifestFromRepo = getManifestFromRepo2;
-    function findFromManifest2(versionSpec, stable, manifest, archFilter = os6.arch()) {
+    function findFromManifest2(versionSpec, stable, manifest, archFilter = os5.arch()) {
       return __awaiter(this, void 0, void 0, function* () {
         const match = yield mm._findMatch(versionSpec, stable, manifest, archFilter);
         return match;
@@ -69267,7 +69267,7 @@ var require_internal_pattern2 = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Pattern = void 0;
-    var os6 = __importStar(require("os"));
+    var os5 = __importStar(require("os"));
     var path10 = __importStar(require("path"));
     var pathHelper = __importStar(require_internal_path_helper2());
     var assert_1 = __importDefault(require("assert"));
@@ -69348,7 +69348,7 @@ var require_internal_pattern2 = __commonJS({
         if (pattern === "." || pattern.startsWith(`.${path10.sep}`)) {
           pattern = Pattern.globEscape(process.cwd()) + pattern.substr(1);
         } else if (pattern === "~" || pattern.startsWith(`~${path10.sep}`)) {
-          homedir2 = homedir2 || os6.homedir();
+          homedir2 = homedir2 || os5.homedir();
           assert_1.default(homedir2, "Unable to determine HOME directory");
           assert_1.default(pathHelper.hasAbsoluteRoot(homedir2), `Expected HOME directory to be a rooted path. Actual '${homedir2}'`);
           pattern = Pattern.globEscape(homedir2) + pattern.substr(1);
@@ -70084,7 +70084,6 @@ function setupPoetry(version, config) {
 
 // src/setup-python.ts
 var import_node_fs = __toESM(require("node:fs"));
-var import_node_os2 = __toESM(require("node:os"));
 var io3 = __toESM(require_io());
 var core12 = __toESM(require_core());
 
@@ -70995,6 +70994,7 @@ async function run() {
 // src/setup-python.ts
 function createHackDependencyFile(option) {
   return __async(this, null, function* () {
+    var _a;
     let key = "";
     if (option.allExtras == "true")
       key += option.allExtras;
@@ -71011,7 +71011,8 @@ function createHackDependencyFile(option) {
     if (option.onlyRoot == "true")
       key = option.onlyRoot;
     if (key) {
-      const tempDir = core12.toPlatformPath(`${import_node_os2.default.homedir()}/.setup-poetry-env`);
+      const githubWorkspace = (_a = process.env["GITHUB_WORKSPACE"]) != null ? _a : process.cwd();
+      const tempDir = core12.toPlatformPath(`${githubWorkspace}/.setup-poetry-env`);
       yield yield io3.mkdirP(tempDir);
       const keyPath = core12.toPlatformPath(`${tempDir}/temp-key.txt`);
       import_node_fs.default.writeFileSync(keyPath, key);
