@@ -70916,6 +70916,7 @@ function setSetting(setting, value) {
       setting,
       value
     ]);
+    console.log("hello");
     if (exitCode && stderr)
       throw new Error(`Could not run "poetry config ${setting}" ${value}.`);
   });

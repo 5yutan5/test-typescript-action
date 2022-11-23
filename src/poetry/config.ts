@@ -16,6 +16,7 @@ async function setSetting(setting: string, value: string): Promise<void> {
     setting,
     value,
   ]);
+  console.log("hello");
   if (exitCode && stderr)
     throw new Error(`Could not run "poetry config ${setting}" ${value}.`);
 }
