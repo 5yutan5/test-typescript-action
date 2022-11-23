@@ -5,6 +5,7 @@ import { setupPython } from "./setup-python";
 
 async function run(): Promise<void> {
   try {
+    core.info("----Setup Poetry----");
     await setupPoetry(core.getInput("poetry-version"), {
       cacheDir: core.getInput("poetry-cash-dir"),
       installerMaxWorkers: core.getInput("poetry-installer-max-workers"),
@@ -26,6 +27,7 @@ async function run(): Promise<void> {
       without: core.getInput("poetry-install--without"),
     };
 
+    core.info("----Run actions/setup-python----");
     await setupPython(poetryInstallOption, {
       architecture: core.getInput("python-architecture"),
       cache: core.getInput("cache-dependencies") == "true" ? "poetry" : "",
@@ -38,7 +40,8 @@ async function run(): Promise<void> {
     });
 
     if (core.getInput("poetry-install-dependencies") == "true")
-      await installDependencies(poetryInstallOption);
+      core.info("----Installing dependencies----");
+    await installDependencies(poetryInstallOption);
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);
   }
