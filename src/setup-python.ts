@@ -21,6 +21,7 @@ interface Inputs {
 async function createHackDependencyFile(
   option: InstallOption
 ): Promise<string> {
+  console.log("hello")
   let key = "";
   if (option.allExtras == "true") key += option.allExtras;
   if (option.extras && option.allExtras != "true") key += option.extras;
@@ -46,7 +47,7 @@ async function createHackDependencyFile(
 function overrideInput(inputs: Inputs, hackPath: string): void {
   let cacheDependencyPath = "**/poetry.lock";
   if (inputs.cacheDependencyPath)
-    cacheDependencyPath += inputs.cacheDependencyPath;
+    cacheDependencyPath = inputs.cacheDependencyPath;
   if (hackPath) cacheDependencyPath += "\n" + hackPath;
 
   setInput("architecture", inputs.architecture);

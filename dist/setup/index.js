@@ -70995,6 +70995,7 @@ async function run() {
 // src/setup-python.ts
 function createHackDependencyFile(option) {
   return __async(this, null, function* () {
+    console.log("hello");
     let key = "";
     if (option.allExtras == "true")
       key += option.allExtras;
@@ -71025,7 +71026,7 @@ function createHackDependencyFile(option) {
 function overrideInput(inputs, hackPath) {
   let cacheDependencyPath = "**/poetry.lock";
   if (inputs.cacheDependencyPath)
-    cacheDependencyPath += inputs.cacheDependencyPath;
+    cacheDependencyPath = inputs.cacheDependencyPath;
   if (hackPath)
     cacheDependencyPath += "\n" + hackPath;
   setInput("architecture", inputs.architecture);
