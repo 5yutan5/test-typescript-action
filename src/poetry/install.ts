@@ -19,7 +19,7 @@ export async function installDependencies(
 ): Promise<void> {
   const primaryKey = core.getState(State.STATE_CACHE_PRIMARY_KEY);
   const matchedKey = core.getState(State.CACHE_MATCHED_KEY);
-  if (matchedKey && primaryKey === matchedKey) {
+  if (primaryKey && primaryKey !== matchedKey) {
     core.info("Already cached python dependencies.");
     return;
   }
