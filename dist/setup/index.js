@@ -110,11 +110,11 @@ var require_command = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.issue = exports.issueCommand = void 0;
-    var os2 = __importStar(require("os"));
+    var os6 = __importStar(require("os"));
     var utils_1 = require_utils();
     function issueCommand(command, properties, message) {
       const cmd = new Command(command, properties, message);
-      process.stdout.write(cmd.toString() + os2.EOL);
+      process.stdout.write(cmd.toString() + os6.EOL);
     }
     exports.issueCommand = issueCommand;
     function issue(name, message = "") {
@@ -688,8 +688,8 @@ var require_file_command = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.prepareKeyValueMessage = exports.issueFileCommand = void 0;
-    var fs2 = __importStar(require("fs"));
-    var os2 = __importStar(require("os"));
+    var fs5 = __importStar(require("fs"));
+    var os6 = __importStar(require("os"));
     var uuid_1 = require_dist();
     var utils_1 = require_utils();
     function issueFileCommand(command, message) {
@@ -697,10 +697,10 @@ var require_file_command = __commonJS({
       if (!filePath) {
         throw new Error(`Unable to find environment variable for file command ${command}`);
       }
-      if (!fs2.existsSync(filePath)) {
+      if (!fs5.existsSync(filePath)) {
         throw new Error(`Missing file at path: ${filePath}`);
       }
-      fs2.appendFileSync(filePath, `${utils_1.toCommandValue(message)}${os2.EOL}`, {
+      fs5.appendFileSync(filePath, `${utils_1.toCommandValue(message)}${os6.EOL}`, {
         encoding: "utf8"
       });
     }
@@ -714,7 +714,7 @@ var require_file_command = __commonJS({
       if (convertedValue.includes(delimiter)) {
         throw new Error(`Unexpected input: value should not contain the delimiter "${delimiter}"`);
       }
-      return `${key}<<${delimiter}${os2.EOL}${convertedValue}${os2.EOL}${delimiter}`;
+      return `${key}<<${delimiter}${os6.EOL}${convertedValue}${os6.EOL}${delimiter}`;
     }
     exports.prepareKeyValueMessage = prepareKeyValueMessage;
   }
@@ -1959,7 +1959,7 @@ var require_path_utils = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.toPlatformPath = exports.toWin32Path = exports.toPosixPath = void 0;
-    var path = __importStar(require("path"));
+    var path10 = __importStar(require("path"));
     function toPosixPath(pth) {
       return pth.replace(/[\\]/g, "/");
     }
@@ -1969,7 +1969,7 @@ var require_path_utils = __commonJS({
     }
     exports.toWin32Path = toWin32Path;
     function toPlatformPath3(pth) {
-      return pth.replace(/[/\\]/g, path.sep);
+      return pth.replace(/[/\\]/g, path10.sep);
     }
     exports.toPlatformPath = toPlatformPath3;
   }
@@ -2039,8 +2039,8 @@ var require_core = __commonJS({
     var command_1 = require_command();
     var file_command_1 = require_file_command();
     var utils_1 = require_utils();
-    var os2 = __importStar(require("os"));
-    var path = __importStar(require("path"));
+    var os6 = __importStar(require("os"));
+    var path10 = __importStar(require("path"));
     var oidc_utils_1 = require_oidc_utils();
     var ExitCode;
     (function(ExitCode2) {
@@ -2068,7 +2068,7 @@ var require_core = __commonJS({
       } else {
         command_1.issueCommand("add-path", {}, inputPath);
       }
-      process.env["PATH"] = `${inputPath}${path.delimiter}${process.env["PATH"]}`;
+      process.env["PATH"] = `${inputPath}${path10.delimiter}${process.env["PATH"]}`;
     }
     exports.addPath = addPath3;
     function getInput4(name, options) {
@@ -2107,7 +2107,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       if (filePath) {
         return file_command_1.issueFileCommand("OUTPUT", file_command_1.prepareKeyValueMessage(name, value));
       }
-      process.stdout.write(os2.EOL);
+      process.stdout.write(os6.EOL);
       command_1.issueCommand("set-output", { name }, utils_1.toCommandValue(value));
     }
     exports.setOutput = setOutput5;
@@ -2141,7 +2141,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
     }
     exports.notice = notice;
     function info11(message) {
-      process.stdout.write(message + os2.EOL);
+      process.stdout.write(message + os6.EOL);
     }
     exports.info = info11;
     function startGroup(name) {
@@ -2266,9 +2266,9 @@ var require_io_util = __commonJS({
     var _a;
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getCmdPath = exports.tryGetExecutablePath = exports.isRooted = exports.isDirectory = exports.exists = exports.IS_WINDOWS = exports.unlink = exports.symlink = exports.stat = exports.rmdir = exports.rename = exports.readlink = exports.readdir = exports.mkdir = exports.lstat = exports.copyFile = exports.chmod = void 0;
-    var fs2 = __importStar(require("fs"));
-    var path = __importStar(require("path"));
-    _a = fs2.promises, exports.chmod = _a.chmod, exports.copyFile = _a.copyFile, exports.lstat = _a.lstat, exports.mkdir = _a.mkdir, exports.readdir = _a.readdir, exports.readlink = _a.readlink, exports.rename = _a.rename, exports.rmdir = _a.rmdir, exports.stat = _a.stat, exports.symlink = _a.symlink, exports.unlink = _a.unlink;
+    var fs5 = __importStar(require("fs"));
+    var path10 = __importStar(require("path"));
+    _a = fs5.promises, exports.chmod = _a.chmod, exports.copyFile = _a.copyFile, exports.lstat = _a.lstat, exports.mkdir = _a.mkdir, exports.readdir = _a.readdir, exports.readlink = _a.readlink, exports.rename = _a.rename, exports.rmdir = _a.rmdir, exports.stat = _a.stat, exports.symlink = _a.symlink, exports.unlink = _a.unlink;
     exports.IS_WINDOWS = process.platform === "win32";
     function exists(fsPath) {
       return __awaiter(this, void 0, void 0, function* () {
@@ -2314,7 +2314,7 @@ var require_io_util = __commonJS({
         }
         if (stats && stats.isFile()) {
           if (exports.IS_WINDOWS) {
-            const upperExt = path.extname(filePath).toUpperCase();
+            const upperExt = path10.extname(filePath).toUpperCase();
             if (extensions.some((validExt) => validExt.toUpperCase() === upperExt)) {
               return filePath;
             }
@@ -2338,11 +2338,11 @@ var require_io_util = __commonJS({
           if (stats && stats.isFile()) {
             if (exports.IS_WINDOWS) {
               try {
-                const directory = path.dirname(filePath);
-                const upperName = path.basename(filePath).toUpperCase();
+                const directory = path10.dirname(filePath);
+                const upperName = path10.basename(filePath).toUpperCase();
                 for (const actualName of yield exports.readdir(directory)) {
                   if (upperName === actualName.toUpperCase()) {
-                    filePath = path.join(directory, actualName);
+                    filePath = path10.join(directory, actualName);
                     break;
                   }
                 }
@@ -2443,10 +2443,10 @@ var require_io = __commonJS({
     exports.findInPath = exports.which = exports.mkdirP = exports.rmRF = exports.mv = exports.cp = void 0;
     var assert_1 = require("assert");
     var childProcess = __importStar(require("child_process"));
-    var path = __importStar(require("path"));
+    var path10 = __importStar(require("path"));
     var util_1 = require("util");
     var ioUtil = __importStar(require_io_util());
-    var exec14 = util_1.promisify(childProcess.exec);
+    var exec15 = util_1.promisify(childProcess.exec);
     var execFile = util_1.promisify(childProcess.execFile);
     function cp(source, dest, options = {}) {
       return __awaiter(this, void 0, void 0, function* () {
@@ -2455,7 +2455,7 @@ var require_io = __commonJS({
         if (destStat && destStat.isFile() && !force) {
           return;
         }
-        const newDest = destStat && destStat.isDirectory() && copySourceDirectory ? path.join(dest, path.basename(source)) : dest;
+        const newDest = destStat && destStat.isDirectory() && copySourceDirectory ? path10.join(dest, path10.basename(source)) : dest;
         if (!(yield ioUtil.exists(source))) {
           throw new Error(`no such file or directory: ${source}`);
         }
@@ -2467,7 +2467,7 @@ var require_io = __commonJS({
             yield cpDirRecursive(source, newDest, 0, force);
           }
         } else {
-          if (path.relative(source, newDest) === "") {
+          if (path10.relative(source, newDest) === "") {
             throw new Error(`'${newDest}' and '${source}' are the same file`);
           }
           yield copyFile(source, newDest, force);
@@ -2480,7 +2480,7 @@ var require_io = __commonJS({
         if (yield ioUtil.exists(dest)) {
           let destExists = true;
           if (yield ioUtil.isDirectory(dest)) {
-            dest = path.join(dest, path.basename(source));
+            dest = path10.join(dest, path10.basename(source));
             destExists = yield ioUtil.exists(dest);
           }
           if (destExists) {
@@ -2491,7 +2491,7 @@ var require_io = __commonJS({
             }
           }
         }
-        yield mkdirP2(path.dirname(dest));
+        yield mkdirP2(path10.dirname(dest));
         yield ioUtil.rename(source, dest);
       });
     }
@@ -2505,11 +2505,11 @@ var require_io = __commonJS({
           try {
             const cmdPath = ioUtil.getCmdPath();
             if (yield ioUtil.isDirectory(inputPath, true)) {
-              yield exec14(`${cmdPath} /s /c "rd /s /q "%inputPath%""`, {
+              yield exec15(`${cmdPath} /s /c "rd /s /q "%inputPath%""`, {
                 env: { inputPath }
               });
             } else {
-              yield exec14(`${cmdPath} /s /c "del /f /a "%inputPath%""`, {
+              yield exec15(`${cmdPath} /s /c "del /f /a "%inputPath%""`, {
                 env: { inputPath }
               });
             }
@@ -2579,7 +2579,7 @@ var require_io = __commonJS({
         }
         const extensions = [];
         if (ioUtil.IS_WINDOWS && process.env["PATHEXT"]) {
-          for (const extension of process.env["PATHEXT"].split(path.delimiter)) {
+          for (const extension of process.env["PATHEXT"].split(path10.delimiter)) {
             if (extension) {
               extensions.push(extension);
             }
@@ -2592,12 +2592,12 @@ var require_io = __commonJS({
           }
           return [];
         }
-        if (tool.includes(path.sep)) {
+        if (tool.includes(path10.sep)) {
           return [];
         }
         const directories = [];
         if (process.env.PATH) {
-          for (const p of process.env.PATH.split(path.delimiter)) {
+          for (const p of process.env.PATH.split(path10.delimiter)) {
             if (p) {
               directories.push(p);
             }
@@ -2605,7 +2605,7 @@ var require_io = __commonJS({
         }
         const matches = [];
         for (const directory of directories) {
-          const filePath = yield ioUtil.tryGetExecutablePath(path.join(directory, tool), extensions);
+          const filePath = yield ioUtil.tryGetExecutablePath(path10.join(directory, tool), extensions);
           if (filePath) {
             matches.push(filePath);
           }
@@ -2723,10 +2723,10 @@ var require_toolrunner = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.argStringToArray = exports.ToolRunner = void 0;
-    var os2 = __importStar(require("os"));
+    var os6 = __importStar(require("os"));
     var events = __importStar(require("events"));
     var child = __importStar(require("child_process"));
-    var path = __importStar(require("path"));
+    var path10 = __importStar(require("path"));
     var io4 = __importStar(require_io());
     var ioUtil = __importStar(require_io_util());
     var timers_1 = require("timers");
@@ -2778,12 +2778,12 @@ var require_toolrunner = __commonJS({
       _processLineBuffer(data, strBuffer, onLine) {
         try {
           let s = strBuffer + data.toString();
-          let n = s.indexOf(os2.EOL);
+          let n = s.indexOf(os6.EOL);
           while (n > -1) {
             const line = s.substring(0, n);
             onLine(line);
-            s = s.substring(n + os2.EOL.length);
-            n = s.indexOf(os2.EOL);
+            s = s.substring(n + os6.EOL.length);
+            n = s.indexOf(os6.EOL);
           }
           return s;
         } catch (err) {
@@ -2932,7 +2932,7 @@ var require_toolrunner = __commonJS({
       exec() {
         return __awaiter(this, void 0, void 0, function* () {
           if (!ioUtil.isRooted(this.toolPath) && (this.toolPath.includes("/") || IS_WINDOWS3 && this.toolPath.includes("\\"))) {
-            this.toolPath = path.resolve(process.cwd(), this.options.cwd || process.cwd(), this.toolPath);
+            this.toolPath = path10.resolve(process.cwd(), this.options.cwd || process.cwd(), this.toolPath);
           }
           this.toolPath = yield io4.which(this.toolPath, true);
           return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
@@ -2943,7 +2943,7 @@ var require_toolrunner = __commonJS({
             }
             const optionsNonNull = this._cloneExecOptions(this.options);
             if (!optionsNonNull.silent && optionsNonNull.outStream) {
-              optionsNonNull.outStream.write(this._getCommandString(optionsNonNull) + os2.EOL);
+              optionsNonNull.outStream.write(this._getCommandString(optionsNonNull) + os6.EOL);
             }
             const state = new ExecState(optionsNonNull, this.toolPath);
             state.on("debug", (message) => {
@@ -3205,7 +3205,7 @@ var require_exec = __commonJS({
     exports.getExecOutput = exports.exec = void 0;
     var string_decoder_1 = require("string_decoder");
     var tr = __importStar(require_toolrunner());
-    function exec14(commandLine, args, options) {
+    function exec15(commandLine, args, options) {
       return __awaiter(this, void 0, void 0, function* () {
         const commandArgs = tr.argStringToArray(commandLine);
         if (commandArgs.length === 0) {
@@ -3217,7 +3217,7 @@ var require_exec = __commonJS({
         return runner.exec();
       });
     }
-    exports.exec = exec14;
+    exports.exec = exec15;
     function getExecOutput6(commandLine, args, options) {
       var _a, _b;
       return __awaiter(this, void 0, void 0, function* () {
@@ -3240,7 +3240,7 @@ var require_exec = __commonJS({
           }
         };
         const listeners = Object.assign(Object.assign({}, options === null || options === void 0 ? void 0 : options.listeners), { stdout: stdOutListener, stderr: stdErrListener });
-        const exitCode = yield exec14(commandLine, args, Object.assign(Object.assign({}, options), { listeners }));
+        const exitCode = yield exec15(commandLine, args, Object.assign(Object.assign({}, options), { listeners }));
         stdout += stdoutDecoder.end();
         stderr += stderrDecoder.end();
         return {
@@ -3352,21 +3352,21 @@ var require_internal_path_helper = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.safeTrimTrailingSeparator = exports.normalizeSeparators = exports.hasRoot = exports.hasAbsoluteRoot = exports.ensureAbsoluteRoot = exports.dirname = void 0;
-    var path = __importStar(require("path"));
+    var path10 = __importStar(require("path"));
     var assert_1 = __importDefault(require("assert"));
     var IS_WINDOWS3 = process.platform === "win32";
-    function dirname(p) {
+    function dirname3(p) {
       p = safeTrimTrailingSeparator(p);
       if (IS_WINDOWS3 && /^\\\\[^\\]+(\\[^\\]+)?$/.test(p)) {
         return p;
       }
-      let result = path.dirname(p);
+      let result = path10.dirname(p);
       if (IS_WINDOWS3 && /^\\\\[^\\]+\\[^\\]+\\$/.test(result)) {
         result = safeTrimTrailingSeparator(result);
       }
       return result;
     }
-    exports.dirname = dirname;
+    exports.dirname = dirname3;
     function ensureAbsoluteRoot(root, itemPath) {
       assert_1.default(root, `ensureAbsoluteRoot parameter 'root' must not be empty`);
       assert_1.default(itemPath, `ensureAbsoluteRoot parameter 'itemPath' must not be empty`);
@@ -3398,7 +3398,7 @@ var require_internal_path_helper = __commonJS({
       assert_1.default(hasAbsoluteRoot(root), `ensureAbsoluteRoot parameter 'root' must have an absolute root`);
       if (root.endsWith("/") || IS_WINDOWS3 && root.endsWith("\\")) {
       } else {
-        root += path.sep;
+        root += path10.sep;
       }
       return root + itemPath;
     }
@@ -3436,10 +3436,10 @@ var require_internal_path_helper = __commonJS({
         return "";
       }
       p = normalizeSeparators(p);
-      if (!p.endsWith(path.sep)) {
+      if (!p.endsWith(path10.sep)) {
         return p;
       }
-      if (p === path.sep) {
+      if (p === path10.sep) {
         return p;
       }
       if (IS_WINDOWS3 && /^[A-Z]:\\$/i.test(p)) {
@@ -3785,7 +3785,7 @@ var require_minimatch = __commonJS({
   "node_modules/minimatch/minimatch.js"(exports, module2) {
     module2.exports = minimatch;
     minimatch.Minimatch = Minimatch;
-    var path = function() {
+    var path10 = function() {
       try {
         return require("path");
       } catch (e) {
@@ -3793,7 +3793,7 @@ var require_minimatch = __commonJS({
     }() || {
       sep: "/"
     };
-    minimatch.sep = path.sep;
+    minimatch.sep = path10.sep;
     var GLOBSTAR = minimatch.GLOBSTAR = Minimatch.GLOBSTAR = {};
     var expand = require_brace_expansion();
     var plTypes = {
@@ -3884,8 +3884,8 @@ var require_minimatch = __commonJS({
       if (!options)
         options = {};
       pattern = pattern.trim();
-      if (!options.allowWindowsEscape && path.sep !== "/") {
-        pattern = pattern.split(path.sep).join("/");
+      if (!options.allowWindowsEscape && path10.sep !== "/") {
+        pattern = pattern.split(path10.sep).join("/");
       }
       this.options = options;
       this.set = [];
@@ -4262,8 +4262,8 @@ var require_minimatch = __commonJS({
       if (f === "/" && partial)
         return true;
       var options = this.options;
-      if (path.sep !== "/") {
-        f = f.split(path.sep).join("/");
+      if (path10.sep !== "/") {
+        f = f.split(path10.sep).join("/");
       }
       f = f.split(slashSplit);
       this.debug(this.pattern, "split", f);
@@ -4407,7 +4407,7 @@ var require_internal_path = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Path = void 0;
-    var path = __importStar(require("path"));
+    var path10 = __importStar(require("path"));
     var pathHelper = __importStar(require_internal_path_helper());
     var assert_1 = __importDefault(require("assert"));
     var IS_WINDOWS3 = process.platform === "win32";
@@ -4418,13 +4418,13 @@ var require_internal_path = __commonJS({
           assert_1.default(itemPath, `Parameter 'itemPath' must not be empty`);
           itemPath = pathHelper.safeTrimTrailingSeparator(itemPath);
           if (!pathHelper.hasRoot(itemPath)) {
-            this.segments = itemPath.split(path.sep);
+            this.segments = itemPath.split(path10.sep);
           } else {
             let remaining = itemPath;
             let dir = pathHelper.dirname(remaining);
             while (dir !== remaining) {
-              const basename = path.basename(remaining);
-              this.segments.unshift(basename);
+              const basename3 = path10.basename(remaining);
+              this.segments.unshift(basename3);
               remaining = dir;
               dir = pathHelper.dirname(remaining);
             }
@@ -4441,7 +4441,7 @@ var require_internal_path = __commonJS({
               assert_1.default(segment === pathHelper.dirname(segment), `Parameter 'itemPath' root segment contains information for multiple segments`);
               this.segments.push(segment);
             } else {
-              assert_1.default(!segment.includes(path.sep), `Parameter 'itemPath' contains unexpected path separators`);
+              assert_1.default(!segment.includes(path10.sep), `Parameter 'itemPath' contains unexpected path separators`);
               this.segments.push(segment);
             }
           }
@@ -4449,12 +4449,12 @@ var require_internal_path = __commonJS({
       }
       toString() {
         let result = this.segments[0];
-        let skipSlash = result.endsWith(path.sep) || IS_WINDOWS3 && /^[A-Z]:$/i.test(result);
+        let skipSlash = result.endsWith(path10.sep) || IS_WINDOWS3 && /^[A-Z]:$/i.test(result);
         for (let i = 1; i < this.segments.length; i++) {
           if (skipSlash) {
             skipSlash = false;
           } else {
-            result += path.sep;
+            result += path10.sep;
           }
           result += this.segments[i];
         }
@@ -4502,8 +4502,8 @@ var require_internal_pattern = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Pattern = void 0;
-    var os2 = __importStar(require("os"));
-    var path = __importStar(require("path"));
+    var os6 = __importStar(require("os"));
+    var path10 = __importStar(require("path"));
     var pathHelper = __importStar(require_internal_path_helper());
     var assert_1 = __importDefault(require("assert"));
     var minimatch_1 = require_minimatch();
@@ -4511,7 +4511,7 @@ var require_internal_pattern = __commonJS({
     var internal_path_1 = require_internal_path();
     var IS_WINDOWS3 = process.platform === "win32";
     var Pattern = class {
-      constructor(patternOrNegate, isImplicitPattern = false, segments, homedir) {
+      constructor(patternOrNegate, isImplicitPattern = false, segments, homedir2) {
         this.negate = false;
         let pattern;
         if (typeof patternOrNegate === "string") {
@@ -4530,9 +4530,9 @@ var require_internal_pattern = __commonJS({
           this.negate = !this.negate;
           pattern = pattern.substr(1).trim();
         }
-        pattern = Pattern.fixupPattern(pattern, homedir);
+        pattern = Pattern.fixupPattern(pattern, homedir2);
         this.segments = new internal_path_1.Path(pattern).segments;
-        this.trailingSeparator = pathHelper.normalizeSeparators(pattern).endsWith(path.sep);
+        this.trailingSeparator = pathHelper.normalizeSeparators(pattern).endsWith(path10.sep);
         pattern = pathHelper.safeTrimTrailingSeparator(pattern);
         let foundGlob = false;
         const searchSegments = this.segments.map((x) => Pattern.getLiteral(x)).filter((x) => !foundGlob && !(foundGlob = x === ""));
@@ -4553,8 +4553,8 @@ var require_internal_pattern = __commonJS({
       match(itemPath) {
         if (this.segments[this.segments.length - 1] === "**") {
           itemPath = pathHelper.normalizeSeparators(itemPath);
-          if (!itemPath.endsWith(path.sep) && this.isImplicitPattern === false) {
-            itemPath = `${itemPath}${path.sep}`;
+          if (!itemPath.endsWith(path10.sep) && this.isImplicitPattern === false) {
+            itemPath = `${itemPath}${path10.sep}`;
           }
         } else {
           itemPath = pathHelper.safeTrimTrailingSeparator(itemPath);
@@ -4574,19 +4574,19 @@ var require_internal_pattern = __commonJS({
       static globEscape(s) {
         return (IS_WINDOWS3 ? s : s.replace(/\\/g, "\\\\")).replace(/(\[)(?=[^/]+\])/g, "[[]").replace(/\?/g, "[?]").replace(/\*/g, "[*]");
       }
-      static fixupPattern(pattern, homedir) {
+      static fixupPattern(pattern, homedir2) {
         assert_1.default(pattern, "pattern cannot be empty");
         const literalSegments = new internal_path_1.Path(pattern).segments.map((x) => Pattern.getLiteral(x));
         assert_1.default(literalSegments.every((x, i) => (x !== "." || i === 0) && x !== ".."), `Invalid pattern '${pattern}'. Relative pathing '.' and '..' is not allowed.`);
         assert_1.default(!pathHelper.hasRoot(pattern) || literalSegments[0], `Invalid pattern '${pattern}'. Root segment must not contain globs.`);
         pattern = pathHelper.normalizeSeparators(pattern);
-        if (pattern === "." || pattern.startsWith(`.${path.sep}`)) {
+        if (pattern === "." || pattern.startsWith(`.${path10.sep}`)) {
           pattern = Pattern.globEscape(process.cwd()) + pattern.substr(1);
-        } else if (pattern === "~" || pattern.startsWith(`~${path.sep}`)) {
-          homedir = homedir || os2.homedir();
-          assert_1.default(homedir, "Unable to determine HOME directory");
-          assert_1.default(pathHelper.hasAbsoluteRoot(homedir), `Expected HOME directory to be a rooted path. Actual '${homedir}'`);
-          pattern = Pattern.globEscape(homedir) + pattern.substr(1);
+        } else if (pattern === "~" || pattern.startsWith(`~${path10.sep}`)) {
+          homedir2 = homedir2 || os6.homedir();
+          assert_1.default(homedir2, "Unable to determine HOME directory");
+          assert_1.default(pathHelper.hasAbsoluteRoot(homedir2), `Expected HOME directory to be a rooted path. Actual '${homedir2}'`);
+          pattern = Pattern.globEscape(homedir2) + pattern.substr(1);
         } else if (IS_WINDOWS3 && (pattern.match(/^[A-Z]:$/i) || pattern.match(/^[A-Z]:[^\\]/i))) {
           let root = pathHelper.ensureAbsoluteRoot("C:\\dummy-root", pattern.substr(0, 2));
           if (pattern.length > 2 && !root.endsWith("\\")) {
@@ -4658,8 +4658,8 @@ var require_internal_search_state = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.SearchState = void 0;
     var SearchState = class {
-      constructor(path, level) {
-        this.path = path;
+      constructor(path10, level) {
+        this.path = path10;
         this.level = level;
       }
     };
@@ -4788,9 +4788,9 @@ var require_internal_globber = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DefaultGlobber = void 0;
     var core15 = __importStar(require_core());
-    var fs2 = __importStar(require("fs"));
+    var fs5 = __importStar(require("fs"));
     var globOptionsHelper = __importStar(require_internal_glob_options_helper());
-    var path = __importStar(require("path"));
+    var path10 = __importStar(require("path"));
     var patternHelper = __importStar(require_internal_pattern_helper());
     var internal_match_kind_1 = require_internal_match_kind();
     var internal_pattern_1 = require_internal_pattern();
@@ -4842,7 +4842,7 @@ var require_internal_globber = __commonJS({
           for (const searchPath of patternHelper.getSearchPaths(patterns)) {
             core15.debug(`Search path '${searchPath}'`);
             try {
-              yield __await(fs2.promises.lstat(searchPath));
+              yield __await(fs5.promises.lstat(searchPath));
             } catch (err) {
               if (err.code === "ENOENT") {
                 continue;
@@ -4872,7 +4872,7 @@ var require_internal_globber = __commonJS({
                 continue;
               }
               const childLevel = item.level + 1;
-              const childItems = (yield __await(fs2.promises.readdir(item.path))).map((x) => new internal_search_state_1.SearchState(path.join(item.path, x), childLevel));
+              const childItems = (yield __await(fs5.promises.readdir(item.path))).map((x) => new internal_search_state_1.SearchState(path10.join(item.path, x), childLevel));
               stack.push(...childItems.reverse());
             } else if (match & internal_match_kind_1.MatchKind.File) {
               yield yield __await(item.path);
@@ -4904,7 +4904,7 @@ var require_internal_globber = __commonJS({
           let stats;
           if (options.followSymbolicLinks) {
             try {
-              stats = yield fs2.promises.stat(item.path);
+              stats = yield fs5.promises.stat(item.path);
             } catch (err) {
               if (err.code === "ENOENT") {
                 if (options.omitBrokenSymbolicLinks) {
@@ -4916,10 +4916,10 @@ var require_internal_globber = __commonJS({
               throw err;
             }
           } else {
-            stats = yield fs2.promises.lstat(item.path);
+            stats = yield fs5.promises.lstat(item.path);
           }
           if (stats.isDirectory() && options.followSymbolicLinks) {
-            const realPath = yield fs2.promises.realpath(item.path);
+            const realPath = yield fs5.promises.realpath(item.path);
             while (traversalChain.length >= item.level) {
               traversalChain.pop();
             }
@@ -6349,11 +6349,11 @@ var require_cacheUtils = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     var core15 = __importStar(require_core());
-    var exec14 = __importStar(require_exec());
+    var exec15 = __importStar(require_exec());
     var glob4 = __importStar(require_glob());
     var io4 = __importStar(require_io());
-    var fs2 = __importStar(require("fs"));
-    var path = __importStar(require("path"));
+    var fs5 = __importStar(require("fs"));
+    var path10 = __importStar(require("path"));
     var semver5 = __importStar(require_semver());
     var util = __importStar(require("util"));
     var uuid_1 = require_uuid();
@@ -6373,16 +6373,16 @@ var require_cacheUtils = __commonJS({
               baseLocation = "/home";
             }
           }
-          tempDirectory = path.join(baseLocation, "actions", "temp");
+          tempDirectory = path10.join(baseLocation, "actions", "temp");
         }
-        const dest = path.join(tempDirectory, uuid_1.v4());
+        const dest = path10.join(tempDirectory, uuid_1.v4());
         yield io4.mkdirP(dest);
         return dest;
       });
     }
     exports.createTempDirectory = createTempDirectory;
     function getArchiveFileSizeInBytes(filePath) {
-      return fs2.statSync(filePath).size;
+      return fs5.statSync(filePath).size;
     }
     exports.getArchiveFileSizeInBytes = getArchiveFileSizeInBytes;
     function resolvePaths(patterns) {
@@ -6397,7 +6397,7 @@ var require_cacheUtils = __commonJS({
         try {
           for (var _c = __asyncValues(globber.globGenerator()), _d; _d = yield _c.next(), !_d.done; ) {
             const file = _d.value;
-            const relativeFile = path.relative(workspace, file).replace(new RegExp(`\\${path.sep}`, "g"), "/");
+            const relativeFile = path10.relative(workspace, file).replace(new RegExp(`\\${path10.sep}`, "g"), "/");
             core15.debug(`Matched: ${relativeFile}`);
             if (relativeFile === "") {
               paths.push(".");
@@ -6422,7 +6422,7 @@ var require_cacheUtils = __commonJS({
     exports.resolvePaths = resolvePaths;
     function unlinkFile(filePath) {
       return __awaiter(this, void 0, void 0, function* () {
-        return util.promisify(fs2.unlink)(filePath);
+        return util.promisify(fs5.unlink)(filePath);
       });
     }
     exports.unlinkFile = unlinkFile;
@@ -6431,7 +6431,7 @@ var require_cacheUtils = __commonJS({
         core15.debug(`Checking ${app} --version`);
         let versionOutput = "";
         try {
-          yield exec14.exec(`${app} --version`, [], {
+          yield exec15.exec(`${app} --version`, [], {
             ignoreReturnCode: true,
             silent: true,
             listeners: {
@@ -6482,11 +6482,11 @@ var require_cacheUtils = __commonJS({
       return value;
     }
     exports.assertDefined = assertDefined;
-    function isGhes() {
+    function isGhes2() {
       const ghUrl = new URL(process.env["GITHUB_SERVER_URL"] || "https://github.com");
       return ghUrl.hostname.toUpperCase() !== "GITHUB.COM";
     }
-    exports.isGhes = isGhes;
+    exports.isGhes = isGhes2;
   }
 });
 
@@ -13522,9 +13522,9 @@ var require_dist5 = __commonJS({
       return ex && typeof ex === "object" && "default" in ex ? ex["default"] : ex;
     }
     var util = _interopDefault(require("util"));
-    var os2 = require("os");
+    var os6 = require("os");
     function log(message, ...args) {
-      process.stderr.write(`${util.format(message, ...args)}${os2.EOL}`);
+      process.stderr.write(`${util.format(message, ...args)}${os6.EOL}`);
     }
     var debugEnvVariable = typeof process !== "undefined" && process.env && process.env.DEBUG || void 0;
     var enabledString;
@@ -14206,25 +14206,25 @@ var require_url_parse = __commonJS({
     function resolve(relative, base) {
       if (relative === "")
         return base;
-      var path = (base || "/").split("/").slice(0, -1).concat(relative.split("/")), i = path.length, last = path[i - 1], unshift = false, up = 0;
+      var path10 = (base || "/").split("/").slice(0, -1).concat(relative.split("/")), i = path10.length, last = path10[i - 1], unshift = false, up = 0;
       while (i--) {
-        if (path[i] === ".") {
-          path.splice(i, 1);
-        } else if (path[i] === "..") {
-          path.splice(i, 1);
+        if (path10[i] === ".") {
+          path10.splice(i, 1);
+        } else if (path10[i] === "..") {
+          path10.splice(i, 1);
           up++;
         } else if (up) {
           if (i === 0)
             unshift = true;
-          path.splice(i, 1);
+          path10.splice(i, 1);
           up--;
         }
       }
       if (unshift)
-        path.unshift("");
+        path10.unshift("");
       if (last === "." || last === "..")
-        path.push("");
-      return path.join("/");
+        path10.push("");
+      return path10.join("/");
     }
     function Url(address, location, parser) {
       address = trimLeft(address);
@@ -24003,10 +24003,10 @@ var require_store = __commonJS({
       constructor() {
         this.synchronous = false;
       }
-      findCookie(domain, path, key, cb) {
+      findCookie(domain, path10, key, cb) {
         throw new Error("findCookie is not implemented");
       }
-      findCookies(domain, path, allowSpecialUseDomain, cb) {
+      findCookies(domain, path10, allowSpecialUseDomain, cb) {
         throw new Error("findCookies is not implemented");
       }
       putCookie(cookie, cb) {
@@ -24015,10 +24015,10 @@ var require_store = __commonJS({
       updateCookie(oldCookie, newCookie, cb) {
         throw new Error("updateCookie is not implemented");
       }
-      removeCookie(domain, path, key, cb) {
+      removeCookie(domain, path10, key, cb) {
         throw new Error("removeCookie is not implemented");
       }
-      removeCookies(domain, path, cb) {
+      removeCookies(domain, path10, cb) {
         throw new Error("removeCookies is not implemented");
       }
       removeAllCookies(cb) {
@@ -24180,16 +24180,16 @@ var require_memstore = __commonJS({
         const util = { inspect: getUtilInspect(inspectFallback) };
         return `{ idx: ${util.inspect(this.idx, false, 2)} }`;
       }
-      findCookie(domain, path, key, cb) {
+      findCookie(domain, path10, key, cb) {
         if (!this.idx[domain]) {
           return cb(null, void 0);
         }
-        if (!this.idx[domain][path]) {
+        if (!this.idx[domain][path10]) {
           return cb(null, void 0);
         }
-        return cb(null, this.idx[domain][path][key] || null);
+        return cb(null, this.idx[domain][path10][key] || null);
       }
-      findCookies(domain, path, allowSpecialUseDomain, cb) {
+      findCookies(domain, path10, allowSpecialUseDomain, cb) {
         const results = [];
         if (typeof allowSpecialUseDomain === "function") {
           cb = allowSpecialUseDomain;
@@ -24199,7 +24199,7 @@ var require_memstore = __commonJS({
           return cb(null, []);
         }
         let pathMatcher;
-        if (!path) {
+        if (!path10) {
           pathMatcher = function matchAll(domainIndex) {
             for (const curPath in domainIndex) {
               const pathIndex = domainIndex[curPath];
@@ -24211,7 +24211,7 @@ var require_memstore = __commonJS({
         } else {
           pathMatcher = function matchRFC(domainIndex) {
             Object.keys(domainIndex).forEach((cookiePath) => {
-              if (pathMatch(path, cookiePath)) {
+              if (pathMatch(path10, cookiePath)) {
                 const pathIndex = domainIndex[cookiePath];
                 for (const key in pathIndex) {
                   results.push(pathIndex[key]);
@@ -24244,16 +24244,16 @@ var require_memstore = __commonJS({
       updateCookie(oldCookie, newCookie, cb) {
         this.putCookie(newCookie, cb);
       }
-      removeCookie(domain, path, key, cb) {
-        if (this.idx[domain] && this.idx[domain][path] && this.idx[domain][path][key]) {
-          delete this.idx[domain][path][key];
+      removeCookie(domain, path10, key, cb) {
+        if (this.idx[domain] && this.idx[domain][path10] && this.idx[domain][path10][key]) {
+          delete this.idx[domain][path10][key];
         }
         cb(null);
       }
-      removeCookies(domain, path, cb) {
+      removeCookies(domain, path10, cb) {
         if (this.idx[domain]) {
-          if (path) {
-            delete this.idx[domain][path];
+          if (path10) {
+            delete this.idx[domain][path10];
           } else {
             delete this.idx[domain];
           }
@@ -24270,11 +24270,11 @@ var require_memstore = __commonJS({
         const domains = Object.keys(idx);
         domains.forEach((domain) => {
           const paths = Object.keys(idx[domain]);
-          paths.forEach((path) => {
-            const keys = Object.keys(idx[domain][path]);
+          paths.forEach((path10) => {
+            const keys = Object.keys(idx[domain][path10]);
             keys.forEach((key) => {
               if (key !== null) {
-                cookies.push(idx[domain][path][key]);
+                cookies.push(idx[domain][path10][key]);
               }
             });
           });
@@ -24320,8 +24320,8 @@ var require_memstore = __commonJS({
       const indent = "  ";
       let result = `${indent}'${domainName}': {
 `;
-      Object.keys(domainValue).forEach((path, i, paths) => {
-        result += formatPath(path, domainValue[path]);
+      Object.keys(domainValue).forEach((path10, i, paths) => {
+        result += formatPath(path10, domainValue[path10]);
         if (i < paths.length - 1) {
           result += ",";
         }
@@ -24624,18 +24624,18 @@ var require_cookie = __commonJS({
       }
       return true;
     }
-    function defaultPath(path) {
-      if (!path || path.substr(0, 1) !== "/") {
+    function defaultPath(path10) {
+      if (!path10 || path10.substr(0, 1) !== "/") {
         return "/";
       }
-      if (path === "/") {
-        return path;
+      if (path10 === "/") {
+        return path10;
       }
-      const rightSlash = path.lastIndexOf("/");
+      const rightSlash = path10.lastIndexOf("/");
       if (rightSlash === 0) {
         return "/";
       }
-      return path.slice(0, rightSlash);
+      return path10.slice(0, rightSlash);
     }
     function trimTerminator(str) {
       if (validators.isEmptyString(str))
@@ -24844,19 +24844,19 @@ var require_cookie = __commonJS({
       cmp = a.creationIndex - b.creationIndex;
       return cmp;
     }
-    function permutePath(path) {
-      validators.validate(validators.isString(path));
-      if (path === "/") {
+    function permutePath(path10) {
+      validators.validate(validators.isString(path10));
+      if (path10 === "/") {
         return ["/"];
       }
-      const permutations = [path];
-      while (path.length > 1) {
-        const lindex = path.lastIndexOf("/");
+      const permutations = [path10];
+      while (path10.length > 1) {
+        const lindex = path10.lastIndexOf("/");
         if (lindex === 0) {
           break;
         }
-        path = path.substr(0, lindex);
-        permutations.push(path);
+        path10 = path10.substr(0, lindex);
+        permutations.push(path10);
       }
       permutations.push("/");
       return permutations;
@@ -25254,7 +25254,7 @@ var require_cookie = __commonJS({
         validators.validate(validators.isObject(options), cb, options);
         validators.validate(validators.isFunction(cb), cb);
         const host = canonicalDomain(context.hostname);
-        const path = context.pathname || "/";
+        const path10 = context.pathname || "/";
         let secure = options.secure;
         if (secure == null && context.protocol && (context.protocol == "https:" || context.protocol == "wss:")) {
           secure = true;
@@ -25285,7 +25285,7 @@ var require_cookie = __commonJS({
               return false;
             }
           }
-          if (!allPaths && !pathMatch(path, c.path)) {
+          if (!allPaths && !pathMatch(path10, c.path)) {
             return false;
           }
           if (c.secure && !secure) {
@@ -25309,7 +25309,7 @@ var require_cookie = __commonJS({
         }
         store.findCookies(
           host,
-          allPaths ? null : path,
+          allPaths ? null : path10,
           this.allowSpecialUseDomain,
           (err, cookies) => {
             if (err) {
@@ -34428,11 +34428,11 @@ var require_mime_types = __commonJS({
       }
       return exts[0];
     }
-    function lookup(path) {
-      if (!path || typeof path !== "string") {
+    function lookup(path10) {
+      if (!path10 || typeof path10 !== "string") {
         return false;
       }
-      var extension2 = extname("x." + path).toLowerCase().substr(1);
+      var extension2 = extname("x." + path10).toLowerCase().substr(1);
       if (!extension2) {
         return false;
       }
@@ -34689,11 +34689,11 @@ var require_form_data = __commonJS({
   "node_modules/@azure/core-http/node_modules/form-data/lib/form_data.js"(exports, module2) {
     var CombinedStream = require_combined_stream();
     var util = require("util");
-    var path = require("path");
+    var path10 = require("path");
     var http = require("http");
     var https = require("https");
     var parseUrl = require("url").parse;
-    var fs2 = require("fs");
+    var fs5 = require("fs");
     var Stream = require("stream").Stream;
     var mime = require_mime_types();
     var asynckit = require_asynckit();
@@ -34758,7 +34758,7 @@ var require_form_data = __commonJS({
         if (value.end != void 0 && value.end != Infinity && value.start != void 0) {
           callback(null, value.end + 1 - (value.start ? value.start : 0));
         } else {
-          fs2.stat(value.path, function(err, stat) {
+          fs5.stat(value.path, function(err, stat) {
             var fileSize;
             if (err) {
               callback(err);
@@ -34814,11 +34814,11 @@ var require_form_data = __commonJS({
     FormData.prototype._getContentDisposition = function(value, options) {
       var filename, contentDisposition;
       if (typeof options.filepath === "string") {
-        filename = path.normalize(options.filepath).replace(/\\/g, "/");
+        filename = path10.normalize(options.filepath).replace(/\\/g, "/");
       } else if (options.filename || value.name || value.path) {
-        filename = path.basename(options.filename || value.name || value.path);
+        filename = path10.basename(options.filename || value.name || value.path);
       } else if (value.readable && value.hasOwnProperty("httpVersion")) {
-        filename = path.basename(value.client._httpMessage.path || "");
+        filename = path10.basename(value.client._httpMessage.path || "");
       }
       if (filename) {
         contentDisposition = 'filename="' + filename + '"';
@@ -35734,14 +35734,14 @@ var require_url_state_machine = __commonJS({
       return url.replace(/\u0009|\u000A|\u000D/g, "");
     }
     function shortenPath(url) {
-      const path = url.path;
-      if (path.length === 0) {
+      const path10 = url.path;
+      if (path10.length === 0) {
         return;
       }
-      if (url.scheme === "file" && path.length === 1 && isNormalizedWindowsDriveLetter(path[0])) {
+      if (url.scheme === "file" && path10.length === 1 && isNormalizedWindowsDriveLetter(path10[0])) {
         return;
       }
-      path.pop();
+      path10.pop();
     }
     function includesCredentials(url) {
       return url.username !== "" || url.password !== "";
@@ -36576,9 +36576,9 @@ var require_URL = __commonJS({
   "node_modules/whatwg-url/lib/URL.js"(exports, module2) {
     "use strict";
     var conversions = require_lib3();
-    var utils = require_utils2();
+    var utils2 = require_utils2();
     var Impl = require_URL_impl();
-    var impl = utils.implSymbol;
+    var impl = utils2.implSymbol;
     function URL2(url) {
       if (!this || this[impl] || !(this instanceof URL2)) {
         throw new TypeError("Failed to construct 'URL': Please use the 'new' operator, this DOM object constructor cannot be called as a function.");
@@ -36743,7 +36743,7 @@ var require_URL = __commonJS({
           privateData = {};
         privateData.wrapper = obj;
         obj[impl] = new Impl.implementation(constructorArgs, privateData);
-        obj[impl][utils.wrapperSymbol] = obj;
+        obj[impl][utils2.wrapperSymbol] = obj;
       },
       interface: URL2,
       expose: {
@@ -39488,7 +39488,7 @@ var require_dist8 = __commonJS({
     var coreUtil = require_dist4();
     var logger$1 = require_dist5();
     var coreAuth = require_dist6();
-    var os2 = require("os");
+    var os6 = require("os");
     var http = require("http");
     var https = require("https");
     var tough = require_cookie();
@@ -39522,7 +39522,7 @@ var require_dist8 = __commonJS({
       return Object.freeze(n);
     }
     var xml2js__namespace = /* @__PURE__ */ _interopNamespace(xml2js);
-    var os__namespace = /* @__PURE__ */ _interopNamespace(os2);
+    var os__namespace = /* @__PURE__ */ _interopNamespace(os6);
     var http__namespace = /* @__PURE__ */ _interopNamespace(http);
     var https__namespace = /* @__PURE__ */ _interopNamespace(https);
     var tough__namespace = /* @__PURE__ */ _interopNamespace(tough);
@@ -40776,32 +40776,32 @@ var require_dist8 = __commonJS({
       getPort() {
         return this._port;
       }
-      setPath(path) {
-        if (!path) {
+      setPath(path10) {
+        if (!path10) {
           this._path = void 0;
         } else {
-          const schemeIndex = path.indexOf("://");
+          const schemeIndex = path10.indexOf("://");
           if (schemeIndex !== -1) {
-            const schemeStart = path.lastIndexOf("/", schemeIndex);
-            this.set(schemeStart === -1 ? path : path.substr(schemeStart + 1), "SCHEME");
+            const schemeStart = path10.lastIndexOf("/", schemeIndex);
+            this.set(schemeStart === -1 ? path10 : path10.substr(schemeStart + 1), "SCHEME");
           } else {
-            this.set(path, "PATH");
+            this.set(path10, "PATH");
           }
         }
       }
-      appendPath(path) {
-        if (path) {
+      appendPath(path10) {
+        if (path10) {
           let currentPath = this.getPath();
           if (currentPath) {
             if (!currentPath.endsWith("/")) {
               currentPath += "/";
             }
-            if (path.startsWith("/")) {
-              path = path.substring(1);
+            if (path10.startsWith("/")) {
+              path10 = path10.substring(1);
             }
-            path = currentPath + path;
+            path10 = currentPath + path10;
           }
-          this.set(path, "PATH");
+          this.set(path10, "PATH");
         }
       }
       getPath() {
@@ -41071,8 +41071,8 @@ var require_dist8 = __commonJS({
       }
     }
     function nextPath(tokenizer) {
-      const path = readUntilCharacter(tokenizer, "?");
-      tokenizer._currentToken = URLToken.path(path);
+      const path10 = readUntilCharacter(tokenizer, "?");
+      tokenizer._currentToken = URLToken.path(path10);
       if (!hasCurrentCharacter(tokenizer)) {
         tokenizer._currentState = "DONE";
       } else {
@@ -44215,13 +44215,13 @@ var require_dist11 = __commonJS({
     var coreTracing = require_dist7();
     var logger$1 = require_dist5();
     var abortController = require_dist3();
-    var os2 = require("os");
+    var os6 = require("os");
     var crypto = require("crypto");
     var stream = require("stream");
     require_dist9();
     var coreLro = require_dist10();
     var events = require("events");
-    var fs2 = require("fs");
+    var fs5 = require("fs");
     var util = require("util");
     function _interopNamespace(e) {
       if (e && e.__esModule)
@@ -44244,8 +44244,8 @@ var require_dist11 = __commonJS({
       return Object.freeze(n);
     }
     var coreHttp__namespace = /* @__PURE__ */ _interopNamespace(coreHttp);
-    var os__namespace = /* @__PURE__ */ _interopNamespace(os2);
-    var fs__namespace = /* @__PURE__ */ _interopNamespace(fs2);
+    var os__namespace = /* @__PURE__ */ _interopNamespace(os6);
+    var fs__namespace = /* @__PURE__ */ _interopNamespace(fs5);
     var util__namespace = /* @__PURE__ */ _interopNamespace(util);
     var BlobServiceProperties = {
       serializedName: "BlobServiceProperties",
@@ -57208,10 +57208,10 @@ var require_dist11 = __commonJS({
     ];
     function escapeURLPath(url2) {
       const urlParsed = coreHttp.URLBuilder.parse(url2);
-      let path = urlParsed.getPath();
-      path = path || "/";
-      path = escape(path);
-      urlParsed.setPath(path);
+      let path10 = urlParsed.getPath();
+      path10 = path10 || "/";
+      path10 = escape(path10);
+      urlParsed.setPath(path10);
       return urlParsed.toString();
     }
     function getProxyUriFromDevConnString(connectionString) {
@@ -57290,9 +57290,9 @@ var require_dist11 = __commonJS({
     }
     function appendToURLPath(url2, name) {
       const urlParsed = coreHttp.URLBuilder.parse(url2);
-      let path = urlParsed.getPath();
-      path = path ? path.endsWith("/") ? `${path}${name}` : `${path}/${name}` : name;
-      urlParsed.setPath(path);
+      let path10 = urlParsed.getPath();
+      path10 = path10 ? path10.endsWith("/") ? `${path10}${name}` : `${path10}/${name}` : name;
+      urlParsed.setPath(path10);
       return urlParsed.toString();
     }
     function setURLParameter(url2, name, value) {
@@ -58388,9 +58388,9 @@ var require_dist11 = __commonJS({
         return canonicalizedHeadersStringToSign;
       }
       getCanonicalizedResourceString(request) {
-        const path = getURLPath(request.url) || "/";
+        const path10 = getURLPath(request.url) || "/";
         let canonicalizedResourceString = "";
-        canonicalizedResourceString += `/${this.factory.accountName}${path}`;
+        canonicalizedResourceString += `/${this.factory.accountName}${path10}`;
         const queries = getURLQueries(request.url);
         const lowercaseQueries = {};
         if (queries) {
@@ -62631,8 +62631,8 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
         if (this.operationCount >= BATCH_MAX_REQUEST) {
           throw new RangeError(`Cannot exceed ${BATCH_MAX_REQUEST} sub requests in a single batch`);
         }
-        const path = getURLPath(subRequest.url);
-        if (!path || path === "") {
+        const path10 = getURLPath(subRequest.url);
+        if (!path10 || path10 === "") {
           throw new RangeError(`Invalid url for sub request: '${subRequest.url}'`);
         }
       }
@@ -62706,8 +62706,8 @@ ${key}:${decodeURIComponent(lowercaseQueries[key])}`;
           pipeline = newPipeline(credentialOrPipeline, options);
         }
         const storageClientContext = new StorageClientContext(url2, pipeline.toServiceClientOptions());
-        const path = getURLPath(url2);
-        if (path && path !== "/") {
+        const path10 = getURLPath(url2);
+        if (path10 && path10 !== "/") {
           this.serviceOrContainerContext = new Container(storageClientContext);
         } else {
           this.serviceOrContainerContext = new Service(storageClientContext);
@@ -64343,10 +64343,10 @@ var require_downloadUtils = __commonJS({
     var http_client_1 = require_lib();
     var storage_blob_1 = require_dist11();
     var buffer = __importStar(require("buffer"));
-    var fs2 = __importStar(require("fs"));
+    var fs5 = __importStar(require("fs"));
     var stream = __importStar(require("stream"));
     var util = __importStar(require("util"));
-    var utils = __importStar(require_cacheUtils());
+    var utils2 = __importStar(require_cacheUtils());
     var constants_1 = require_constants();
     var requestUtils_1 = require_requestUtils();
     var abort_controller_1 = require_dist3();
@@ -64420,7 +64420,7 @@ var require_downloadUtils = __commonJS({
     exports.DownloadProgress = DownloadProgress;
     function downloadCacheHttpClient(archiveLocation, archivePath) {
       return __awaiter(this, void 0, void 0, function* () {
-        const writeStream = fs2.createWriteStream(archivePath);
+        const writeStream = fs5.createWriteStream(archivePath);
         const httpClient = new http_client_1.HttpClient("actions/cache");
         const downloadResponse = yield requestUtils_1.retryHttpClientResponse("downloadCache", () => __awaiter(this, void 0, void 0, function* () {
           return httpClient.get(archiveLocation);
@@ -64433,7 +64433,7 @@ var require_downloadUtils = __commonJS({
         const contentLengthHeader = downloadResponse.message.headers["content-length"];
         if (contentLengthHeader) {
           const expectedLength = parseInt(contentLengthHeader);
-          const actualLength = utils.getArchiveFileSizeInBytes(archivePath);
+          const actualLength = utils2.getArchiveFileSizeInBytes(archivePath);
           if (actualLength !== expectedLength) {
             throw new Error(`Incomplete download. Expected file size: ${expectedLength}, actual file size: ${actualLength}`);
           }
@@ -64459,7 +64459,7 @@ var require_downloadUtils = __commonJS({
         } else {
           const maxSegmentSize = Math.min(2147483647, buffer.constants.MAX_LENGTH);
           const downloadProgress = new DownloadProgress(contentLength);
-          const fd = fs2.openSync(archivePath, "w");
+          const fd = fs5.openSync(archivePath, "w");
           try {
             downloadProgress.startDisplayTimer();
             const controller = new abort_controller_1.AbortController();
@@ -64477,12 +64477,12 @@ var require_downloadUtils = __commonJS({
                 controller.abort();
                 throw new Error("Aborting cache download as the download time exceeded the timeout.");
               } else if (Buffer.isBuffer(result)) {
-                fs2.writeFileSync(fd, result);
+                fs5.writeFileSync(fd, result);
               }
             }
           } finally {
             downloadProgress.stopDisplayTimer();
-            fs2.closeSync(fd);
+            fs5.closeSync(fd);
           }
         }
       });
@@ -64621,9 +64621,9 @@ var require_cacheHttpClient = __commonJS({
     var http_client_1 = require_lib();
     var auth_1 = require_auth();
     var crypto = __importStar(require("crypto"));
-    var fs2 = __importStar(require("fs"));
+    var fs5 = __importStar(require("fs"));
     var url_1 = require("url");
-    var utils = __importStar(require_cacheUtils());
+    var utils2 = __importStar(require_cacheUtils());
     var constants_1 = require_constants();
     var downloadUtils_1 = require_downloadUtils();
     var options_1 = require_options();
@@ -64734,12 +64734,12 @@ var require_cacheHttpClient = __commonJS({
     }
     function uploadFile(httpClient, cacheId, archivePath, options) {
       return __awaiter(this, void 0, void 0, function* () {
-        const fileSize = utils.getArchiveFileSizeInBytes(archivePath);
+        const fileSize = utils2.getArchiveFileSizeInBytes(archivePath);
         const resourceUrl = getCacheApiUrl(`caches/${cacheId.toString()}`);
-        const fd = fs2.openSync(archivePath, "r");
+        const fd = fs5.openSync(archivePath, "r");
         const uploadOptions = options_1.getUploadOptions(options);
-        const concurrency = utils.assertDefined("uploadConcurrency", uploadOptions.uploadConcurrency);
-        const maxChunkSize = utils.assertDefined("uploadChunkSize", uploadOptions.uploadChunkSize);
+        const concurrency = utils2.assertDefined("uploadConcurrency", uploadOptions.uploadConcurrency);
+        const maxChunkSize = utils2.assertDefined("uploadChunkSize", uploadOptions.uploadChunkSize);
         const parallelUploads = [...new Array(concurrency).keys()];
         core15.debug("Awaiting all uploads");
         let offset = 0;
@@ -64750,7 +64750,7 @@ var require_cacheHttpClient = __commonJS({
               const start = offset;
               const end = offset + chunkSize - 1;
               offset += maxChunkSize;
-              yield uploadChunk(httpClient, resourceUrl, () => fs2.createReadStream(archivePath, {
+              yield uploadChunk(httpClient, resourceUrl, () => fs5.createReadStream(archivePath, {
                 fd,
                 start,
                 end,
@@ -64761,7 +64761,7 @@ var require_cacheHttpClient = __commonJS({
             }
           })));
         } finally {
-          fs2.closeSync(fd);
+          fs5.closeSync(fd);
         }
         return;
       });
@@ -64780,7 +64780,7 @@ var require_cacheHttpClient = __commonJS({
         core15.debug("Upload cache");
         yield uploadFile(httpClient, cacheId, archivePath, options);
         core15.debug("Commiting cache");
-        const cacheSize = utils.getArchiveFileSizeInBytes(archivePath);
+        const cacheSize = utils2.getArchiveFileSizeInBytes(archivePath);
         core15.info(`Cache Size: ~${Math.round(cacheSize / (1024 * 1024))} MB (${cacheSize} B)`);
         const commitCacheResponse = yield commitCache(httpClient, cacheId, cacheSize);
         if (!requestUtils_1.isSuccessStatusCode(commitCacheResponse.statusCode)) {
@@ -64840,8 +64840,8 @@ var require_tar = __commonJS({
     var exec_1 = require_exec();
     var io4 = __importStar(require_io());
     var fs_1 = require("fs");
-    var path = __importStar(require("path"));
-    var utils = __importStar(require_cacheUtils());
+    var path10 = __importStar(require("path"));
+    var utils2 = __importStar(require_cacheUtils());
     var constants_1 = require_constants();
     var IS_WINDOWS3 = process.platform === "win32";
     function getTarPath(args, compressionMethod) {
@@ -64853,7 +64853,7 @@ var require_tar = __commonJS({
               args.push("--force-local");
             } else if (fs_1.existsSync(systemTar)) {
               return systemTar;
-            } else if (yield utils.isGnuTarInstalled()) {
+            } else if (yield utils2.isGnuTarInstalled()) {
               args.push("--force-local");
             }
             break;
@@ -64903,7 +64903,7 @@ var require_tar = __commonJS({
         const args = [
           ...getCompressionProgram(compressionMethod),
           "-tf",
-          archivePath.replace(new RegExp(`\\${path.sep}`, "g"), "/"),
+          archivePath.replace(new RegExp(`\\${path10.sep}`, "g"), "/"),
           "-P"
         ];
         yield execTar(args, compressionMethod);
@@ -64917,10 +64917,10 @@ var require_tar = __commonJS({
         const args = [
           ...getCompressionProgram(compressionMethod),
           "-xf",
-          archivePath.replace(new RegExp(`\\${path.sep}`, "g"), "/"),
+          archivePath.replace(new RegExp(`\\${path10.sep}`, "g"), "/"),
           "-P",
           "-C",
-          workingDirectory.replace(new RegExp(`\\${path.sep}`, "g"), "/")
+          workingDirectory.replace(new RegExp(`\\${path10.sep}`, "g"), "/")
         ];
         yield execTar(args, compressionMethod);
       });
@@ -64929,8 +64929,8 @@ var require_tar = __commonJS({
     function createTar(archiveFolder, sourceDirectories, compressionMethod) {
       return __awaiter(this, void 0, void 0, function* () {
         const manifestFilename = "manifest.txt";
-        const cacheFileName = utils.getCacheFileName(compressionMethod);
-        fs_1.writeFileSync(path.join(archiveFolder, manifestFilename), sourceDirectories.join("\n"));
+        const cacheFileName = utils2.getCacheFileName(compressionMethod);
+        fs_1.writeFileSync(path10.join(archiveFolder, manifestFilename), sourceDirectories.join("\n"));
         const workingDirectory = getWorkingDirectory();
         function getCompressionProgram2() {
           switch (compressionMethod) {
@@ -64949,12 +64949,12 @@ var require_tar = __commonJS({
           "--posix",
           ...getCompressionProgram2(),
           "-cf",
-          cacheFileName.replace(new RegExp(`\\${path.sep}`, "g"), "/"),
+          cacheFileName.replace(new RegExp(`\\${path10.sep}`, "g"), "/"),
           "--exclude",
-          cacheFileName.replace(new RegExp(`\\${path.sep}`, "g"), "/"),
+          cacheFileName.replace(new RegExp(`\\${path10.sep}`, "g"), "/"),
           "-P",
           "-C",
-          workingDirectory.replace(new RegExp(`\\${path.sep}`, "g"), "/"),
+          workingDirectory.replace(new RegExp(`\\${path10.sep}`, "g"), "/"),
           "--files-from",
           manifestFilename
         ];
@@ -65010,8 +65010,8 @@ var require_cache = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     var core15 = __importStar(require_core());
-    var path = __importStar(require("path"));
-    var utils = __importStar(require_cacheUtils());
+    var path10 = __importStar(require("path"));
+    var utils2 = __importStar(require_cacheUtils());
     var cacheHttpClient = __importStar(require_cacheHttpClient());
     var tar_1 = require_tar();
     var ValidationError = class extends Error {
@@ -65061,7 +65061,7 @@ var require_cache = __commonJS({
         for (const key of keys) {
           checkKey(key);
         }
-        const compressionMethod = yield utils.getCompressionMethod();
+        const compressionMethod = yield utils2.getCompressionMethod();
         let archivePath = "";
         try {
           const cacheEntry = yield cacheHttpClient.getCacheEntry(keys, paths, {
@@ -65070,13 +65070,13 @@ var require_cache = __commonJS({
           if (!(cacheEntry === null || cacheEntry === void 0 ? void 0 : cacheEntry.archiveLocation)) {
             return void 0;
           }
-          archivePath = path.join(yield utils.createTempDirectory(), utils.getCacheFileName(compressionMethod));
+          archivePath = path10.join(yield utils2.createTempDirectory(), utils2.getCacheFileName(compressionMethod));
           core15.debug(`Archive Path: ${archivePath}`);
           yield cacheHttpClient.downloadCache(cacheEntry.archiveLocation, archivePath, options);
           if (core15.isDebug()) {
             yield tar_1.listTar(archivePath, compressionMethod);
           }
-          const archiveFileSize = utils.getArchiveFileSizeInBytes(archivePath);
+          const archiveFileSize = utils2.getArchiveFileSizeInBytes(archivePath);
           core15.info(`Cache Size: ~${Math.round(archiveFileSize / (1024 * 1024))} MB (${archiveFileSize} B)`);
           yield tar_1.extractTar(archivePath, compressionMethod);
           core15.info("Cache restored successfully");
@@ -65090,7 +65090,7 @@ var require_cache = __commonJS({
           }
         } finally {
           try {
-            yield utils.unlinkFile(archivePath);
+            yield utils2.unlinkFile(archivePath);
           } catch (error2) {
             core15.debug(`Failed to delete archive: ${error2}`);
           }
@@ -65104,16 +65104,16 @@ var require_cache = __commonJS({
       return __awaiter(this, void 0, void 0, function* () {
         checkPaths(paths);
         checkKey(key);
-        const compressionMethod = yield utils.getCompressionMethod();
+        const compressionMethod = yield utils2.getCompressionMethod();
         let cacheId = -1;
-        const cachePaths = yield utils.resolvePaths(paths);
+        const cachePaths = yield utils2.resolvePaths(paths);
         core15.debug("Cache Paths:");
         core15.debug(`${JSON.stringify(cachePaths)}`);
         if (cachePaths.length === 0) {
           throw new Error(`Path Validation Error: Path(s) specified in the action for caching do(es) not exist, hence no cache is being saved.`);
         }
-        const archiveFolder = yield utils.createTempDirectory();
-        const archivePath = path.join(archiveFolder, utils.getCacheFileName(compressionMethod));
+        const archiveFolder = yield utils2.createTempDirectory();
+        const archivePath = path10.join(archiveFolder, utils2.getCacheFileName(compressionMethod));
         core15.debug(`Archive Path: ${archivePath}`);
         try {
           yield tar_1.createTar(archiveFolder, cachePaths, compressionMethod);
@@ -65121,9 +65121,9 @@ var require_cache = __commonJS({
             yield tar_1.listTar(archivePath, compressionMethod);
           }
           const fileSizeLimit = 10 * 1024 * 1024 * 1024;
-          const archiveFileSize = utils.getArchiveFileSizeInBytes(archivePath);
+          const archiveFileSize = utils2.getArchiveFileSizeInBytes(archivePath);
           core15.debug(`File Size: ${archiveFileSize}`);
-          if (archiveFileSize > fileSizeLimit && !utils.isGhes()) {
+          if (archiveFileSize > fileSizeLimit && !utils2.isGhes()) {
             throw new Error(`Cache size of ~${Math.round(archiveFileSize / (1024 * 1024))} MB (${archiveFileSize} B) is over the 10GB limit, not saving cache.`);
           }
           core15.debug("Reserving Cache");
@@ -65151,7 +65151,7 @@ var require_cache = __commonJS({
           }
         } finally {
           try {
-            yield utils.unlinkFile(archivePath);
+            yield utils2.unlinkFile(archivePath);
           } catch (error2) {
             core15.debug(`Failed to delete archive: ${error2}`);
           }
@@ -65164,11 +65164,45 @@ var require_cache = __commonJS({
 });
 
 // node_modules/setup-python/src/cache-distributions/cache-distributor.ts
-var cache, core;
+var cache, core, CacheDistributor, cache_distributor_default;
 var init_cache_distributor = __esm({
   "node_modules/setup-python/src/cache-distributions/cache-distributor.ts"() {
     cache = __toESM(require_cache());
     core = __toESM(require_core());
+    CacheDistributor = class {
+      constructor(packageManager, cacheDependencyPath) {
+        this.packageManager = packageManager;
+        this.cacheDependencyPath = cacheDependencyPath;
+        this.CACHE_KEY_PREFIX = "setup-python";
+      }
+      async restoreCache() {
+        const { primaryKey, restoreKey } = await this.computeKeys();
+        if (primaryKey.endsWith("-")) {
+          throw new Error(
+            `No file in ${process.cwd()} matched to [${this.cacheDependencyPath.split("\n").join(",")}], make sure you have checked out the target repository`
+          );
+        }
+        const cachePath = await this.getCacheGlobalDirectories();
+        core.saveState("cache-paths" /* CACHE_PATHS */, cachePath);
+        core.saveState("cache-primary-key" /* STATE_CACHE_PRIMARY_KEY */, primaryKey);
+        const matchedKey = await cache.restoreCache(
+          cachePath,
+          primaryKey,
+          restoreKey
+        );
+        this.handleMatchResult(matchedKey, primaryKey);
+      }
+      handleMatchResult(matchedKey, primaryKey) {
+        if (matchedKey) {
+          core.saveState("cache-matched-key" /* CACHE_MATCHED_KEY */, matchedKey);
+          core.info(`Cache restored from key: ${matchedKey}`);
+        } else {
+          core.info(`${this.packageManager} cache is not found`);
+        }
+        core.setOutput("cache-hit", matchedKey === primaryKey);
+      }
+    };
+    cache_distributor_default = CacheDistributor;
   }
 });
 
@@ -67529,16 +67563,94 @@ var require_semver4 = __commonJS({
 });
 
 // node_modules/setup-python/src/utils.ts
-var cache3, core4, semver, exec7, IS_WINDOWS2, IS_LINUX2, IS_MAC2;
+function createSymlinkInFolder(folderPath, sourceName, targetName, setExecutable = false) {
+  const sourcePath = path.join(folderPath, sourceName);
+  const targetPath = path.join(folderPath, targetName);
+  if (import_fs.default.existsSync(targetPath)) {
+    return;
+  }
+  import_fs.default.symlinkSync(sourcePath, targetPath);
+  if (!IS_WINDOWS2 && setExecutable) {
+    import_fs.default.chmodSync(targetPath, "755");
+  }
+}
+function validateVersion(version) {
+  return isNightlyKeyword(version) || Boolean(semver.validRange(version));
+}
+function isNightlyKeyword(pypyVersion) {
+  return pypyVersion === "nightly";
+}
+function getPyPyVersionFromPath(installDir) {
+  return path.basename(path.dirname(installDir));
+}
+function readExactPyPyVersionFile(installDir) {
+  let pypyVersion = "";
+  let fileVersion = path.join(installDir, PYPY_VERSION_FILE);
+  if (import_fs.default.existsSync(fileVersion)) {
+    pypyVersion = import_fs.default.readFileSync(fileVersion).toString();
+  }
+  return pypyVersion;
+}
+function writeExactPyPyVersionFile(installDir, resolvedPyPyVersion) {
+  const pypyFilePath = path.join(installDir, PYPY_VERSION_FILE);
+  import_fs.default.writeFileSync(pypyFilePath, resolvedPyPyVersion);
+}
+function validatePythonVersionFormatForPyPy(version) {
+  const re = /^\d+\.\d+$/;
+  return re.test(version);
+}
+function isGhes() {
+  const ghUrl = new URL(
+    process.env["GITHUB_SERVER_URL"] || "https://github.com"
+  );
+  return ghUrl.hostname.toUpperCase() !== "GITHUB.COM";
+}
+function isCacheFeatureAvailable() {
+  if (!cache3.isFeatureAvailable()) {
+    if (isGhes()) {
+      throw new Error(
+        "Caching is only supported on GHES version >= 3.5. If you are on a version >= 3.5, please check with your GHES admin if the Actions cache service is enabled or not."
+      );
+    } else {
+      core4.warning(
+        "The runner was not able to contact the cache service. Caching will be skipped"
+      );
+    }
+    return false;
+  }
+  return true;
+}
+async function getLinuxOSReleaseInfo() {
+  const { stdout, stderr, exitCode } = await exec7.getExecOutput(
+    "lsb_release",
+    ["-i", "-r", "-s"],
+    {
+      silent: true
+    }
+  );
+  const [osRelease, osVersion] = stdout.trim().split("\n");
+  core4.debug(`OS Release: ${osRelease}, Version: ${osVersion}`);
+  return `${osVersion}-${osRelease}`;
+}
+function logWarning(message) {
+  const warningPrefix = "[warning]";
+  core4.info(`${warningPrefix}${message}`);
+}
+var cache3, core4, import_fs, path, semver, exec7, IS_WINDOWS2, IS_LINUX2, IS_MAC2, WINDOWS_ARCHS, WINDOWS_PLATFORMS, PYPY_VERSION_FILE;
 var init_utils = __esm({
   "node_modules/setup-python/src/utils.ts"() {
     cache3 = __toESM(require_cache());
     core4 = __toESM(require_core());
+    import_fs = __toESM(require("fs"));
+    path = __toESM(require("path"));
     semver = __toESM(require_semver4());
     exec7 = __toESM(require_exec());
     IS_WINDOWS2 = process.platform === "win32";
     IS_LINUX2 = process.platform === "linux";
     IS_MAC2 = process.platform === "darwin";
+    WINDOWS_ARCHS = ["x86", "x64"];
+    WINDOWS_PLATFORMS = ["win32", "win64"];
+    PYPY_VERSION_FILE = "PYPY_VERSION";
   }
 });
 
@@ -67605,12 +67717,12 @@ var require_manifest = __commonJS({
     exports._readLinuxVersionFile = exports._getOsVersion = exports._findMatch = void 0;
     var semver5 = __importStar(require_semver());
     var core_1 = require_core();
-    var os2 = require("os");
+    var os6 = require("os");
     var cp = require("child_process");
-    var fs2 = require("fs");
+    var fs5 = require("fs");
     function _findMatch(versionSpec, stable, candidates, archFilter) {
       return __awaiter(this, void 0, void 0, function* () {
-        const platFilter = os2.platform();
+        const platFilter = os6.platform();
         let result;
         let match;
         let file;
@@ -67647,7 +67759,7 @@ var require_manifest = __commonJS({
     }
     exports._findMatch = _findMatch;
     function _getOsVersion() {
-      const plat = os2.platform();
+      const plat = os6.platform();
       let version = "";
       if (plat === "darwin") {
         version = cp.execSync("sw_vers -productVersion").toString();
@@ -67671,10 +67783,10 @@ var require_manifest = __commonJS({
       const lsbReleaseFile = "/etc/lsb-release";
       const osReleaseFile = "/etc/os-release";
       let contents = "";
-      if (fs2.existsSync(lsbReleaseFile)) {
-        contents = fs2.readFileSync(lsbReleaseFile).toString();
-      } else if (fs2.existsSync(osReleaseFile)) {
-        contents = fs2.readFileSync(osReleaseFile).toString();
+      if (fs5.existsSync(lsbReleaseFile)) {
+        contents = fs5.readFileSync(lsbReleaseFile).toString();
+      } else if (fs5.existsSync(osReleaseFile)) {
+        contents = fs5.readFileSync(osReleaseFile).toString();
       }
       return contents;
     }
@@ -68373,10 +68485,10 @@ var require_tool_cache = __commonJS({
     exports.evaluateVersions = exports.isExplicitVersion = exports.findFromManifest = exports.getManifestFromRepo = exports.findAllVersions = exports.find = exports.cacheFile = exports.cacheDir = exports.extractZip = exports.extractXar = exports.extractTar = exports.extract7z = exports.downloadTool = exports.HTTPError = void 0;
     var core15 = __importStar(require_core());
     var io4 = __importStar(require_io());
-    var fs2 = __importStar(require("fs"));
+    var fs5 = __importStar(require("fs"));
     var mm = __importStar(require_manifest());
-    var os2 = __importStar(require("os"));
-    var path = __importStar(require("path"));
+    var os6 = __importStar(require("os"));
+    var path10 = __importStar(require("path"));
     var httpm2 = __importStar(require_http_client());
     var semver5 = __importStar(require_semver());
     var stream = __importStar(require("stream"));
@@ -68398,8 +68510,8 @@ var require_tool_cache = __commonJS({
     var userAgent = "actions/tool-cache";
     function downloadTool3(url, dest, auth, headers) {
       return __awaiter(this, void 0, void 0, function* () {
-        dest = dest || path.join(_getTempDirectory(), v4_1.default());
-        yield io4.mkdirP(path.dirname(dest));
+        dest = dest || path10.join(_getTempDirectory(), v4_1.default());
+        yield io4.mkdirP(path10.dirname(dest));
         core15.debug(`Downloading ${url}`);
         core15.debug(`Destination ${dest}`);
         const maxAttempts = 3;
@@ -68421,7 +68533,7 @@ var require_tool_cache = __commonJS({
     exports.downloadTool = downloadTool3;
     function downloadToolAttempt(url, dest, auth, headers) {
       return __awaiter(this, void 0, void 0, function* () {
-        if (fs2.existsSync(dest)) {
+        if (fs5.existsSync(dest)) {
           throw new Error(`Destination file path ${dest} already exists`);
         }
         const http = new httpm2.HttpClient(userAgent, [], {
@@ -68445,7 +68557,7 @@ var require_tool_cache = __commonJS({
         const readStream = responseMessageFactory();
         let succeeded = false;
         try {
-          yield pipeline(readStream, fs2.createWriteStream(dest));
+          yield pipeline(readStream, fs5.createWriteStream(dest));
           core15.debug("download complete");
           succeeded = true;
           return dest;
@@ -68486,7 +68598,7 @@ var require_tool_cache = __commonJS({
             process.chdir(originalCwd);
           }
         } else {
-          const escapedScript = path.join(__dirname, "..", "scripts", "Invoke-7zdec.ps1").replace(/'/g, "''").replace(/"|\n|\r/g, "");
+          const escapedScript = path10.join(__dirname, "..", "scripts", "Invoke-7zdec.ps1").replace(/'/g, "''").replace(/"|\n|\r/g, "");
           const escapedFile = file.replace(/'/g, "''").replace(/"|\n|\r/g, "");
           const escapedTarget = dest.replace(/'/g, "''").replace(/"|\n|\r/g, "");
           const command = `& '${escapedScript}' -Source '${escapedFile}' -Target '${escapedTarget}'`;
@@ -68651,63 +68763,63 @@ var require_tool_cache = __commonJS({
         yield exec_1.exec(`"${unzipPath}"`, args, { cwd: dest });
       });
     }
-    function cacheDir2(sourceDir, tool, version, arch) {
+    function cacheDir2(sourceDir, tool, version, arch2) {
       return __awaiter(this, void 0, void 0, function* () {
         version = semver5.clean(version) || version;
-        arch = arch || os2.arch();
-        core15.debug(`Caching tool ${tool} ${version} ${arch}`);
+        arch2 = arch2 || os6.arch();
+        core15.debug(`Caching tool ${tool} ${version} ${arch2}`);
         core15.debug(`source dir: ${sourceDir}`);
-        if (!fs2.statSync(sourceDir).isDirectory()) {
+        if (!fs5.statSync(sourceDir).isDirectory()) {
           throw new Error("sourceDir is not a directory");
         }
-        const destPath = yield _createToolPath(tool, version, arch);
-        for (const itemName of fs2.readdirSync(sourceDir)) {
-          const s = path.join(sourceDir, itemName);
+        const destPath = yield _createToolPath(tool, version, arch2);
+        for (const itemName of fs5.readdirSync(sourceDir)) {
+          const s = path10.join(sourceDir, itemName);
           yield io4.cp(s, destPath, { recursive: true });
         }
-        _completeToolPath(tool, version, arch);
+        _completeToolPath(tool, version, arch2);
         return destPath;
       });
     }
     exports.cacheDir = cacheDir2;
-    function cacheFile(sourceFile, targetFile, tool, version, arch) {
+    function cacheFile(sourceFile, targetFile, tool, version, arch2) {
       return __awaiter(this, void 0, void 0, function* () {
         version = semver5.clean(version) || version;
-        arch = arch || os2.arch();
-        core15.debug(`Caching tool ${tool} ${version} ${arch}`);
+        arch2 = arch2 || os6.arch();
+        core15.debug(`Caching tool ${tool} ${version} ${arch2}`);
         core15.debug(`source file: ${sourceFile}`);
-        if (!fs2.statSync(sourceFile).isFile()) {
+        if (!fs5.statSync(sourceFile).isFile()) {
           throw new Error("sourceFile is not a file");
         }
-        const destFolder = yield _createToolPath(tool, version, arch);
-        const destPath = path.join(destFolder, targetFile);
+        const destFolder = yield _createToolPath(tool, version, arch2);
+        const destPath = path10.join(destFolder, targetFile);
         core15.debug(`destination file ${destPath}`);
         yield io4.cp(sourceFile, destPath);
-        _completeToolPath(tool, version, arch);
+        _completeToolPath(tool, version, arch2);
         return destFolder;
       });
     }
     exports.cacheFile = cacheFile;
-    function find3(toolName, versionSpec, arch) {
+    function find3(toolName, versionSpec, arch2) {
       if (!toolName) {
         throw new Error("toolName parameter is required");
       }
       if (!versionSpec) {
         throw new Error("versionSpec parameter is required");
       }
-      arch = arch || os2.arch();
+      arch2 = arch2 || os6.arch();
       if (!isExplicitVersion(versionSpec)) {
-        const localVersions = findAllVersions(toolName, arch);
+        const localVersions = findAllVersions(toolName, arch2);
         const match = evaluateVersions(localVersions, versionSpec);
         versionSpec = match;
       }
       let toolPath = "";
       if (versionSpec) {
         versionSpec = semver5.clean(versionSpec) || "";
-        const cachePath = path.join(_getCacheDirectory(), toolName, versionSpec, arch);
+        const cachePath = path10.join(_getCacheDirectory(), toolName, versionSpec, arch2);
         core15.debug(`checking cache: ${cachePath}`);
-        if (fs2.existsSync(cachePath) && fs2.existsSync(`${cachePath}.complete`)) {
-          core15.debug(`Found tool in cache ${toolName} ${versionSpec} ${arch}`);
+        if (fs5.existsSync(cachePath) && fs5.existsSync(`${cachePath}.complete`)) {
+          core15.debug(`Found tool in cache ${toolName} ${versionSpec} ${arch2}`);
           toolPath = cachePath;
         } else {
           core15.debug("not found");
@@ -68716,16 +68828,16 @@ var require_tool_cache = __commonJS({
       return toolPath;
     }
     exports.find = find3;
-    function findAllVersions(toolName, arch) {
+    function findAllVersions(toolName, arch2) {
       const versions = [];
-      arch = arch || os2.arch();
-      const toolPath = path.join(_getCacheDirectory(), toolName);
-      if (fs2.existsSync(toolPath)) {
-        const children2 = fs2.readdirSync(toolPath);
+      arch2 = arch2 || os6.arch();
+      const toolPath = path10.join(_getCacheDirectory(), toolName);
+      if (fs5.existsSync(toolPath)) {
+        const children2 = fs5.readdirSync(toolPath);
         for (const child of children2) {
           if (isExplicitVersion(child)) {
-            const fullPath = path.join(toolPath, child, arch || "");
-            if (fs2.existsSync(fullPath) && fs2.existsSync(`${fullPath}.complete`)) {
+            const fullPath = path10.join(toolPath, child, arch2 || "");
+            if (fs5.existsSync(fullPath) && fs5.existsSync(`${fullPath}.complete`)) {
               versions.push(child);
             }
           }
@@ -68769,7 +68881,7 @@ var require_tool_cache = __commonJS({
       });
     }
     exports.getManifestFromRepo = getManifestFromRepo2;
-    function findFromManifest2(versionSpec, stable, manifest, archFilter = os2.arch()) {
+    function findFromManifest2(versionSpec, stable, manifest, archFilter = os6.arch()) {
       return __awaiter(this, void 0, void 0, function* () {
         const match = yield mm._findMatch(versionSpec, stable, manifest, archFilter);
         return match;
@@ -68779,15 +68891,15 @@ var require_tool_cache = __commonJS({
     function _createExtractFolder(dest) {
       return __awaiter(this, void 0, void 0, function* () {
         if (!dest) {
-          dest = path.join(_getTempDirectory(), v4_1.default());
+          dest = path10.join(_getTempDirectory(), v4_1.default());
         }
         yield io4.mkdirP(dest);
         return dest;
       });
     }
-    function _createToolPath(tool, version, arch) {
+    function _createToolPath(tool, version, arch2) {
       return __awaiter(this, void 0, void 0, function* () {
-        const folderPath = path.join(_getCacheDirectory(), tool, semver5.clean(version) || version, arch || "");
+        const folderPath = path10.join(_getCacheDirectory(), tool, semver5.clean(version) || version, arch2 || "");
         core15.debug(`destination ${folderPath}`);
         const markerPath = `${folderPath}.complete`;
         yield io4.rmRF(folderPath);
@@ -68796,10 +68908,10 @@ var require_tool_cache = __commonJS({
         return folderPath;
       });
     }
-    function _completeToolPath(tool, version, arch) {
-      const folderPath = path.join(_getCacheDirectory(), tool, semver5.clean(version) || version, arch || "");
+    function _completeToolPath(tool, version, arch2) {
+      const folderPath = path10.join(_getCacheDirectory(), tool, semver5.clean(version) || version, arch2 || "");
       const markerPath = `${folderPath}.complete`;
-      fs2.writeFileSync(markerPath, "");
+      fs5.writeFileSync(markerPath, "");
       core15.debug("finished caching tool");
     }
     function isExplicitVersion(versionSpec) {
@@ -68856,9 +68968,70 @@ var require_tool_cache = __commonJS({
 });
 
 // node_modules/setup-python/src/install-python.ts
-var core5, tc, exec8, TOKEN, AUTH, MANIFEST_REPO_OWNER, MANIFEST_REPO_NAME, MANIFEST_REPO_BRANCH, MANIFEST_URL;
+async function findReleaseFromManifest(semanticVersionSpec, architecture, manifest) {
+  if (!manifest) {
+    manifest = await getManifest();
+  }
+  const foundRelease = await tc.findFromManifest(
+    semanticVersionSpec,
+    false,
+    manifest,
+    architecture
+  );
+  return foundRelease;
+}
+function getManifest() {
+  core5.debug(
+    `Getting manifest from ${MANIFEST_REPO_OWNER}/${MANIFEST_REPO_NAME}@${MANIFEST_REPO_BRANCH}`
+  );
+  return tc.getManifestFromRepo(
+    MANIFEST_REPO_OWNER,
+    MANIFEST_REPO_NAME,
+    AUTH,
+    MANIFEST_REPO_BRANCH
+  );
+}
+async function installPython(workingDirectory) {
+  const options = {
+    cwd: workingDirectory,
+    env: {
+      ...process.env,
+      ...IS_LINUX2 && { LD_LIBRARY_PATH: path2.join(workingDirectory, "lib") }
+    },
+    silent: true,
+    listeners: {
+      stdout: (data) => {
+        core5.info(data.toString().trim());
+      },
+      stderr: (data) => {
+        core5.error(data.toString().trim());
+      }
+    }
+  };
+  if (IS_WINDOWS2) {
+    await exec8.exec("powershell", ["./setup.ps1"], options);
+  } else {
+    await exec8.exec("bash", ["./setup.sh"], options);
+  }
+}
+async function installCpythonFromRelease(release) {
+  const downloadUrl = release.files[0].download_url;
+  core5.info(`Download from "${downloadUrl}"`);
+  const pythonPath = await tc.downloadTool(downloadUrl, void 0, AUTH);
+  core5.info("Extract downloaded archive");
+  let pythonExtractedFolder;
+  if (IS_WINDOWS2) {
+    pythonExtractedFolder = await tc.extractZip(pythonPath);
+  } else {
+    pythonExtractedFolder = await tc.extractTar(pythonPath);
+  }
+  core5.info("Execute installation script");
+  await installPython(pythonExtractedFolder);
+}
+var path2, core5, tc, exec8, TOKEN, AUTH, MANIFEST_REPO_OWNER, MANIFEST_REPO_NAME, MANIFEST_REPO_BRANCH, MANIFEST_URL;
 var init_install_python = __esm({
   "node_modules/setup-python/src/install-python.ts"() {
+    path2 = __toESM(require("path"));
     core5 = __toESM(require_core());
     tc = __toESM(require_tool_cache());
     exec8 = __toESM(require_exec());
@@ -68873,9 +69046,121 @@ var init_install_python = __esm({
 });
 
 // node_modules/setup-python/src/find-python.ts
-var semver2, core6, tc2;
+function binDir(installDir) {
+  if (IS_WINDOWS2) {
+    return path3.join(installDir, "Scripts");
+  } else {
+    return path3.join(installDir, "bin");
+  }
+}
+async function useCpythonVersion(version, architecture, updateEnvironment, checkLatest) {
+  let manifest = null;
+  const desugaredVersionSpec = desugarDevVersion(version);
+  let semanticVersionSpec = pythonVersionToSemantic(desugaredVersionSpec);
+  core6.debug(`Semantic version spec of ${version} is ${semanticVersionSpec}`);
+  if (checkLatest) {
+    manifest = await getManifest();
+    const resolvedVersion = (await findReleaseFromManifest(
+      semanticVersionSpec,
+      architecture,
+      manifest
+    ))?.version;
+    if (resolvedVersion) {
+      semanticVersionSpec = resolvedVersion;
+      core6.info(`Resolved as '${semanticVersionSpec}'`);
+    } else {
+      core6.info(
+        `Failed to resolve version ${semanticVersionSpec} from manifest`
+      );
+    }
+  }
+  let installDir = tc2.find(
+    "Python",
+    semanticVersionSpec,
+    architecture
+  );
+  if (!installDir) {
+    core6.info(
+      `Version ${semanticVersionSpec} was not found in the local cache`
+    );
+    const foundRelease = await findReleaseFromManifest(
+      semanticVersionSpec,
+      architecture,
+      manifest
+    );
+    if (foundRelease && foundRelease.files && foundRelease.files.length > 0) {
+      core6.info(`Version ${semanticVersionSpec} is available for downloading`);
+      await installCpythonFromRelease(foundRelease);
+      installDir = tc2.find("Python", semanticVersionSpec, architecture);
+    }
+  }
+  if (!installDir) {
+    throw new Error(
+      [
+        `Version ${version} with arch ${architecture} not found`,
+        `The list of all available versions can be found here: ${MANIFEST_URL}`
+      ].join(os.EOL)
+    );
+  }
+  const _binDir = binDir(installDir);
+  const binaryExtension = IS_WINDOWS2 ? ".exe" : "";
+  const pythonPath = path3.join(
+    IS_WINDOWS2 ? installDir : _binDir,
+    `python${binaryExtension}`
+  );
+  if (updateEnvironment) {
+    core6.exportVariable("pythonLocation", installDir);
+    core6.exportVariable("PKG_CONFIG_PATH", installDir + "/lib/pkgconfig");
+    core6.exportVariable("pythonLocation", installDir);
+    core6.exportVariable("Python_ROOT_DIR", installDir);
+    core6.exportVariable("Python2_ROOT_DIR", installDir);
+    core6.exportVariable("Python3_ROOT_DIR", installDir);
+    core6.exportVariable("PKG_CONFIG_PATH", installDir + "/lib/pkgconfig");
+    if (IS_LINUX2) {
+      const libPath = process.env.LD_LIBRARY_PATH ? `:${process.env.LD_LIBRARY_PATH}` : "";
+      const pyLibPath = path3.join(installDir, "lib");
+      if (!libPath.split(":").includes(pyLibPath)) {
+        core6.exportVariable("LD_LIBRARY_PATH", pyLibPath + libPath);
+      }
+    }
+    core6.addPath(installDir);
+    core6.addPath(_binDir);
+    if (IS_WINDOWS2) {
+      const version2 = path3.basename(path3.dirname(installDir));
+      const major3 = semver2.major(version2);
+      const minor3 = semver2.minor(version2);
+      const userScriptsDir = path3.join(
+        process.env["APPDATA"] || "",
+        "Python",
+        `Python${major3}${minor3}`,
+        "Scripts"
+      );
+      core6.addPath(userScriptsDir);
+    }
+  }
+  const installed = versionFromPath(installDir);
+  core6.setOutput("python-version", installed);
+  core6.setOutput("python-path", pythonPath);
+  return { impl: "CPython", version: installed };
+}
+function desugarDevVersion(versionSpec) {
+  const devVersion = /^(\d+)\.(\d+)-dev$/;
+  return versionSpec.replace(devVersion, "~$1.$2.0-0");
+}
+function versionFromPath(installDir) {
+  const parts = installDir.split(path3.sep);
+  const idx = parts.findIndex((part) => part === "PyPy" || part === "Python");
+  return parts[idx + 1] || "";
+}
+function pythonVersionToSemantic(versionSpec) {
+  const prereleaseVersion = /(\d+\.\d+\.\d+)((?:a|b|rc)\d*)/g;
+  return versionSpec.replace(prereleaseVersion, "$1-$2");
+}
+var os, path3, semver2, core6, tc2;
 var init_find_python = __esm({
   "node_modules/setup-python/src/find-python.ts"() {
+    os = __toESM(require("os"));
+    path3 = __toESM(require("path"));
     init_utils();
     semver2 = __toESM(require_semver4());
     init_install_python();
@@ -68885,22 +69170,304 @@ var init_find_python = __esm({
 });
 
 // node_modules/setup-python/src/install-pypy.ts
-var core7, tc3, semver3, httpm, exec10;
+async function installPyPy(pypyVersion, pythonVersion, architecture, releases) {
+  let downloadDir;
+  releases = releases ?? await getAvailablePyPyVersions();
+  if (!releases || releases.length === 0) {
+    throw new Error("No release was found in PyPy version.json");
+  }
+  const releaseData = findRelease(
+    releases,
+    pythonVersion,
+    pypyVersion,
+    architecture
+  );
+  if (!releaseData || !releaseData.foundAsset) {
+    throw new Error(
+      `PyPy version ${pythonVersion} (${pypyVersion}) with arch ${architecture} not found`
+    );
+  }
+  const { foundAsset, resolvedPythonVersion, resolvedPyPyVersion } = releaseData;
+  let downloadUrl = `${foundAsset.download_url}`;
+  core7.info(`Downloading PyPy from "${downloadUrl}" ...`);
+  const pypyPath = await tc3.downloadTool(downloadUrl);
+  core7.info("Extracting downloaded archive...");
+  if (IS_WINDOWS2) {
+    downloadDir = await tc3.extractZip(pypyPath);
+  } else {
+    downloadDir = await tc3.extractTar(pypyPath, void 0, "x");
+  }
+  const archiveName = import_fs2.default.readdirSync(downloadDir)[0];
+  const toolDir = path4.join(downloadDir, archiveName);
+  let installDir = toolDir;
+  if (!isNightlyKeyword(resolvedPyPyVersion)) {
+    installDir = await tc3.cacheDir(
+      toolDir,
+      "PyPy",
+      resolvedPythonVersion,
+      architecture
+    );
+  }
+  writeExactPyPyVersionFile(installDir, resolvedPyPyVersion);
+  const binaryPath = getPyPyBinaryPath(installDir);
+  await createPyPySymlink(binaryPath, resolvedPythonVersion);
+  await installPip(binaryPath);
+  return { installDir, resolvedPythonVersion, resolvedPyPyVersion };
+}
+async function getAvailablePyPyVersions() {
+  const url = "https://downloads.python.org/pypy/versions.json";
+  const http = new httpm.HttpClient("tool-cache");
+  const response = await http.getJson(url);
+  if (!response.result) {
+    throw new Error(
+      `Unable to retrieve the list of available PyPy versions from '${url}'`
+    );
+  }
+  return response.result;
+}
+async function createPyPySymlink(pypyBinaryPath, pythonVersion) {
+  const version = semver3.coerce(pythonVersion);
+  const pythonBinaryPostfix = semver3.major(version);
+  const pythonMinor = semver3.minor(version);
+  const pypyBinaryPostfix = pythonBinaryPostfix === 2 ? "" : "3";
+  const pypyMajorMinorBinaryPostfix = `${pythonBinaryPostfix}.${pythonMinor}`;
+  let binaryExtension = IS_WINDOWS2 ? ".exe" : "";
+  core7.info("Creating symlinks...");
+  createSymlinkInFolder(
+    pypyBinaryPath,
+    `pypy${pypyBinaryPostfix}${binaryExtension}`,
+    `python${pythonBinaryPostfix}${binaryExtension}`,
+    true
+  );
+  createSymlinkInFolder(
+    pypyBinaryPath,
+    `pypy${pypyBinaryPostfix}${binaryExtension}`,
+    `python${binaryExtension}`,
+    true
+  );
+  createSymlinkInFolder(
+    pypyBinaryPath,
+    `pypy${pypyBinaryPostfix}${binaryExtension}`,
+    `pypy${pypyMajorMinorBinaryPostfix}${binaryExtension}`,
+    true
+  );
+}
+async function installPip(pythonLocation) {
+  core7.info("Installing and updating pip");
+  const pythonBinary = path4.join(pythonLocation, "python");
+  await exec10.exec(`${pythonBinary} -m ensurepip`);
+  await exec10.exec(
+    `${pythonLocation}/python -m pip install --ignore-installed pip`
+  );
+}
+function findRelease(releases, pythonVersion, pypyVersion, architecture) {
+  const filterReleases = releases.filter((item) => {
+    const isPythonVersionSatisfied = semver3.satisfies(
+      semver3.coerce(item.python_version),
+      pythonVersion
+    );
+    const isPyPyNightly = isNightlyKeyword(pypyVersion) && isNightlyKeyword(item.pypy_version);
+    const isPyPyVersionSatisfied = isPyPyNightly || semver3.satisfies(pypyVersionToSemantic(item.pypy_version), pypyVersion);
+    const isArchPresent = item.files && (IS_WINDOWS2 ? isArchPresentForWindows(item) : isArchPresentForMacOrLinux(item, architecture, process.platform));
+    return isPythonVersionSatisfied && isPyPyVersionSatisfied && isArchPresent;
+  });
+  if (filterReleases.length === 0) {
+    return null;
+  }
+  const sortedReleases = filterReleases.sort((previous, current) => {
+    return semver3.compare(
+      semver3.coerce(pypyVersionToSemantic(current.pypy_version)),
+      semver3.coerce(pypyVersionToSemantic(previous.pypy_version))
+    ) || semver3.compare(
+      semver3.coerce(current.python_version),
+      semver3.coerce(previous.python_version)
+    );
+  });
+  const foundRelease = sortedReleases[0];
+  const foundAsset = IS_WINDOWS2 ? findAssetForWindows(foundRelease) : findAssetForMacOrLinux(foundRelease, architecture, process.platform);
+  return {
+    foundAsset,
+    resolvedPythonVersion: foundRelease.python_version,
+    resolvedPyPyVersion: foundRelease.pypy_version
+  };
+}
+function getPyPyBinaryPath(installDir) {
+  const _binDir = path4.join(installDir, "bin");
+  return IS_WINDOWS2 ? installDir : _binDir;
+}
+function pypyVersionToSemantic(versionSpec) {
+  const prereleaseVersion = /(\d+\.\d+\.\d+)((?:a|b|rc))(\d*)/g;
+  return versionSpec.replace(prereleaseVersion, "$1-$2.$3");
+}
+function isArchPresentForWindows(item) {
+  return item.files.some(
+    (file) => WINDOWS_ARCHS.includes(file.arch) && WINDOWS_PLATFORMS.includes(file.platform)
+  );
+}
+function isArchPresentForMacOrLinux(item, architecture, platform) {
+  return item.files.some(
+    (file) => file.arch === architecture && file.platform === platform
+  );
+}
+function findAssetForWindows(releases) {
+  return releases.files.find(
+    (item) => WINDOWS_ARCHS.includes(item.arch) && WINDOWS_PLATFORMS.includes(item.platform)
+  );
+}
+function findAssetForMacOrLinux(releases, architecture, platform) {
+  return releases.files.find(
+    (item) => item.arch === architecture && item.platform === platform
+  );
+}
+var path4, core7, tc3, semver3, httpm, exec10, import_fs2;
 var init_install_pypy = __esm({
   "node_modules/setup-python/src/install-pypy.ts"() {
+    path4 = __toESM(require("path"));
     core7 = __toESM(require_core());
     tc3 = __toESM(require_tool_cache());
     semver3 = __toESM(require_semver4());
     httpm = __toESM(require_lib());
     exec10 = __toESM(require_exec());
+    import_fs2 = __toESM(require("fs"));
     init_utils();
   }
 });
 
 // node_modules/setup-python/src/find-pypy.ts
-var semver4, core8, tc4;
+async function findPyPyVersion(versionSpec, architecture, updateEnvironment, checkLatest) {
+  let resolvedPyPyVersion = "";
+  let resolvedPythonVersion = "";
+  let installDir;
+  let releases;
+  const pypyVersionSpec = parsePyPyVersion(versionSpec);
+  if (checkLatest) {
+    releases = await getAvailablePyPyVersions();
+    if (releases && releases.length > 0) {
+      const releaseData = findRelease(
+        releases,
+        pypyVersionSpec.pythonVersion,
+        pypyVersionSpec.pypyVersion,
+        architecture
+      );
+      if (releaseData) {
+        core8.info(
+          `Resolved as PyPy ${releaseData.resolvedPyPyVersion} with Python (${releaseData.resolvedPythonVersion})`
+        );
+        pypyVersionSpec.pythonVersion = releaseData.resolvedPythonVersion;
+        pypyVersionSpec.pypyVersion = releaseData.resolvedPyPyVersion;
+      } else {
+        core8.info(
+          `Failed to resolve PyPy ${pypyVersionSpec.pypyVersion} with Python (${pypyVersionSpec.pythonVersion}) from manifest`
+        );
+      }
+    }
+  }
+  ({ installDir, resolvedPythonVersion, resolvedPyPyVersion } = findPyPyToolCache(
+    pypyVersionSpec.pythonVersion,
+    pypyVersionSpec.pypyVersion,
+    architecture
+  ));
+  if (!installDir) {
+    ({
+      installDir,
+      resolvedPythonVersion,
+      resolvedPyPyVersion
+    } = await installPyPy(
+      pypyVersionSpec.pypyVersion,
+      pypyVersionSpec.pythonVersion,
+      architecture,
+      releases
+    ));
+  }
+  const pipDir = IS_WINDOWS2 ? "Scripts" : "bin";
+  const _binDir = path5.join(installDir, pipDir);
+  const binaryExtension = IS_WINDOWS2 ? ".exe" : "";
+  const pythonPath = path5.join(
+    IS_WINDOWS2 ? installDir : _binDir,
+    `python${binaryExtension}`
+  );
+  const pythonLocation = getPyPyBinaryPath(installDir);
+  if (updateEnvironment) {
+    core8.exportVariable("pythonLocation", installDir);
+    core8.exportVariable("Python_ROOT_DIR", installDir);
+    core8.exportVariable("Python2_ROOT_DIR", installDir);
+    core8.exportVariable("Python3_ROOT_DIR", installDir);
+    core8.exportVariable("PKG_CONFIG_PATH", pythonLocation + "/lib/pkgconfig");
+    core8.addPath(pythonLocation);
+    core8.addPath(_binDir);
+  }
+  core8.setOutput("python-version", "pypy" + resolvedPyPyVersion.trim());
+  core8.setOutput("python-path", pythonPath);
+  return { resolvedPyPyVersion, resolvedPythonVersion };
+}
+function findPyPyToolCache(pythonVersion, pypyVersion, architecture) {
+  let resolvedPyPyVersion = "";
+  let resolvedPythonVersion = "";
+  let installDir = IS_WINDOWS2 ? findPyPyInstallDirForWindows(pythonVersion) : tc4.find("PyPy", pythonVersion, architecture);
+  if (installDir) {
+    resolvedPythonVersion = getPyPyVersionFromPath(installDir);
+    resolvedPyPyVersion = readExactPyPyVersionFile(installDir);
+    const isPyPyVersionSatisfies = semver4.satisfies(
+      resolvedPyPyVersion,
+      pypyVersion
+    );
+    if (!isPyPyVersionSatisfies) {
+      installDir = null;
+      resolvedPyPyVersion = "";
+      resolvedPythonVersion = "";
+    }
+  }
+  if (!installDir) {
+    core8.info(
+      `PyPy version ${pythonVersion} (${pypyVersion}) was not found in the local cache`
+    );
+  }
+  return { installDir, resolvedPythonVersion, resolvedPyPyVersion };
+}
+function parsePyPyVersion(versionSpec) {
+  const versions = versionSpec.split("-").filter((item) => !!item);
+  if (/^(pypy)(.+)/.test(versions[0])) {
+    let pythonVersion2 = versions[0].replace("pypy", "");
+    versions.splice(0, 1, "pypy", pythonVersion2);
+  }
+  if (versions.length < 2 || versions[0] != "pypy") {
+    throw new Error(
+      "Invalid 'version' property for PyPy. PyPy version should be specified as 'pypy<python-version>' or 'pypy-<python-version>'. See README for examples and documentation."
+    );
+  }
+  const pythonVersion = versions[1];
+  let pypyVersion;
+  if (versions.length > 2) {
+    pypyVersion = pypyVersionToSemantic(versions[2]);
+  } else {
+    pypyVersion = "x";
+  }
+  if (!validateVersion(pythonVersion) || !validateVersion(pypyVersion)) {
+    throw new Error(
+      "Invalid 'version' property for PyPy. Both Python version and PyPy versions should satisfy SemVer notation. See README for examples and documentation."
+    );
+  }
+  if (!validatePythonVersionFormatForPyPy(pythonVersion)) {
+    throw new Error(
+      "Invalid format of Python version for PyPy. Python version should be specified in format 'x.y'. See README for examples and documentation."
+    );
+  }
+  return {
+    pypyVersion,
+    pythonVersion
+  };
+}
+function findPyPyInstallDirForWindows(pythonVersion) {
+  let installDir = "";
+  WINDOWS_ARCHS.forEach(
+    (architecture) => installDir = installDir || tc4.find("PyPy", pythonVersion, architecture)
+  );
+  return installDir;
+}
+var path5, semver4, core8, tc4;
 var init_find_pypy = __esm({
   "node_modules/setup-python/src/find-pypy.ts"() {
+    path5 = __toESM(require("path"));
     init_install_pypy();
     init_utils();
     semver4 = __toESM(require_semver4());
@@ -69012,21 +69579,21 @@ var require_internal_path_helper2 = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.safeTrimTrailingSeparator = exports.normalizeSeparators = exports.hasRoot = exports.hasAbsoluteRoot = exports.ensureAbsoluteRoot = exports.dirname = void 0;
-    var path = __importStar(require("path"));
+    var path10 = __importStar(require("path"));
     var assert_1 = __importDefault(require("assert"));
     var IS_WINDOWS3 = process.platform === "win32";
-    function dirname(p) {
+    function dirname3(p) {
       p = safeTrimTrailingSeparator(p);
       if (IS_WINDOWS3 && /^\\\\[^\\]+(\\[^\\]+)?$/.test(p)) {
         return p;
       }
-      let result = path.dirname(p);
+      let result = path10.dirname(p);
       if (IS_WINDOWS3 && /^\\\\[^\\]+\\[^\\]+\\$/.test(result)) {
         result = safeTrimTrailingSeparator(result);
       }
       return result;
     }
-    exports.dirname = dirname;
+    exports.dirname = dirname3;
     function ensureAbsoluteRoot(root, itemPath) {
       assert_1.default(root, `ensureAbsoluteRoot parameter 'root' must not be empty`);
       assert_1.default(itemPath, `ensureAbsoluteRoot parameter 'itemPath' must not be empty`);
@@ -69058,7 +69625,7 @@ var require_internal_path_helper2 = __commonJS({
       assert_1.default(hasAbsoluteRoot(root), `ensureAbsoluteRoot parameter 'root' must have an absolute root`);
       if (root.endsWith("/") || IS_WINDOWS3 && root.endsWith("\\")) {
       } else {
-        root += path.sep;
+        root += path10.sep;
       }
       return root + itemPath;
     }
@@ -69096,10 +69663,10 @@ var require_internal_path_helper2 = __commonJS({
         return "";
       }
       p = normalizeSeparators(p);
-      if (!p.endsWith(path.sep)) {
+      if (!p.endsWith(path10.sep)) {
         return p;
       }
-      if (p === path.sep) {
+      if (p === path10.sep) {
         return p;
       }
       if (IS_WINDOWS3 && /^[A-Z]:\\$/i.test(p)) {
@@ -69252,7 +69819,7 @@ var require_internal_path2 = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Path = void 0;
-    var path = __importStar(require("path"));
+    var path10 = __importStar(require("path"));
     var pathHelper = __importStar(require_internal_path_helper2());
     var assert_1 = __importDefault(require("assert"));
     var IS_WINDOWS3 = process.platform === "win32";
@@ -69263,13 +69830,13 @@ var require_internal_path2 = __commonJS({
           assert_1.default(itemPath, `Parameter 'itemPath' must not be empty`);
           itemPath = pathHelper.safeTrimTrailingSeparator(itemPath);
           if (!pathHelper.hasRoot(itemPath)) {
-            this.segments = itemPath.split(path.sep);
+            this.segments = itemPath.split(path10.sep);
           } else {
             let remaining = itemPath;
             let dir = pathHelper.dirname(remaining);
             while (dir !== remaining) {
-              const basename = path.basename(remaining);
-              this.segments.unshift(basename);
+              const basename3 = path10.basename(remaining);
+              this.segments.unshift(basename3);
               remaining = dir;
               dir = pathHelper.dirname(remaining);
             }
@@ -69286,7 +69853,7 @@ var require_internal_path2 = __commonJS({
               assert_1.default(segment === pathHelper.dirname(segment), `Parameter 'itemPath' root segment contains information for multiple segments`);
               this.segments.push(segment);
             } else {
-              assert_1.default(!segment.includes(path.sep), `Parameter 'itemPath' contains unexpected path separators`);
+              assert_1.default(!segment.includes(path10.sep), `Parameter 'itemPath' contains unexpected path separators`);
               this.segments.push(segment);
             }
           }
@@ -69294,12 +69861,12 @@ var require_internal_path2 = __commonJS({
       }
       toString() {
         let result = this.segments[0];
-        let skipSlash = result.endsWith(path.sep) || IS_WINDOWS3 && /^[A-Z]:$/i.test(result);
+        let skipSlash = result.endsWith(path10.sep) || IS_WINDOWS3 && /^[A-Z]:$/i.test(result);
         for (let i = 1; i < this.segments.length; i++) {
           if (skipSlash) {
             skipSlash = false;
           } else {
-            result += path.sep;
+            result += path10.sep;
           }
           result += this.segments[i];
         }
@@ -69347,8 +69914,8 @@ var require_internal_pattern2 = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Pattern = void 0;
-    var os2 = __importStar(require("os"));
-    var path = __importStar(require("path"));
+    var os6 = __importStar(require("os"));
+    var path10 = __importStar(require("path"));
     var pathHelper = __importStar(require_internal_path_helper2());
     var assert_1 = __importDefault(require("assert"));
     var minimatch_1 = require_minimatch();
@@ -69356,7 +69923,7 @@ var require_internal_pattern2 = __commonJS({
     var internal_path_1 = require_internal_path2();
     var IS_WINDOWS3 = process.platform === "win32";
     var Pattern = class {
-      constructor(patternOrNegate, isImplicitPattern = false, segments, homedir) {
+      constructor(patternOrNegate, isImplicitPattern = false, segments, homedir2) {
         this.negate = false;
         let pattern;
         if (typeof patternOrNegate === "string") {
@@ -69375,9 +69942,9 @@ var require_internal_pattern2 = __commonJS({
           this.negate = !this.negate;
           pattern = pattern.substr(1).trim();
         }
-        pattern = Pattern.fixupPattern(pattern, homedir);
+        pattern = Pattern.fixupPattern(pattern, homedir2);
         this.segments = new internal_path_1.Path(pattern).segments;
-        this.trailingSeparator = pathHelper.normalizeSeparators(pattern).endsWith(path.sep);
+        this.trailingSeparator = pathHelper.normalizeSeparators(pattern).endsWith(path10.sep);
         pattern = pathHelper.safeTrimTrailingSeparator(pattern);
         let foundGlob = false;
         const searchSegments = this.segments.map((x) => Pattern.getLiteral(x)).filter((x) => !foundGlob && !(foundGlob = x === ""));
@@ -69398,8 +69965,8 @@ var require_internal_pattern2 = __commonJS({
       match(itemPath) {
         if (this.segments[this.segments.length - 1] === "**") {
           itemPath = pathHelper.normalizeSeparators(itemPath);
-          if (!itemPath.endsWith(path.sep) && this.isImplicitPattern === false) {
-            itemPath = `${itemPath}${path.sep}`;
+          if (!itemPath.endsWith(path10.sep) && this.isImplicitPattern === false) {
+            itemPath = `${itemPath}${path10.sep}`;
           }
         } else {
           itemPath = pathHelper.safeTrimTrailingSeparator(itemPath);
@@ -69419,19 +69986,19 @@ var require_internal_pattern2 = __commonJS({
       static globEscape(s) {
         return (IS_WINDOWS3 ? s : s.replace(/\\/g, "\\\\")).replace(/(\[)(?=[^/]+\])/g, "[[]").replace(/\?/g, "[?]").replace(/\*/g, "[*]");
       }
-      static fixupPattern(pattern, homedir) {
+      static fixupPattern(pattern, homedir2) {
         assert_1.default(pattern, "pattern cannot be empty");
         const literalSegments = new internal_path_1.Path(pattern).segments.map((x) => Pattern.getLiteral(x));
         assert_1.default(literalSegments.every((x, i) => (x !== "." || i === 0) && x !== ".."), `Invalid pattern '${pattern}'. Relative pathing '.' and '..' is not allowed.`);
         assert_1.default(!pathHelper.hasRoot(pattern) || literalSegments[0], `Invalid pattern '${pattern}'. Root segment must not contain globs.`);
         pattern = pathHelper.normalizeSeparators(pattern);
-        if (pattern === "." || pattern.startsWith(`.${path.sep}`)) {
+        if (pattern === "." || pattern.startsWith(`.${path10.sep}`)) {
           pattern = Pattern.globEscape(process.cwd()) + pattern.substr(1);
-        } else if (pattern === "~" || pattern.startsWith(`~${path.sep}`)) {
-          homedir = homedir || os2.homedir();
-          assert_1.default(homedir, "Unable to determine HOME directory");
-          assert_1.default(pathHelper.hasAbsoluteRoot(homedir), `Expected HOME directory to be a rooted path. Actual '${homedir}'`);
-          pattern = Pattern.globEscape(homedir) + pattern.substr(1);
+        } else if (pattern === "~" || pattern.startsWith(`~${path10.sep}`)) {
+          homedir2 = homedir2 || os6.homedir();
+          assert_1.default(homedir2, "Unable to determine HOME directory");
+          assert_1.default(pathHelper.hasAbsoluteRoot(homedir2), `Expected HOME directory to be a rooted path. Actual '${homedir2}'`);
+          pattern = Pattern.globEscape(homedir2) + pattern.substr(1);
         } else if (IS_WINDOWS3 && (pattern.match(/^[A-Z]:$/i) || pattern.match(/^[A-Z]:[^\\]/i))) {
           let root = pathHelper.ensureAbsoluteRoot("C:\\dummy-root", pattern.substr(0, 2));
           if (pattern.length > 2 && !root.endsWith("\\")) {
@@ -69503,8 +70070,8 @@ var require_internal_search_state2 = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.SearchState = void 0;
     var SearchState = class {
-      constructor(path, level) {
-        this.path = path;
+      constructor(path10, level) {
+        this.path = path10;
         this.level = level;
       }
     };
@@ -69633,9 +70200,9 @@ var require_internal_globber2 = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DefaultGlobber = void 0;
     var core15 = __importStar(require_core());
-    var fs2 = __importStar(require("fs"));
+    var fs5 = __importStar(require("fs"));
     var globOptionsHelper = __importStar(require_internal_glob_options_helper2());
-    var path = __importStar(require("path"));
+    var path10 = __importStar(require("path"));
     var patternHelper = __importStar(require_internal_pattern_helper2());
     var internal_match_kind_1 = require_internal_match_kind2();
     var internal_pattern_1 = require_internal_pattern2();
@@ -69687,7 +70254,7 @@ var require_internal_globber2 = __commonJS({
           for (const searchPath of patternHelper.getSearchPaths(patterns)) {
             core15.debug(`Search path '${searchPath}'`);
             try {
-              yield __await(fs2.promises.lstat(searchPath));
+              yield __await(fs5.promises.lstat(searchPath));
             } catch (err) {
               if (err.code === "ENOENT") {
                 continue;
@@ -69717,7 +70284,7 @@ var require_internal_globber2 = __commonJS({
                 continue;
               }
               const childLevel = item.level + 1;
-              const childItems = (yield __await(fs2.promises.readdir(item.path))).map((x) => new internal_search_state_1.SearchState(path.join(item.path, x), childLevel));
+              const childItems = (yield __await(fs5.promises.readdir(item.path))).map((x) => new internal_search_state_1.SearchState(path10.join(item.path, x), childLevel));
               stack.push(...childItems.reverse());
             } else if (match & internal_match_kind_1.MatchKind.File) {
               yield yield __await(item.path);
@@ -69749,7 +70316,7 @@ var require_internal_globber2 = __commonJS({
           let stats;
           if (options.followSymbolicLinks) {
             try {
-              stats = yield fs2.promises.stat(item.path);
+              stats = yield fs5.promises.stat(item.path);
             } catch (err) {
               if (err.code === "ENOENT") {
                 if (options.omitBrokenSymbolicLinks) {
@@ -69761,10 +70328,10 @@ var require_internal_globber2 = __commonJS({
               throw err;
             }
           } else {
-            stats = yield fs2.promises.lstat(item.path);
+            stats = yield fs5.promises.lstat(item.path);
           }
           if (stats.isDirectory() && options.followSymbolicLinks) {
-            const realPath = yield fs2.promises.realpath(item.path);
+            const realPath = yield fs5.promises.realpath(item.path);
             while (traversalChain.length >= item.level) {
               traversalChain.pop();
             }
@@ -69865,10 +70432,10 @@ var require_internal_hash_files = __commonJS({
     exports.hashFiles = void 0;
     var crypto = __importStar(require("crypto"));
     var core15 = __importStar(require_core());
-    var fs2 = __importStar(require("fs"));
+    var fs5 = __importStar(require("fs"));
     var stream = __importStar(require("stream"));
     var util = __importStar(require("util"));
-    var path = __importStar(require("path"));
+    var path10 = __importStar(require("path"));
     function hashFiles4(globber) {
       var e_1, _a;
       var _b;
@@ -69881,17 +70448,17 @@ var require_internal_hash_files = __commonJS({
           for (var _c = __asyncValues(globber.globGenerator()), _d; _d = yield _c.next(), !_d.done; ) {
             const file = _d.value;
             core15.debug(file);
-            if (!file.startsWith(`${githubWorkspace}${path.sep}`)) {
+            if (!file.startsWith(`${githubWorkspace}${path10.sep}`)) {
               core15.debug(`Ignore '${file}' since it is not under GITHUB_WORKSPACE.`);
               continue;
             }
-            if (fs2.statSync(file).isDirectory()) {
+            if (fs5.statSync(file).isDirectory()) {
               core15.debug(`Skip directory '${file}'.`);
               continue;
             }
             const hash = crypto.createHash("sha256");
             const pipeline = util.promisify(stream.pipeline);
-            yield pipeline(fs2.createReadStream(file), hash);
+            yield pipeline(fs5.createReadStream(file), hash);
             result.write(hash.digest());
             count++;
             if (!hasMatch) {
@@ -69979,41 +70546,204 @@ var require_glob2 = __commonJS({
 });
 
 // node_modules/setup-python/src/cache-distributions/pip-cache.ts
-var glob, core9, exec12;
+var glob, core9, exec12, child_process, import_util2, path6, import_os, PipCache, pip_cache_default;
 var init_pip_cache = __esm({
   "node_modules/setup-python/src/cache-distributions/pip-cache.ts"() {
     glob = __toESM(require_glob2());
     core9 = __toESM(require_core());
     exec12 = __toESM(require_exec());
+    child_process = __toESM(require("child_process"));
+    import_util2 = __toESM(require("util"));
+    path6 = __toESM(require("path"));
+    import_os = __toESM(require("os"));
     init_cache_distributor();
     init_utils();
+    PipCache = class extends cache_distributor_default {
+      constructor(pythonVersion, cacheDependencyPath = "**/requirements.txt") {
+        super("pip", cacheDependencyPath);
+        this.pythonVersion = pythonVersion;
+      }
+      async getCacheGlobalDirectories() {
+        let exitCode = 1;
+        let stdout = "";
+        let stderr = "";
+        if (IS_WINDOWS2) {
+          const execPromisify = import_util2.default.promisify(child_process.exec);
+          ({ stdout, stderr } = await execPromisify("pip cache dir"));
+        } else {
+          ({
+            stdout,
+            stderr,
+            exitCode
+          } = await exec12.getExecOutput("pip cache dir"));
+        }
+        if (exitCode && stderr) {
+          throw new Error(
+            `Could not get cache folder path for pip package manager`
+          );
+        }
+        let resolvedPath = stdout.trim();
+        if (resolvedPath.includes("~")) {
+          resolvedPath = path6.join(import_os.default.homedir(), resolvedPath.slice(1));
+        }
+        core9.debug(`global cache directory path is ${resolvedPath}`);
+        return [resolvedPath];
+      }
+      async computeKeys() {
+        const hash = await glob.hashFiles(this.cacheDependencyPath);
+        let primaryKey = "";
+        let restoreKey = "";
+        if (IS_LINUX2) {
+          const osRelease = await getLinuxOSReleaseInfo();
+          primaryKey = `${this.CACHE_KEY_PREFIX}-${process.env["RUNNER_OS"]}-${osRelease}-python-${this.pythonVersion}-${this.packageManager}-${hash}`;
+          restoreKey = `${this.CACHE_KEY_PREFIX}-${process.env["RUNNER_OS"]}-${osRelease}-python-${this.pythonVersion}-${this.packageManager}`;
+        } else {
+          primaryKey = `${this.CACHE_KEY_PREFIX}-${process.env["RUNNER_OS"]}-python-${this.pythonVersion}-${this.packageManager}-${hash}`;
+          restoreKey = `${this.CACHE_KEY_PREFIX}-${process.env["RUNNER_OS"]}-python-${this.pythonVersion}-${this.packageManager}`;
+        }
+        return {
+          primaryKey,
+          restoreKey: [restoreKey]
+        };
+      }
+    };
+    pip_cache_default = PipCache;
   }
 });
 
 // node_modules/setup-python/src/cache-distributions/pipenv-cache.ts
-var glob2, core10;
+var glob2, os3, path7, core10, PipenvCache, pipenv_cache_default;
 var init_pipenv_cache = __esm({
   "node_modules/setup-python/src/cache-distributions/pipenv-cache.ts"() {
     glob2 = __toESM(require_glob2());
+    os3 = __toESM(require("os"));
+    path7 = __toESM(require("path"));
     core10 = __toESM(require_core());
     init_cache_distributor();
+    PipenvCache = class extends cache_distributor_default {
+      constructor(pythonVersion, patterns = "**/Pipfile.lock") {
+        super("pipenv", patterns);
+        this.pythonVersion = pythonVersion;
+        this.patterns = patterns;
+      }
+      async getCacheGlobalDirectories() {
+        let virtualEnvRelativePath;
+        if (process.platform === "win32") {
+          virtualEnvRelativePath = ".virtualenvs";
+        } else {
+          virtualEnvRelativePath = ".local/share/virtualenvs";
+        }
+        const resolvedPath = path7.join(os3.homedir(), virtualEnvRelativePath);
+        core10.debug(`global cache directory path is ${resolvedPath}`);
+        return [resolvedPath];
+      }
+      async computeKeys() {
+        const hash = await glob2.hashFiles(this.patterns);
+        const primaryKey = `${this.CACHE_KEY_PREFIX}-${process.env["RUNNER_OS"]}-python-${this.pythonVersion}-${this.packageManager}-${hash}`;
+        const restoreKey = void 0;
+        return {
+          primaryKey,
+          restoreKey
+        };
+      }
+    };
+    pipenv_cache_default = PipenvCache;
   }
 });
 
 // node_modules/setup-python/src/cache-distributions/poetry-cache.ts
-var glob3, io2, exec13, core11;
+var glob3, io2, path8, exec14, core11, PoetryCache, poetry_cache_default;
 var init_poetry_cache = __esm({
   "node_modules/setup-python/src/cache-distributions/poetry-cache.ts"() {
     glob3 = __toESM(require_glob2());
     io2 = __toESM(require_io());
-    exec13 = __toESM(require_exec());
+    path8 = __toESM(require("path"));
+    exec14 = __toESM(require_exec());
     core11 = __toESM(require_core());
     init_cache_distributor();
     init_utils();
+    PoetryCache = class extends cache_distributor_default {
+      constructor(pythonVersion, patterns = "**/poetry.lock") {
+        super("poetry", patterns);
+        this.pythonVersion = pythonVersion;
+        this.patterns = patterns;
+      }
+      async getCacheGlobalDirectories() {
+        const poetryConfig = await this.getPoetryConfiguration();
+        const cacheDir2 = poetryConfig["cache-dir"];
+        const virtualenvsPath = poetryConfig["virtualenvs.path"].replace(
+          "{cache-dir}",
+          cacheDir2
+        );
+        const paths = [virtualenvsPath];
+        if (poetryConfig["virtualenvs.in-project"] === true) {
+          paths.push(path8.join(process.cwd(), ".venv"));
+        }
+        const pythonLocation = await io2.which("python");
+        if (pythonLocation) {
+          core11.debug(`pythonLocation is ${pythonLocation}`);
+          const {
+            exitCode,
+            stderr
+          } = await exec14.getExecOutput(
+            `poetry env use ${pythonLocation}`,
+            void 0,
+            { ignoreReturnCode: true }
+          );
+          if (exitCode) {
+            logWarning(stderr);
+          }
+        } else {
+          logWarning("python binaries were not found in PATH");
+        }
+        return paths;
+      }
+      async computeKeys() {
+        const hash = await glob3.hashFiles(this.patterns);
+        const primaryKey = `${this.CACHE_KEY_PREFIX}-${process.env["RUNNER_OS"]}-python-${this.pythonVersion}-${this.packageManager}-${hash}`;
+        const restoreKey = void 0;
+        return {
+          primaryKey,
+          restoreKey
+        };
+      }
+      async getPoetryConfiguration() {
+        const { stdout, stderr, exitCode } = await exec14.getExecOutput("poetry", [
+          "config",
+          "--list"
+        ]);
+        if (exitCode && stderr) {
+          throw new Error(
+            "Could not get cache folder path for poetry package manager"
+          );
+        }
+        const lines = stdout.trim().split("\n");
+        const config = {};
+        for (let line of lines) {
+          line = line.replace(/#.*$/gm, "");
+          const [key, value] = line.split("=").map((part) => part.trim());
+          config[key] = JSON.parse(value);
+        }
+        return config;
+      }
+    };
+    poetry_cache_default = PoetryCache;
   }
 });
 
 // node_modules/setup-python/src/cache-distributions/cache-factory.ts
+function getCacheDistributor(packageManager, pythonVersion, cacheDependencyPath) {
+  switch (packageManager) {
+    case "pip" /* Pip */:
+      return new pip_cache_default(pythonVersion, cacheDependencyPath);
+    case "pipenv" /* Pipenv */:
+      return new pipenv_cache_default(pythonVersion, cacheDependencyPath);
+    case "poetry" /* Poetry */:
+      return new poetry_cache_default(pythonVersion, cacheDependencyPath);
+    default:
+      throw new Error(`Caching for '${packageManager}' is not supported`);
+  }
+}
 var init_cache_factory = __esm({
   "node_modules/setup-python/src/cache-distributions/cache-factory.ts"() {
     init_pip_cache();
@@ -70024,14 +70754,116 @@ var init_cache_factory = __esm({
 
 // node_modules/setup-python/src/setup-python.ts
 var setup_python_exports = {};
-var core12;
+function isPyPyVersion(versionSpec) {
+  return versionSpec.startsWith("pypy");
+}
+async function cacheDependencies(cache4, pythonVersion) {
+  const cacheDependencyPath = core12.getInput("cache-dependency-path") || void 0;
+  const cacheDistributor = getCacheDistributor(
+    cache4,
+    pythonVersion,
+    cacheDependencyPath
+  );
+  await cacheDistributor.restoreCache();
+}
+function resolveVersionInput() {
+  let version = core12.getInput("python-version");
+  let versionFile = core12.getInput("python-version-file");
+  if (version && versionFile) {
+    core12.warning(
+      "Both python-version and python-version-file inputs are specified, only python-version will be used."
+    );
+  }
+  if (version) {
+    return version;
+  }
+  if (versionFile) {
+    if (!import_fs3.default.existsSync(versionFile)) {
+      throw new Error(
+        `The specified python version file at: ${versionFile} doesn't exist.`
+      );
+    }
+    version = import_fs3.default.readFileSync(versionFile, "utf8");
+    core12.info(`Resolved ${versionFile} as ${version}`);
+    return version;
+  }
+  logWarning(
+    "Neither 'python-version' nor 'python-version-file' inputs were supplied. Attempting to find '.python-version' file."
+  );
+  versionFile = ".python-version";
+  if (import_fs3.default.existsSync(versionFile)) {
+    version = import_fs3.default.readFileSync(versionFile, "utf8");
+    core12.info(`Resolved ${versionFile} as ${version}`);
+    return version;
+  }
+  logWarning(`${versionFile} doesn't exist.`);
+  return version;
+}
+async function run() {
+  if (IS_MAC2) {
+    process.env["AGENT_TOOLSDIRECTORY"] = "/Users/runner/hostedtoolcache";
+  }
+  if (process.env.AGENT_TOOLSDIRECTORY?.trim()) {
+    process.env["RUNNER_TOOL_CACHE"] = process.env["AGENT_TOOLSDIRECTORY"];
+  }
+  core12.debug(
+    `Python is expected to be installed into ${process.env["RUNNER_TOOL_CACHE"]}`
+  );
+  try {
+    const version = resolveVersionInput();
+    const checkLatest = core12.getBooleanInput("check-latest");
+    if (version) {
+      let pythonVersion;
+      const arch2 = core12.getInput("architecture") || os4.arch();
+      const updateEnvironment = core12.getBooleanInput("update-environment");
+      if (isPyPyVersion(version)) {
+        const installed = await findPyPyVersion(
+          version,
+          arch2,
+          updateEnvironment,
+          checkLatest
+        );
+        pythonVersion = `${installed.resolvedPyPyVersion}-${installed.resolvedPythonVersion}`;
+        core12.info(
+          `Successfully set up PyPy ${installed.resolvedPyPyVersion} with Python (${installed.resolvedPythonVersion})`
+        );
+      } else {
+        const installed = await useCpythonVersion(
+          version,
+          arch2,
+          updateEnvironment,
+          checkLatest
+        );
+        pythonVersion = installed.version;
+        core12.info(`Successfully set up ${installed.impl} (${pythonVersion})`);
+      }
+      const cache4 = core12.getInput("cache");
+      if (cache4 && isCacheFeatureAvailable()) {
+        await cacheDependencies(cache4, pythonVersion);
+      }
+    } else {
+      core12.warning(
+        "The `python-version` input is not set.  The version of Python currently in `PATH` will be used."
+      );
+    }
+    const matchersPath = path9.join(__dirname, "../..", ".github");
+    core12.info(`##[add-matcher]${path9.join(matchersPath, "python.json")}`);
+  } catch (err) {
+    core12.setFailed(err.message);
+  }
+}
+var core12, path9, os4, import_fs3;
 var init_setup_python = __esm({
   "node_modules/setup-python/src/setup-python.ts"() {
     core12 = __toESM(require_core());
     init_find_python();
     init_find_pypy();
+    path9 = __toESM(require("path"));
+    os4 = __toESM(require("os"));
+    import_fs3 = __toESM(require("fs"));
     init_cache_factory();
     init_utils();
+    run();
   }
 });
 
@@ -70169,7 +71001,7 @@ function getCacheDirectories() {
     const poetryBinPath = IS_WINDOWS ? `${pipxVariables["PIPX_BIN_DIR"]}/poetry.exe` : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
     const poetryVenvPath = `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
     return [poetryBinPath, poetryVenvPath].map(
-      (path) => core3.toPlatformPath(path)
+      (path10) => core3.toPlatformPath(path10)
     );
   });
 }
@@ -70281,7 +71113,7 @@ function setupPython(poetryInstallOption, inputs) {
 }
 
 // src/main.ts
-function run() {
+function run2() {
   return __async(this, null, function* () {
     try {
       core14.info("----Setup Poetry----");
@@ -70324,7 +71156,7 @@ function run() {
     }
   });
 }
-run();
+run2();
 /*!
  * Copyright (c) 2015, Salesforce.com, Inc.
  * All rights reserved.
