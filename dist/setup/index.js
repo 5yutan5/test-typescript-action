@@ -71010,9 +71010,9 @@ function getCacheDirectories() {
 function handleMatchResult(matchedKey, searchKey) {
   if (matchedKey) {
     core3.saveState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */, matchedKey);
-    core3.info(`Cache of Poetry installation restored from key: ${matchedKey}`);
+    core3.info(`Poetry installation restored from key: ${matchedKey}`);
   } else {
-    core3.info("Cache of Poetry installation is not found");
+    core3.info("Poetry installation cache is not found.");
   }
   core3.setOutput("poetry-cache-hit", matchedKey === searchKey);
 }

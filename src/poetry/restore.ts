@@ -72,9 +72,9 @@ async function getCacheDirectories(): Promise<Array<string>> {
 function handleMatchResult(matchedKey: string | undefined, searchKey: string) {
   if (matchedKey) {
     core.saveState(State.CACHE_MATCHED_KEY, matchedKey);
-    core.info(`Cache of Poetry installation restored from key: ${matchedKey}`);
+    core.info(`Poetry installation restored from key: ${matchedKey}`);
   } else {
-    core.info("Cache of Poetry installation is not found");
+    core.info("Poetry installation cache is not found.");
   }
   core.setOutput("poetry-cache-hit", matchedKey === searchKey);
 }
@@ -82,6 +82,10 @@ function handleMatchResult(matchedKey: string | undefined, searchKey: string) {
 export async function tryRestoringCache(
   poetryVersion: string
 ): Promise<boolean> {
+  if (IS_WINDOWS) {
+    core.info("Skip to restore Poetry install on Windows.")
+    return false;
+  }
   const searchKey = await createCacheSearchKey(poetryVersion);
   const cachePath = await getCacheDirectories();
   core.saveState(State.CACHE_PATHS, cachePath);
