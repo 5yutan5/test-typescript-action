@@ -64,6 +64,7 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
+          import re
 
           path = Path("action.yml")
           source = path.read_text()
