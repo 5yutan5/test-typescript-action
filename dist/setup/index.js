@@ -3218,7 +3218,7 @@ var require_exec = __commonJS({
       });
     }
     exports.exec = exec15;
-    function getExecOutput6(commandLine, args, options) {
+    function getExecOutput7(commandLine, args, options) {
       var _a, _b;
       return __awaiter(this, void 0, void 0, function* () {
         let stdout = "";
@@ -3250,7 +3250,7 @@ var require_exec = __commonJS({
         };
       });
     }
-    exports.getExecOutput = getExecOutput6;
+    exports.getExecOutput = getExecOutput7;
   }
 });
 
@@ -70928,12 +70928,11 @@ function configurePoetry(config) {
       setSetting("pypi-token", config.pypiToken);
     if (config.virtualenvsCreate == "false")
       setSetting("virtualenvs.in-project", "false");
-    console.log(config.virtualenvsInProject == "true");
     if (config.virtualenvsInProject == "true")
-      console.log("config.virtualenvsInProject");
-    setSetting("virtualenvs.in-project", "true");
+      setSetting("virtualenvs.in-project", "true");
     if (config.virtualenvsPath)
       setSetting("virtualenvs.path", config.virtualenvsPath);
+    yield exec3.getExecOutput("poetry", ["config", "--list"]);
   });
 }
 
