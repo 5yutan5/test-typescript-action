@@ -21,7 +21,6 @@ interface Inputs {
 async function createHackDependencyFile(
   option: InstallOption
 ): Promise<string> {
-  console.log("hello")
   let key = "";
   if (option.allExtras == "true") key += option.allExtras;
   if (option.extras && option.allExtras != "true") key += option.extras;
@@ -37,7 +36,6 @@ async function createHackDependencyFile(
     await await io.mkdirP(tempDir);
     const keyPath = core.toPlatformPath(`${tempDir}/temp-key.txt`);
     fs.writeFileSync(keyPath, key);
-    console.log(keyPath)
     return keyPath;
   } else {
     return "";
@@ -49,6 +47,7 @@ function overrideInput(inputs: Inputs, hackPath: string): void {
   if (inputs.cacheDependencyPath)
     cacheDependencyPath = inputs.cacheDependencyPath;
   if (hackPath) cacheDependencyPath += "\n" + hackPath;
+  console.log(cacheDependencyPath)
 
   setInput("architecture", inputs.architecture);
   setInput("cache", inputs.cache);

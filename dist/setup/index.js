@@ -70995,7 +70995,6 @@ async function run() {
 // src/setup-python.ts
 function createHackDependencyFile(option) {
   return __async(this, null, function* () {
-    console.log("hello");
     let key = "";
     if (option.allExtras == "true")
       key += option.allExtras;
@@ -71016,7 +71015,6 @@ function createHackDependencyFile(option) {
       yield yield io3.mkdirP(tempDir);
       const keyPath = core12.toPlatformPath(`${tempDir}/temp-key.txt`);
       import_node_fs.default.writeFileSync(keyPath, key);
-      console.log(keyPath);
       return keyPath;
     } else {
       return "";
@@ -71029,6 +71027,7 @@ function overrideInput(inputs, hackPath) {
     cacheDependencyPath = inputs.cacheDependencyPath;
   if (hackPath)
     cacheDependencyPath += "\n" + hackPath;
+  console.log(cacheDependencyPath);
   setInput("architecture", inputs.architecture);
   setInput("cache", inputs.cache);
   setInput("cache-dependency-path", cacheDependencyPath);
