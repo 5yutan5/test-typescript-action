@@ -70068,8 +70068,8 @@ function getPipxVariables() {
 function getCacheDirectories() {
   return __async(this, null, function* () {
     const pipxVariables = yield getPipxVariables();
-    const poetryBinPath = IS_WINDOWS ? `${pipxVariables["PIPX_BIN_DIR"]}/poetry.exe` : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
-    const poetryVenvPath = `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
+    const poetryBinPath = IS_WINDOWS ? `${pipxVariables["PIPX_BIN_DIR"]}\\poetry.exe` : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
+    const poetryVenvPath = IS_WINDOWS ? `${pipxVariables["PIPX_LOCAL_VENVS"]}\\poetry` : `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
     return [poetryBinPath, poetryVenvPath].map(
       (path10) => core3.toPlatformPath(path10)
     );

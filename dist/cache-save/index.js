@@ -65280,7 +65280,8 @@ function run2() {
     try {
       if (IS_WINDOWS)
         core3.info("Skip to cache Poetry installation on Windows.");
-      yield cachePoetryInstallation();
+      else
+        yield cachePoetryInstallation();
       hackSetupPython();
       yield Promise.resolve().then(() => (init_cache_save(), cache_save_exports));
     } catch (error) {
