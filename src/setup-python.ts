@@ -69,6 +69,6 @@ export async function setupPython(
   inputs: Inputs
 ): Promise<void> {
   await hackActionSetupPython(poetryInstallOption, inputs);
-  // Run setup python of `actions/setup-python`.
+  // Run `actions/setup-python`.
   await import("setup-python/src/setup-python");
 }

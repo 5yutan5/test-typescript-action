@@ -1,0 +1,47 @@
+---
+name: Automated actions/setup-python update
+
+on:  # yamllint disable-line rule:truthy
+  schedule:
+    - cron: '23 2 * * *' # Runs at 02:23 UTC every day
+  workflow_dispatch:
+
+jobs:
+  update-actions-setup-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm ci
+      - name: Get last version of actions/setup-python
+        id: setup-python
+        run: |
+          pip install lastversion
+          VERSION=$(python -m lastversion github.com/actions/setup-python)
+          echo version=$VERSION >> $GITHUB_OUTPUT
+          echo $VERSION
+      - name: Update actions/setup-python
+        run: |
+          VERSION = ${{ steps.setup-python.outputs.version }}
+          npm i git+https://git@github.com/actions/setup-python.git#v$VERSION
+
+      - name: Edit actions/setup-python
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path("./node_modules/setup-python/src/setup-python.ts")
+          text_fixed = path.read_text().replace("run();", "")
+          path.write_text(text_fixed)
+
+      - run: npm run build
+
+      - uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: Update actions/setup-python
+          title: Automated update of actions/setup-python
+          body: This is an auto-generated PR with external GitHub repo updates.
+          branch: auto-update-setup-python
