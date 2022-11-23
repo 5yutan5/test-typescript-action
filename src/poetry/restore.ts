@@ -64,9 +64,7 @@ async function getCacheDirectories(): Promise<Array<string>> {
   const poetryVenvPath = IS_WINDOWS
     ? `${pipxVariables["PIPX_LOCAL_VENVS"]}\\poetry`
     : `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
-  return [poetryBinPath, poetryVenvPath].map((path) =>
-    core.toPlatformPath(path)
-  );
+  return [poetryBinPath, poetryVenvPath];
 }
 
 function handleMatchResult(matchedKey: string | undefined, searchKey: string) {

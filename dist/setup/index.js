@@ -1965,10 +1965,10 @@ var require_path_utils = __commonJS({
       return pth.replace(/[/]/g, "\\");
     }
     exports.toWin32Path = toWin32Path;
-    function toPlatformPath3(pth) {
+    function toPlatformPath2(pth) {
       return pth.replace(/[/\\]/g, path10.sep);
     }
-    exports.toPlatformPath = toPlatformPath3;
+    exports.toPlatformPath = toPlatformPath2;
   }
 });
 
@@ -70070,9 +70070,7 @@ function getCacheDirectories() {
     const pipxVariables = yield getPipxVariables();
     const poetryBinPath = IS_WINDOWS ? `${pipxVariables["PIPX_BIN_DIR"]}\\poetry.exe` : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
     const poetryVenvPath = IS_WINDOWS ? `${pipxVariables["PIPX_LOCAL_VENVS"]}\\poetry` : `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
-    return [poetryBinPath, poetryVenvPath].map(
-      (path10) => core3.toPlatformPath(path10)
-    );
+    return [poetryBinPath, poetryVenvPath];
   });
 }
 function handleMatchResult(matchedKey, searchKey) {
