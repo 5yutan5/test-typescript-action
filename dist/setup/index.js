@@ -2446,7 +2446,7 @@ var require_io = __commonJS({
     var path10 = __importStar(require("path"));
     var util_1 = require("util");
     var ioUtil = __importStar(require_io_util());
-    var exec14 = util_1.promisify(childProcess.exec);
+    var exec15 = util_1.promisify(childProcess.exec);
     var execFile = util_1.promisify(childProcess.execFile);
     function cp(source, dest, options = {}) {
       return __awaiter(this, void 0, void 0, function* () {
@@ -2505,11 +2505,11 @@ var require_io = __commonJS({
           try {
             const cmdPath = ioUtil.getCmdPath();
             if (yield ioUtil.isDirectory(inputPath, true)) {
-              yield exec14(`${cmdPath} /s /c "rd /s /q "%inputPath%""`, {
+              yield exec15(`${cmdPath} /s /c "rd /s /q "%inputPath%""`, {
                 env: { inputPath }
               });
             } else {
-              yield exec14(`${cmdPath} /s /c "del /f /a "%inputPath%""`, {
+              yield exec15(`${cmdPath} /s /c "del /f /a "%inputPath%""`, {
                 env: { inputPath }
               });
             }
@@ -3205,7 +3205,7 @@ var require_exec = __commonJS({
     exports.getExecOutput = exports.exec = void 0;
     var string_decoder_1 = require("string_decoder");
     var tr = __importStar(require_toolrunner());
-    function exec14(commandLine, args, options) {
+    function exec15(commandLine, args, options) {
       return __awaiter(this, void 0, void 0, function* () {
         const commandArgs = tr.argStringToArray(commandLine);
         if (commandArgs.length === 0) {
@@ -3217,8 +3217,8 @@ var require_exec = __commonJS({
         return runner.exec();
       });
     }
-    exports.exec = exec14;
-    function getExecOutput7(commandLine, args, options) {
+    exports.exec = exec15;
+    function getExecOutput6(commandLine, args, options) {
       var _a, _b;
       return __awaiter(this, void 0, void 0, function* () {
         let stdout = "";
@@ -3240,7 +3240,7 @@ var require_exec = __commonJS({
           }
         };
         const listeners = Object.assign(Object.assign({}, options === null || options === void 0 ? void 0 : options.listeners), { stdout: stdOutListener, stderr: stdErrListener });
-        const exitCode = yield exec14(commandLine, args, Object.assign(Object.assign({}, options), { listeners }));
+        const exitCode = yield exec15(commandLine, args, Object.assign(Object.assign({}, options), { listeners }));
         stdout += stdoutDecoder.end();
         stderr += stderrDecoder.end();
         return {
@@ -3250,7 +3250,7 @@ var require_exec = __commonJS({
         };
       });
     }
-    exports.getExecOutput = getExecOutput7;
+    exports.getExecOutput = getExecOutput6;
   }
 });
 
@@ -6349,7 +6349,7 @@ var require_cacheUtils = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     var core15 = __importStar(require_core());
-    var exec14 = __importStar(require_exec());
+    var exec15 = __importStar(require_exec());
     var glob4 = __importStar(require_glob());
     var io4 = __importStar(require_io());
     var fs5 = __importStar(require("fs"));
@@ -6431,7 +6431,7 @@ var require_cacheUtils = __commonJS({
         core15.debug(`Checking ${app} --version`);
         let versionOutput = "";
         try {
-          yield exec14.exec(`${app} --version`, [], {
+          yield exec15.exec(`${app} --version`, [], {
             ignoreReturnCode: true,
             silent: true,
             listeners: {
@@ -67621,7 +67621,7 @@ function isCacheFeatureAvailable() {
   return true;
 }
 async function getLinuxOSReleaseInfo() {
-  const { stdout, stderr, exitCode } = await exec6.getExecOutput(
+  const { stdout, stderr, exitCode } = await exec7.getExecOutput(
     "lsb_release",
     ["-i", "-r", "-s"],
     {
@@ -67636,7 +67636,7 @@ function logWarning(message) {
   const warningPrefix = "[warning]";
   core4.info(`${warningPrefix}${message}`);
 }
-var cache3, core4, import_fs, path, semver, exec6, IS_WINDOWS2, IS_LINUX2, IS_MAC2, WINDOWS_ARCHS, WINDOWS_PLATFORMS, PYPY_VERSION_FILE;
+var cache3, core4, import_fs, path, semver, exec7, IS_WINDOWS2, IS_LINUX2, IS_MAC2, WINDOWS_ARCHS, WINDOWS_PLATFORMS, PYPY_VERSION_FILE;
 var init_utils = __esm({
   "node_modules/setup-python/src/utils.ts"() {
     cache3 = __toESM(require_cache());
@@ -67644,7 +67644,7 @@ var init_utils = __esm({
     import_fs = __toESM(require("fs"));
     path = __toESM(require("path"));
     semver = __toESM(require_semver4());
-    exec6 = __toESM(require_exec());
+    exec7 = __toESM(require_exec());
     IS_WINDOWS2 = process.platform === "win32";
     IS_LINUX2 = process.platform === "linux";
     IS_MAC2 = process.platform === "darwin";
@@ -69009,9 +69009,9 @@ async function installPython(workingDirectory) {
     }
   };
   if (IS_WINDOWS2) {
-    await exec7.exec("powershell", ["./setup.ps1"], options);
+    await exec8.exec("powershell", ["./setup.ps1"], options);
   } else {
-    await exec7.exec("bash", ["./setup.sh"], options);
+    await exec8.exec("bash", ["./setup.sh"], options);
   }
 }
 async function installCpythonFromRelease(release) {
@@ -69028,13 +69028,13 @@ async function installCpythonFromRelease(release) {
   core5.info("Execute installation script");
   await installPython(pythonExtractedFolder);
 }
-var path2, core5, tc, exec7, TOKEN, AUTH, MANIFEST_REPO_OWNER, MANIFEST_REPO_NAME, MANIFEST_REPO_BRANCH, MANIFEST_URL;
+var path2, core5, tc, exec8, TOKEN, AUTH, MANIFEST_REPO_OWNER, MANIFEST_REPO_NAME, MANIFEST_REPO_BRANCH, MANIFEST_URL;
 var init_install_python = __esm({
   "node_modules/setup-python/src/install-python.ts"() {
     path2 = __toESM(require("path"));
     core5 = __toESM(require_core());
     tc = __toESM(require_tool_cache());
-    exec7 = __toESM(require_exec());
+    exec8 = __toESM(require_exec());
     init_utils();
     TOKEN = core5.getInput("token");
     AUTH = !TOKEN ? void 0 : `token ${TOKEN}`;
@@ -69255,8 +69255,8 @@ async function createPyPySymlink(pypyBinaryPath, pythonVersion) {
 async function installPip(pythonLocation) {
   core7.info("Installing and updating pip");
   const pythonBinary = path4.join(pythonLocation, "python");
-  await exec9.exec(`${pythonBinary} -m ensurepip`);
-  await exec9.exec(
+  await exec10.exec(`${pythonBinary} -m ensurepip`);
+  await exec10.exec(
     `${pythonLocation}/python -m pip install --ignore-installed pip`
   );
 }
@@ -69319,7 +69319,7 @@ function findAssetForMacOrLinux(releases, architecture, platform) {
     (item) => item.arch === architecture && item.platform === platform
   );
 }
-var path4, core7, tc3, semver3, httpm, exec9, import_fs2;
+var path4, core7, tc3, semver3, httpm, exec10, import_fs2;
 var init_install_pypy = __esm({
   "node_modules/setup-python/src/install-pypy.ts"() {
     path4 = __toESM(require("path"));
@@ -69327,7 +69327,7 @@ var init_install_pypy = __esm({
     tc3 = __toESM(require_tool_cache());
     semver3 = __toESM(require_semver4());
     httpm = __toESM(require_lib());
-    exec9 = __toESM(require_exec());
+    exec10 = __toESM(require_exec());
     import_fs2 = __toESM(require("fs"));
     init_utils();
   }
@@ -70546,12 +70546,12 @@ var require_glob2 = __commonJS({
 });
 
 // node_modules/setup-python/src/cache-distributions/pip-cache.ts
-var glob, core9, exec11, child_process, import_util2, path6, import_os, PipCache, pip_cache_default;
+var glob, core9, exec12, child_process, import_util2, path6, import_os, PipCache, pip_cache_default;
 var init_pip_cache = __esm({
   "node_modules/setup-python/src/cache-distributions/pip-cache.ts"() {
     glob = __toESM(require_glob2());
     core9 = __toESM(require_core());
-    exec11 = __toESM(require_exec());
+    exec12 = __toESM(require_exec());
     child_process = __toESM(require("child_process"));
     import_util2 = __toESM(require("util"));
     path6 = __toESM(require("path"));
@@ -70575,7 +70575,7 @@ var init_pip_cache = __esm({
             stdout,
             stderr,
             exitCode
-          } = await exec11.getExecOutput("pip cache dir"));
+          } = await exec12.getExecOutput("pip cache dir"));
         }
         if (exitCode && stderr) {
           throw new Error(
@@ -70652,13 +70652,13 @@ var init_pipenv_cache = __esm({
 });
 
 // node_modules/setup-python/src/cache-distributions/poetry-cache.ts
-var glob3, io2, path8, exec13, core11, PoetryCache, poetry_cache_default;
+var glob3, io2, path8, exec14, core11, PoetryCache, poetry_cache_default;
 var init_poetry_cache = __esm({
   "node_modules/setup-python/src/cache-distributions/poetry-cache.ts"() {
     glob3 = __toESM(require_glob2());
     io2 = __toESM(require_io());
     path8 = __toESM(require("path"));
-    exec13 = __toESM(require_exec());
+    exec14 = __toESM(require_exec());
     core11 = __toESM(require_core());
     init_cache_distributor();
     init_utils();
@@ -70685,7 +70685,7 @@ var init_poetry_cache = __esm({
           const {
             exitCode,
             stderr
-          } = await exec13.getExecOutput(
+          } = await exec14.getExecOutput(
             `poetry env use ${pythonLocation}`,
             void 0,
             { ignoreReturnCode: true }
@@ -70708,7 +70708,7 @@ var init_poetry_cache = __esm({
         };
       }
       async getPoetryConfiguration() {
-        const { stdout, stderr, exitCode } = await exec13.getExecOutput("poetry", [
+        const { stdout, stderr, exitCode } = await exec14.getExecOutput("poetry", [
           "config",
           "--list"
         ]);
@@ -70905,43 +70905,38 @@ function installDependencies(option) {
 
 // src/poetry/setup.ts
 var io = __toESM(require_io());
-var exec5 = __toESM(require_exec());
+var exec6 = __toESM(require_exec());
 
 // src/poetry/config.ts
 var exec3 = __toESM(require_exec());
 function setSetting(setting, value) {
   return __async(this, null, function* () {
-    const { exitCode, stderr } = yield exec3.getExecOutput("poetry", [
-      "config",
-      setting,
-      value
-    ]);
-    console.log("hello");
-    if (exitCode && stderr)
+    const exitCode = yield exec3.exec("poetry", ["config", setting, value]);
+    if (exitCode)
       throw new Error(`Could not run "poetry config ${setting}" ${value}.`);
   });
 }
 function configurePoetry(config) {
   return __async(this, null, function* () {
     if (config["cacheDir"])
-      setSetting("cache-dir", config["cacheDir"]);
+      yield setSetting("cache-dir", config["cacheDir"]);
     if (config.installerMaxWorkers)
-      setSetting("installer.max-workers", config.installerMaxWorkers);
+      yield setSetting("installer.max-workers", config.installerMaxWorkers);
     if (config.installerParallel == "false")
-      setSetting("installer.parallel", "false");
+      yield setSetting("installer.parallel", "false");
     if (config.pypiToken == "false")
       setSetting("pypi-token", config.pypiToken);
     if (config.virtualenvsCreate == "false")
-      setSetting("virtualenvs.in-project", "false");
+      yield setSetting("virtualenvs.in-project", "false");
     if (config.virtualenvsInProject == "true")
-      setSetting("virtualenvs.in-project", "true");
+      yield setSetting("virtualenvs.in-project", "true");
     if (config.virtualenvsPath)
-      setSetting("virtualenvs.path", config.virtualenvsPath);
+      yield setSetting("virtualenvs.path", config.virtualenvsPath);
   });
 }
 
 // src/poetry/restore.ts
-var exec4 = __toESM(require_exec());
+var exec5 = __toESM(require_exec());
 var cache2 = __toESM(require_cache());
 var core3 = __toESM(require_core());
 
@@ -70956,7 +70951,7 @@ function setInput(name, value) {
 // src/poetry/restore.ts
 function getPythonVersion() {
   return __async(this, null, function* () {
-    const { stdout, stderr, exitCode } = yield exec4.getExecOutput("python3", [
+    const { stdout, stderr, exitCode } = yield exec5.getExecOutput("python3", [
       "--version"
     ]);
     if (exitCode && stderr)
@@ -70966,7 +70961,7 @@ function getPythonVersion() {
 }
 function getPipxVersion() {
   return __async(this, null, function* () {
-    const { stdout, stderr, exitCode } = yield exec4.getExecOutput("pipx", [
+    const { stdout, stderr, exitCode } = yield exec5.getExecOutput("pipx", [
       "--version"
     ]);
     if (exitCode && stderr)
@@ -70983,7 +70978,7 @@ function createCacheSearchKey(poetryVersion) {
 }
 function getPipxVariables() {
   return __async(this, null, function* () {
-    const { stdout, stderr, exitCode } = yield exec4.getExecOutput("pipx", [
+    const { stdout, stderr, exitCode } = yield exec5.getExecOutput("pipx", [
       "environment"
     ]);
     if (exitCode && stderr)
@@ -71040,7 +71035,7 @@ function tryRestoringCache(poetryVersion) {
 function installPoetry(version) {
   return __async(this, null, function* () {
     const pythonLocation = yield io.which("python3", true);
-    const { exitCode, stderr } = yield exec5.getExecOutput(
+    const { exitCode, stderr } = yield exec6.getExecOutput(
       "pipx",
       pythonLocation ? ["install", `poetry==${version}`, "--python", pythonLocation] : ["install", `poetry==${version}`]
     );
