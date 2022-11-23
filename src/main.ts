@@ -1,4 +1,6 @@
 import * as core from "@actions/core";
+import { State } from "setup-python/src/cache-distributions/cache-distributor";
+
 import { installDependencies } from "./poetry/install";
 import { setupPoetry } from "./poetry/setup";
 import { setupPython } from "./setup-python";
@@ -39,9 +41,10 @@ async function run(): Promise<void> {
       versionFile: core.getInput("python-version-file"),
     });
 
-    if (core.getInput("poetry-install-dependencies") == "true")
+    const matchedKey = core.getState(State.CACHE_MATCHED_KEY);
+    if (!matchedKey && core.getInput("poetry-install-dependencies") == "true")
       core.info("----Installing dependencies----");
-    await installDependencies(poetryInstallOption);
+      await installDependencies(poetryInstallOption);
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message);
   }

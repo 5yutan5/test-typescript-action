@@ -1,7 +1,4 @@
-import * as core from "@actions/core";
 import * as exec from "@actions/exec";
-
-import { State } from "setup-python/src/cache-distributions/cache-distributor";
 
 export interface InstallOption {
   readonly allExtras: string;
@@ -17,13 +14,6 @@ export interface InstallOption {
 export async function installDependencies(
   option: InstallOption
 ): Promise<void> {
-  const primaryKey = core.getState(State.STATE_CACHE_PRIMARY_KEY);
-  const matchedKey = core.getState(State.CACHE_MATCHED_KEY);
-  if (primaryKey && primaryKey !== matchedKey) {
-    core.info("Already cached python dependencies.");
-    return;
-  }
-
   let args: string[] = [];
   if (option.allExtras == "true") args.push("--all-extras");
   if (option.extras && option.allExtras != "true")

@@ -1285,12 +1285,12 @@ var require_lib = __commonJS({
             throw new Error("Client has already been disposed.");
           }
           const parsedUrl = new URL(requestUrl);
-          let info11 = this._prepareRequest(verb, parsedUrl, headers);
+          let info10 = this._prepareRequest(verb, parsedUrl, headers);
           const maxTries = this._allowRetries && RetryableHttpVerbs.includes(verb) ? this._maxRetries + 1 : 1;
           let numTries = 0;
           let response;
           do {
-            response = yield this.requestRaw(info11, data);
+            response = yield this.requestRaw(info10, data);
             if (response && response.message && response.message.statusCode === HttpCodes.Unauthorized) {
               let authenticationHandler;
               for (const handler of this.handlers) {
@@ -1300,7 +1300,7 @@ var require_lib = __commonJS({
                 }
               }
               if (authenticationHandler) {
-                return authenticationHandler.handleAuthentication(this, info11, data);
+                return authenticationHandler.handleAuthentication(this, info10, data);
               } else {
                 return response;
               }
@@ -1323,8 +1323,8 @@ var require_lib = __commonJS({
                   }
                 }
               }
-              info11 = this._prepareRequest(verb, parsedRedirectUrl, headers);
-              response = yield this.requestRaw(info11, data);
+              info10 = this._prepareRequest(verb, parsedRedirectUrl, headers);
+              response = yield this.requestRaw(info10, data);
               redirectsRemaining--;
             }
             if (!response.message.statusCode || !HttpResponseRetryCodes.includes(response.message.statusCode)) {
@@ -1345,7 +1345,7 @@ var require_lib = __commonJS({
         }
         this._disposed = true;
       }
-      requestRaw(info11, data) {
+      requestRaw(info10, data) {
         return __awaiter(this, void 0, void 0, function* () {
           return new Promise((resolve, reject) => {
             function callbackForResult(err, res) {
@@ -1357,16 +1357,16 @@ var require_lib = __commonJS({
                 resolve(res);
               }
             }
-            this.requestRawWithCallback(info11, data, callbackForResult);
+            this.requestRawWithCallback(info10, data, callbackForResult);
           });
         });
       }
-      requestRawWithCallback(info11, data, onResult) {
+      requestRawWithCallback(info10, data, onResult) {
         if (typeof data === "string") {
-          if (!info11.options.headers) {
-            info11.options.headers = {};
+          if (!info10.options.headers) {
+            info10.options.headers = {};
           }
-          info11.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
+          info10.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
         }
         let callbackCalled = false;
         function handleResult(err, res) {
@@ -1375,7 +1375,7 @@ var require_lib = __commonJS({
             onResult(err, res);
           }
         }
-        const req = info11.httpModule.request(info11.options, (msg) => {
+        const req = info10.httpModule.request(info10.options, (msg) => {
           const res = new HttpClientResponse(msg);
           handleResult(void 0, res);
         });
@@ -1387,7 +1387,7 @@ var require_lib = __commonJS({
           if (socket) {
             socket.end();
           }
-          handleResult(new Error(`Request timeout: ${info11.options.path}`));
+          handleResult(new Error(`Request timeout: ${info10.options.path}`));
         });
         req.on("error", function(err) {
           handleResult(err);
@@ -1409,27 +1409,27 @@ var require_lib = __commonJS({
         return this._getAgent(parsedUrl);
       }
       _prepareRequest(method, requestUrl, headers) {
-        const info11 = {};
-        info11.parsedUrl = requestUrl;
-        const usingSsl = info11.parsedUrl.protocol === "https:";
-        info11.httpModule = usingSsl ? https : http;
+        const info10 = {};
+        info10.parsedUrl = requestUrl;
+        const usingSsl = info10.parsedUrl.protocol === "https:";
+        info10.httpModule = usingSsl ? https : http;
         const defaultPort = usingSsl ? 443 : 80;
-        info11.options = {};
-        info11.options.host = info11.parsedUrl.hostname;
-        info11.options.port = info11.parsedUrl.port ? parseInt(info11.parsedUrl.port) : defaultPort;
-        info11.options.path = (info11.parsedUrl.pathname || "") + (info11.parsedUrl.search || "");
-        info11.options.method = method;
-        info11.options.headers = this._mergeHeaders(headers);
+        info10.options = {};
+        info10.options.host = info10.parsedUrl.hostname;
+        info10.options.port = info10.parsedUrl.port ? parseInt(info10.parsedUrl.port) : defaultPort;
+        info10.options.path = (info10.parsedUrl.pathname || "") + (info10.parsedUrl.search || "");
+        info10.options.method = method;
+        info10.options.headers = this._mergeHeaders(headers);
         if (this.userAgent != null) {
-          info11.options.headers["user-agent"] = this.userAgent;
+          info10.options.headers["user-agent"] = this.userAgent;
         }
-        info11.options.agent = this._getAgent(info11.parsedUrl);
+        info10.options.agent = this._getAgent(info10.parsedUrl);
         if (this.handlers) {
           for (const handler of this.handlers) {
-            handler.prepareRequest(info11.options);
+            handler.prepareRequest(info10.options);
           }
         }
-        return info11;
+        return info10;
       }
       _mergeHeaders(headers) {
         if (this.requestOptions && this.requestOptions.headers) {
@@ -2137,10 +2137,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       command_1.issueCommand("notice", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
     exports.notice = notice;
-    function info11(message) {
+    function info10(message) {
       process.stdout.write(message + os6.EOL);
     }
-    exports.info = info11;
+    exports.info = info10;
     function startGroup(name) {
       command_1.issue("group", name);
     }
@@ -3285,7 +3285,7 @@ var require_internal_glob_options_helper = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getOptions = void 0;
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     function getOptions(copy) {
       const result = {
         followSymbolicLinks: true,
@@ -3295,15 +3295,15 @@ var require_internal_glob_options_helper = __commonJS({
       if (copy) {
         if (typeof copy.followSymbolicLinks === "boolean") {
           result.followSymbolicLinks = copy.followSymbolicLinks;
-          core15.debug(`followSymbolicLinks '${result.followSymbolicLinks}'`);
+          core14.debug(`followSymbolicLinks '${result.followSymbolicLinks}'`);
         }
         if (typeof copy.implicitDescendants === "boolean") {
           result.implicitDescendants = copy.implicitDescendants;
-          core15.debug(`implicitDescendants '${result.implicitDescendants}'`);
+          core14.debug(`implicitDescendants '${result.implicitDescendants}'`);
         }
         if (typeof copy.omitBrokenSymbolicLinks === "boolean") {
           result.omitBrokenSymbolicLinks = copy.omitBrokenSymbolicLinks;
-          core15.debug(`omitBrokenSymbolicLinks '${result.omitBrokenSymbolicLinks}'`);
+          core14.debug(`omitBrokenSymbolicLinks '${result.omitBrokenSymbolicLinks}'`);
         }
       }
       return result;
@@ -4784,7 +4784,7 @@ var require_internal_globber = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DefaultGlobber = void 0;
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     var fs6 = __importStar(require("fs"));
     var globOptionsHelper = __importStar(require_internal_glob_options_helper());
     var path10 = __importStar(require("path"));
@@ -4837,7 +4837,7 @@ var require_internal_globber = __commonJS({
           }
           const stack = [];
           for (const searchPath of patternHelper.getSearchPaths(patterns)) {
-            core15.debug(`Search path '${searchPath}'`);
+            core14.debug(`Search path '${searchPath}'`);
             try {
               yield __await(fs6.promises.lstat(searchPath));
             } catch (err) {
@@ -4905,7 +4905,7 @@ var require_internal_globber = __commonJS({
             } catch (err) {
               if (err.code === "ENOENT") {
                 if (options.omitBrokenSymbolicLinks) {
-                  core15.debug(`Broken symlink '${item.path}'`);
+                  core14.debug(`Broken symlink '${item.path}'`);
                   return void 0;
                 }
                 throw new Error(`No information found for the path '${item.path}'. This may indicate a broken symbolic link.`);
@@ -4921,7 +4921,7 @@ var require_internal_globber = __commonJS({
               traversalChain.pop();
             }
             if (traversalChain.some((x) => x === realPath)) {
-              core15.debug(`Symlink cycle detected for path '${item.path}' and realpath '${realPath}'`);
+              core14.debug(`Symlink cycle detected for path '${item.path}' and realpath '${realPath}'`);
               return void 0;
             }
             traversalChain.push(realPath);
@@ -6345,7 +6345,7 @@ var require_cacheUtils = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     var exec15 = __importStar(require_exec());
     var glob4 = __importStar(require_glob());
     var io4 = __importStar(require_io());
@@ -6395,7 +6395,7 @@ var require_cacheUtils = __commonJS({
           for (var _c = __asyncValues(globber.globGenerator()), _d; _d = yield _c.next(), !_d.done; ) {
             const file = _d.value;
             const relativeFile = path10.relative(workspace, file).replace(new RegExp(`\\${path10.sep}`, "g"), "/");
-            core15.debug(`Matched: ${relativeFile}`);
+            core14.debug(`Matched: ${relativeFile}`);
             if (relativeFile === "") {
               paths.push(".");
             } else {
@@ -6425,7 +6425,7 @@ var require_cacheUtils = __commonJS({
     exports.unlinkFile = unlinkFile;
     function getVersion(app) {
       return __awaiter(this, void 0, void 0, function* () {
-        core15.debug(`Checking ${app} --version`);
+        core14.debug(`Checking ${app} --version`);
         let versionOutput = "";
         try {
           yield exec15.exec(`${app} --version`, [], {
@@ -6437,10 +6437,10 @@ var require_cacheUtils = __commonJS({
             }
           });
         } catch (err) {
-          core15.debug(err.message);
+          core14.debug(err.message);
         }
         versionOutput = versionOutput.trim();
-        core15.debug(versionOutput);
+        core14.debug(versionOutput);
         return versionOutput;
       });
     }
@@ -42042,9 +42042,9 @@ var require_dist8 = __commonJS({
       return [msRestRuntime];
     }
     function getUserAgentString(telemetryInfo, keySeparator = " ", valueSeparator = "/") {
-      return telemetryInfo.map((info11) => {
-        const value = info11.value ? `${valueSeparator}${info11.value}` : "";
-        return `${info11.key}${value}`;
+      return telemetryInfo.map((info10) => {
+        const value = info10.value ? `${valueSeparator}${info10.value}` : "";
+        return `${info10.key}${value}`;
       }).join(keySeparator);
     }
     var getDefaultUserAgentHeaderName = getDefaultUserAgentKey;
@@ -64186,7 +64186,7 @@ var require_requestUtils = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     var http_client_1 = require_lib();
     var constants_1 = require_constants();
     function isSuccessStatusCode(statusCode) {
@@ -64247,9 +64247,9 @@ var require_requestUtils = __commonJS({
             isRetryable = isRetryableStatusCode(statusCode);
             errorMessage = `Cache service responded with ${statusCode}`;
           }
-          core15.debug(`${name} - Attempt ${attempt} of ${maxAttempts} failed with error: ${errorMessage}`);
+          core14.debug(`${name} - Attempt ${attempt} of ${maxAttempts} failed with error: ${errorMessage}`);
           if (!isRetryable) {
-            core15.debug(`${name} - Error is not retryable`);
+            core14.debug(`${name} - Error is not retryable`);
             break;
           }
           yield sleep(delay);
@@ -64336,7 +64336,7 @@ var require_downloadUtils = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     var http_client_1 = require_lib();
     var storage_blob_1 = require_dist11();
     var buffer = __importStar(require("buffer"));
@@ -64368,7 +64368,7 @@ var require_downloadUtils = __commonJS({
         this.segmentIndex = this.segmentIndex + 1;
         this.segmentSize = segmentSize;
         this.receivedBytes = 0;
-        core15.debug(`Downloading segment at offset ${this.segmentOffset} with length ${this.segmentSize}...`);
+        core14.debug(`Downloading segment at offset ${this.segmentOffset} with length ${this.segmentSize}...`);
       }
       setReceivedBytes(receivedBytes) {
         this.receivedBytes = receivedBytes;
@@ -64387,7 +64387,7 @@ var require_downloadUtils = __commonJS({
         const percentage = (100 * (transferredBytes / this.contentLength)).toFixed(1);
         const elapsedTime = Date.now() - this.startTime;
         const downloadSpeed = (transferredBytes / (1024 * 1024) / (elapsedTime / 1e3)).toFixed(1);
-        core15.info(`Received ${transferredBytes} of ${this.contentLength} (${percentage}%), ${downloadSpeed} MBs/sec`);
+        core14.info(`Received ${transferredBytes} of ${this.contentLength} (${percentage}%), ${downloadSpeed} MBs/sec`);
         if (this.isDone()) {
           this.displayedComplete = true;
         }
@@ -64424,7 +64424,7 @@ var require_downloadUtils = __commonJS({
         }));
         downloadResponse.message.socket.setTimeout(constants_1.SocketTimeout, () => {
           downloadResponse.message.destroy();
-          core15.debug(`Aborting download, socket timed out after ${constants_1.SocketTimeout} ms`);
+          core14.debug(`Aborting download, socket timed out after ${constants_1.SocketTimeout} ms`);
         });
         yield pipeResponseToStream(downloadResponse, writeStream);
         const contentLengthHeader = downloadResponse.message.headers["content-length"];
@@ -64435,7 +64435,7 @@ var require_downloadUtils = __commonJS({
             throw new Error(`Incomplete download. Expected file size: ${expectedLength}, actual file size: ${actualLength}`);
           }
         } else {
-          core15.debug("Unable to validate download, no Content-Length header");
+          core14.debug("Unable to validate download, no Content-Length header");
         }
       });
     }
@@ -64451,7 +64451,7 @@ var require_downloadUtils = __commonJS({
         const properties = yield client.getProperties();
         const contentLength = (_a = properties.contentLength) !== null && _a !== void 0 ? _a : -1;
         if (contentLength < 0) {
-          core15.debug("Unable to determine content length, downloading file with http-client...");
+          core14.debug("Unable to determine content length, downloading file with http-client...");
           yield downloadCacheHttpClient(archiveLocation, archivePath);
         } else {
           const maxSegmentSize = Math.min(2147483647, buffer.constants.MAX_LENGTH);
@@ -64515,7 +64515,7 @@ var require_options = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     function getUploadOptions(copy) {
       const result = {
         uploadConcurrency: 4,
@@ -64529,8 +64529,8 @@ var require_options = __commonJS({
           result.uploadChunkSize = copy.uploadChunkSize;
         }
       }
-      core15.debug(`Upload concurrency: ${result.uploadConcurrency}`);
-      core15.debug(`Upload chunk size: ${result.uploadChunkSize}`);
+      core14.debug(`Upload concurrency: ${result.uploadConcurrency}`);
+      core14.debug(`Upload chunk size: ${result.uploadChunkSize}`);
       return result;
     }
     exports.getUploadOptions = getUploadOptions;
@@ -64559,11 +64559,11 @@ var require_options = __commonJS({
       if (segmentDownloadTimeoutMins && !isNaN(Number(segmentDownloadTimeoutMins)) && isFinite(Number(segmentDownloadTimeoutMins))) {
         result.segmentTimeoutInMs = Number(segmentDownloadTimeoutMins) * 60 * 1e3;
       }
-      core15.debug(`Use Azure SDK: ${result.useAzureSdk}`);
-      core15.debug(`Download concurrency: ${result.downloadConcurrency}`);
-      core15.debug(`Request timeout (ms): ${result.timeoutInMs}`);
-      core15.debug(`Cache segment download timeout mins env var: ${process.env["SEGMENT_DOWNLOAD_TIMEOUT_MINS"]}`);
-      core15.debug(`Segment download timeout (ms): ${result.segmentTimeoutInMs}`);
+      core14.debug(`Use Azure SDK: ${result.useAzureSdk}`);
+      core14.debug(`Download concurrency: ${result.downloadConcurrency}`);
+      core14.debug(`Request timeout (ms): ${result.timeoutInMs}`);
+      core14.debug(`Cache segment download timeout mins env var: ${process.env["SEGMENT_DOWNLOAD_TIMEOUT_MINS"]}`);
+      core14.debug(`Segment download timeout (ms): ${result.segmentTimeoutInMs}`);
       return result;
     }
     exports.getDownloadOptions = getDownloadOptions;
@@ -64614,7 +64614,7 @@ var require_cacheHttpClient = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     var http_client_1 = require_lib();
     var auth_1 = require_auth();
     var crypto = __importStar(require("crypto"));
@@ -64632,7 +64632,7 @@ var require_cacheHttpClient = __commonJS({
         throw new Error("Cache Service Url not found, unable to restore cache.");
       }
       const url = `${baseUrl}_apis/artifactcache/${resource}`;
-      core15.debug(`Resource Url: ${url}`);
+      core14.debug(`Resource Url: ${url}`);
       return url;
     }
     function createAcceptHeader(type, apiVersion) {
@@ -64676,9 +64676,9 @@ var require_cacheHttpClient = __commonJS({
         if (!cacheDownloadUrl) {
           throw new Error("Cache not found.");
         }
-        core15.setSecret(cacheDownloadUrl);
-        core15.debug(`Cache Result:`);
-        core15.debug(JSON.stringify(cacheResult));
+        core14.setSecret(cacheDownloadUrl);
+        core14.debug(`Cache Result:`);
+        core14.debug(JSON.stringify(cacheResult));
         return cacheResult;
       });
     }
@@ -64716,7 +64716,7 @@ var require_cacheHttpClient = __commonJS({
     }
     function uploadChunk(httpClient, resourceUrl, openStream, start, end) {
       return __awaiter(this, void 0, void 0, function* () {
-        core15.debug(`Uploading chunk of size ${end - start + 1} bytes at offset ${start} with content range: ${getContentRange(start, end)}`);
+        core14.debug(`Uploading chunk of size ${end - start + 1} bytes at offset ${start} with content range: ${getContentRange(start, end)}`);
         const additionalHeaders = {
           "Content-Type": "application/octet-stream",
           "Content-Range": getContentRange(start, end)
@@ -64738,7 +64738,7 @@ var require_cacheHttpClient = __commonJS({
         const concurrency = utils2.assertDefined("uploadConcurrency", uploadOptions.uploadConcurrency);
         const maxChunkSize = utils2.assertDefined("uploadChunkSize", uploadOptions.uploadChunkSize);
         const parallelUploads = [...new Array(concurrency).keys()];
-        core15.debug("Awaiting all uploads");
+        core14.debug("Awaiting all uploads");
         let offset = 0;
         try {
           yield Promise.all(parallelUploads.map(() => __awaiter(this, void 0, void 0, function* () {
@@ -64774,16 +64774,16 @@ var require_cacheHttpClient = __commonJS({
     function saveCache(cacheId, archivePath, options) {
       return __awaiter(this, void 0, void 0, function* () {
         const httpClient = createHttpClient();
-        core15.debug("Upload cache");
+        core14.debug("Upload cache");
         yield uploadFile(httpClient, cacheId, archivePath, options);
-        core15.debug("Commiting cache");
+        core14.debug("Commiting cache");
         const cacheSize = utils2.getArchiveFileSizeInBytes(archivePath);
-        core15.info(`Cache Size: ~${Math.round(cacheSize / (1024 * 1024))} MB (${cacheSize} B)`);
+        core14.info(`Cache Size: ~${Math.round(cacheSize / (1024 * 1024))} MB (${cacheSize} B)`);
         const commitCacheResponse = yield commitCache(httpClient, cacheId, cacheSize);
         if (!requestUtils_1.isSuccessStatusCode(commitCacheResponse.statusCode)) {
           throw new Error(`Cache service responded with ${commitCacheResponse.statusCode} during commit cache.`);
         }
-        core15.info("Cache saved successfully");
+        core14.info("Cache saved successfully");
       });
     }
     exports.saveCache = saveCache;
@@ -65006,7 +65006,7 @@ var require_cache = __commonJS({
       return result;
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     var path10 = __importStar(require("path"));
     var utils2 = __importStar(require_cacheUtils());
     var cacheHttpClient = __importStar(require_cacheHttpClient());
@@ -65050,8 +65050,8 @@ var require_cache = __commonJS({
         checkPaths(paths);
         restoreKeys = restoreKeys || [];
         const keys = [primaryKey, ...restoreKeys];
-        core15.debug("Resolved Keys:");
-        core15.debug(JSON.stringify(keys));
+        core14.debug("Resolved Keys:");
+        core14.debug(JSON.stringify(keys));
         if (keys.length > 10) {
           throw new ValidationError(`Key Validation Error: Keys are limited to a maximum of 10.`);
         }
@@ -65068,28 +65068,28 @@ var require_cache = __commonJS({
             return void 0;
           }
           archivePath = path10.join(yield utils2.createTempDirectory(), utils2.getCacheFileName(compressionMethod));
-          core15.debug(`Archive Path: ${archivePath}`);
+          core14.debug(`Archive Path: ${archivePath}`);
           yield cacheHttpClient.downloadCache(cacheEntry.archiveLocation, archivePath, options);
-          if (core15.isDebug()) {
+          if (core14.isDebug()) {
             yield tar_1.listTar(archivePath, compressionMethod);
           }
           const archiveFileSize = utils2.getArchiveFileSizeInBytes(archivePath);
-          core15.info(`Cache Size: ~${Math.round(archiveFileSize / (1024 * 1024))} MB (${archiveFileSize} B)`);
+          core14.info(`Cache Size: ~${Math.round(archiveFileSize / (1024 * 1024))} MB (${archiveFileSize} B)`);
           yield tar_1.extractTar(archivePath, compressionMethod);
-          core15.info("Cache restored successfully");
+          core14.info("Cache restored successfully");
           return cacheEntry.cacheKey;
         } catch (error2) {
           const typedError = error2;
           if (typedError.name === ValidationError.name) {
             throw error2;
           } else {
-            core15.warning(`Failed to restore: ${error2.message}`);
+            core14.warning(`Failed to restore: ${error2.message}`);
           }
         } finally {
           try {
             yield utils2.unlinkFile(archivePath);
           } catch (error2) {
-            core15.debug(`Failed to delete archive: ${error2}`);
+            core14.debug(`Failed to delete archive: ${error2}`);
           }
         }
         return void 0;
@@ -65104,26 +65104,26 @@ var require_cache = __commonJS({
         const compressionMethod = yield utils2.getCompressionMethod();
         let cacheId = -1;
         const cachePaths = yield utils2.resolvePaths(paths);
-        core15.debug("Cache Paths:");
-        core15.debug(`${JSON.stringify(cachePaths)}`);
+        core14.debug("Cache Paths:");
+        core14.debug(`${JSON.stringify(cachePaths)}`);
         if (cachePaths.length === 0) {
           throw new Error(`Path Validation Error: Path(s) specified in the action for caching do(es) not exist, hence no cache is being saved.`);
         }
         const archiveFolder = yield utils2.createTempDirectory();
         const archivePath = path10.join(archiveFolder, utils2.getCacheFileName(compressionMethod));
-        core15.debug(`Archive Path: ${archivePath}`);
+        core14.debug(`Archive Path: ${archivePath}`);
         try {
           yield tar_1.createTar(archiveFolder, cachePaths, compressionMethod);
-          if (core15.isDebug()) {
+          if (core14.isDebug()) {
             yield tar_1.listTar(archivePath, compressionMethod);
           }
           const fileSizeLimit = 10 * 1024 * 1024 * 1024;
           const archiveFileSize = utils2.getArchiveFileSizeInBytes(archivePath);
-          core15.debug(`File Size: ${archiveFileSize}`);
+          core14.debug(`File Size: ${archiveFileSize}`);
           if (archiveFileSize > fileSizeLimit && !utils2.isGhes()) {
             throw new Error(`Cache size of ~${Math.round(archiveFileSize / (1024 * 1024))} MB (${archiveFileSize} B) is over the 10GB limit, not saving cache.`);
           }
-          core15.debug("Reserving Cache");
+          core14.debug("Reserving Cache");
           const reserveCacheResponse = yield cacheHttpClient.reserveCache(key, paths, {
             compressionMethod,
             cacheSize: archiveFileSize
@@ -65135,22 +65135,22 @@ var require_cache = __commonJS({
           } else {
             throw new ReserveCacheError(`Unable to reserve cache with key ${key}, another job may be creating this cache. More details: ${(_e = reserveCacheResponse === null || reserveCacheResponse === void 0 ? void 0 : reserveCacheResponse.error) === null || _e === void 0 ? void 0 : _e.message}`);
           }
-          core15.debug(`Saving Cache (ID: ${cacheId})`);
+          core14.debug(`Saving Cache (ID: ${cacheId})`);
           yield cacheHttpClient.saveCache(cacheId, archivePath, options);
         } catch (error2) {
           const typedError = error2;
           if (typedError.name === ValidationError.name) {
             throw error2;
           } else if (typedError.name === ReserveCacheError.name) {
-            core15.info(`Failed to save: ${typedError.message}`);
+            core14.info(`Failed to save: ${typedError.message}`);
           } else {
-            core15.warning(`Failed to save: ${typedError.message}`);
+            core14.warning(`Failed to save: ${typedError.message}`);
           }
         } finally {
           try {
             yield utils2.unlinkFile(archivePath);
           } catch (error2) {
-            core15.debug(`Failed to delete archive: ${error2}`);
+            core14.debug(`Failed to delete archive: ${error2}`);
           }
         }
         return cacheId;
@@ -67902,12 +67902,12 @@ var require_http_client = __commonJS({
           throw new Error("Client has already been disposed.");
         }
         let parsedUrl = new URL(requestUrl);
-        let info11 = this._prepareRequest(verb, parsedUrl, headers);
+        let info10 = this._prepareRequest(verb, parsedUrl, headers);
         let maxTries = this._allowRetries && RetryableHttpVerbs.indexOf(verb) != -1 ? this._maxRetries + 1 : 1;
         let numTries = 0;
         let response;
         while (numTries < maxTries) {
-          response = await this.requestRaw(info11, data);
+          response = await this.requestRaw(info10, data);
           if (response && response.message && response.message.statusCode === HttpCodes.Unauthorized) {
             let authenticationHandler;
             for (let i = 0; i < this.handlers.length; i++) {
@@ -67917,7 +67917,7 @@ var require_http_client = __commonJS({
               }
             }
             if (authenticationHandler) {
-              return authenticationHandler.handleAuthentication(this, info11, data);
+              return authenticationHandler.handleAuthentication(this, info10, data);
             } else {
               return response;
             }
@@ -67940,8 +67940,8 @@ var require_http_client = __commonJS({
                 }
               }
             }
-            info11 = this._prepareRequest(verb, parsedRedirectUrl, headers);
-            response = await this.requestRaw(info11, data);
+            info10 = this._prepareRequest(verb, parsedRedirectUrl, headers);
+            response = await this.requestRaw(info10, data);
             redirectsRemaining--;
           }
           if (HttpResponseRetryCodes.indexOf(response.message.statusCode) == -1) {
@@ -67961,7 +67961,7 @@ var require_http_client = __commonJS({
         }
         this._disposed = true;
       }
-      requestRaw(info11, data) {
+      requestRaw(info10, data) {
         return new Promise((resolve, reject) => {
           let callbackForResult = function(err, res) {
             if (err) {
@@ -67969,13 +67969,13 @@ var require_http_client = __commonJS({
             }
             resolve(res);
           };
-          this.requestRawWithCallback(info11, data, callbackForResult);
+          this.requestRawWithCallback(info10, data, callbackForResult);
         });
       }
-      requestRawWithCallback(info11, data, onResult) {
+      requestRawWithCallback(info10, data, onResult) {
         let socket;
         if (typeof data === "string") {
-          info11.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
+          info10.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
         }
         let callbackCalled = false;
         let handleResult = (err, res) => {
@@ -67984,7 +67984,7 @@ var require_http_client = __commonJS({
             onResult(err, res);
           }
         };
-        let req = info11.httpModule.request(info11.options, (msg) => {
+        let req = info10.httpModule.request(info10.options, (msg) => {
           let res = new HttpClientResponse(msg);
           handleResult(null, res);
         });
@@ -67995,7 +67995,7 @@ var require_http_client = __commonJS({
           if (socket) {
             socket.end();
           }
-          handleResult(new Error("Request timeout: " + info11.options.path), null);
+          handleResult(new Error("Request timeout: " + info10.options.path), null);
         });
         req.on("error", function(err) {
           handleResult(err, null);
@@ -68017,27 +68017,27 @@ var require_http_client = __commonJS({
         return this._getAgent(parsedUrl);
       }
       _prepareRequest(method, requestUrl, headers) {
-        const info11 = {};
-        info11.parsedUrl = requestUrl;
-        const usingSsl = info11.parsedUrl.protocol === "https:";
-        info11.httpModule = usingSsl ? https : http;
+        const info10 = {};
+        info10.parsedUrl = requestUrl;
+        const usingSsl = info10.parsedUrl.protocol === "https:";
+        info10.httpModule = usingSsl ? https : http;
         const defaultPort = usingSsl ? 443 : 80;
-        info11.options = {};
-        info11.options.host = info11.parsedUrl.hostname;
-        info11.options.port = info11.parsedUrl.port ? parseInt(info11.parsedUrl.port) : defaultPort;
-        info11.options.path = (info11.parsedUrl.pathname || "") + (info11.parsedUrl.search || "");
-        info11.options.method = method;
-        info11.options.headers = this._mergeHeaders(headers);
+        info10.options = {};
+        info10.options.host = info10.parsedUrl.hostname;
+        info10.options.port = info10.parsedUrl.port ? parseInt(info10.parsedUrl.port) : defaultPort;
+        info10.options.path = (info10.parsedUrl.pathname || "") + (info10.parsedUrl.search || "");
+        info10.options.method = method;
+        info10.options.headers = this._mergeHeaders(headers);
         if (this.userAgent != null) {
-          info11.options.headers["user-agent"] = this.userAgent;
+          info10.options.headers["user-agent"] = this.userAgent;
         }
-        info11.options.agent = this._getAgent(info11.parsedUrl);
+        info10.options.agent = this._getAgent(info10.parsedUrl);
         if (this.handlers) {
           this.handlers.forEach((handler) => {
-            handler.prepareRequest(info11.options);
+            handler.prepareRequest(info10.options);
           });
         }
-        return info11;
+        return info10;
       }
       _mergeHeaders(headers) {
         const lowercaseKeys = (obj) => Object.keys(obj).reduce((c, k) => (c[k.toLowerCase()] = obj[k], c), {});
@@ -68235,7 +68235,7 @@ var require_retry_helper = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.RetryHelper = void 0;
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     var RetryHelper = class {
       constructor(maxAttempts, minSeconds, maxSeconds) {
         if (maxAttempts < 1) {
@@ -68258,10 +68258,10 @@ var require_retry_helper = __commonJS({
               if (isRetryable && !isRetryable(err)) {
                 throw err;
               }
-              core15.info(err.message);
+              core14.info(err.message);
             }
             const seconds = this.getSleepAmount();
-            core15.info(`Waiting ${seconds} seconds before trying again`);
+            core14.info(`Waiting ${seconds} seconds before trying again`);
             yield this.sleep(seconds);
             attempt++;
           }
@@ -68345,7 +68345,7 @@ var require_tool_cache = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.evaluateVersions = exports.isExplicitVersion = exports.findFromManifest = exports.getManifestFromRepo = exports.findAllVersions = exports.find = exports.cacheFile = exports.cacheDir = exports.extractZip = exports.extractXar = exports.extractTar = exports.extract7z = exports.downloadTool = exports.HTTPError = void 0;
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     var io4 = __importStar(require_io());
     var fs6 = __importStar(require("fs"));
     var mm = __importStar(require_manifest());
@@ -68374,8 +68374,8 @@ var require_tool_cache = __commonJS({
       return __awaiter(this, void 0, void 0, function* () {
         dest = dest || path10.join(_getTempDirectory(), v4_1.default());
         yield io4.mkdirP(path10.dirname(dest));
-        core15.debug(`Downloading ${url}`);
-        core15.debug(`Destination ${dest}`);
+        core14.debug(`Downloading ${url}`);
+        core14.debug(`Destination ${dest}`);
         const maxAttempts = 3;
         const minSeconds = _getGlobal("TEST_DOWNLOAD_TOOL_RETRY_MIN_SECONDS", 10);
         const maxSeconds = _getGlobal("TEST_DOWNLOAD_TOOL_RETRY_MAX_SECONDS", 20);
@@ -68402,7 +68402,7 @@ var require_tool_cache = __commonJS({
           allowRetries: false
         });
         if (auth) {
-          core15.debug("set auth");
+          core14.debug("set auth");
           if (headers === void 0) {
             headers = {};
           }
@@ -68411,7 +68411,7 @@ var require_tool_cache = __commonJS({
         const response = yield http.get(url, headers);
         if (response.message.statusCode !== 200) {
           const err = new HTTPError(response.message.statusCode);
-          core15.debug(`Failed to download from "${url}". Code(${response.message.statusCode}) Message(${response.message.statusMessage})`);
+          core14.debug(`Failed to download from "${url}". Code(${response.message.statusCode}) Message(${response.message.statusMessage})`);
           throw err;
         }
         const pipeline = util.promisify(stream.pipeline);
@@ -68420,16 +68420,16 @@ var require_tool_cache = __commonJS({
         let succeeded = false;
         try {
           yield pipeline(readStream, fs6.createWriteStream(dest));
-          core15.debug("download complete");
+          core14.debug("download complete");
           succeeded = true;
           return dest;
         } finally {
           if (!succeeded) {
-            core15.debug("download failed");
+            core14.debug("download failed");
             try {
               yield io4.rmRF(dest);
             } catch (err) {
-              core15.debug(`Failed to delete '${dest}'. ${err.message}`);
+              core14.debug(`Failed to delete '${dest}'. ${err.message}`);
             }
           }
         }
@@ -68444,7 +68444,7 @@ var require_tool_cache = __commonJS({
         process.chdir(dest);
         if (_7zPath) {
           try {
-            const logLevel = core15.isDebug() ? "-bb1" : "-bb0";
+            const logLevel = core14.isDebug() ? "-bb1" : "-bb0";
             const args = [
               "x",
               logLevel,
@@ -68494,7 +68494,7 @@ var require_tool_cache = __commonJS({
           throw new Error("parameter 'file' is required");
         }
         dest = yield _createExtractFolder(dest);
-        core15.debug("Checking tar --version");
+        core14.debug("Checking tar --version");
         let versionOutput = "";
         yield exec_1.exec("tar --version", [], {
           ignoreReturnCode: true,
@@ -68504,7 +68504,7 @@ var require_tool_cache = __commonJS({
             stderr: (data) => versionOutput += data.toString()
           }
         });
-        core15.debug(versionOutput.trim());
+        core14.debug(versionOutput.trim());
         const isGnuTar = versionOutput.toUpperCase().includes("GNU TAR");
         let args;
         if (flags instanceof Array) {
@@ -68512,7 +68512,7 @@ var require_tool_cache = __commonJS({
         } else {
           args = [flags];
         }
-        if (core15.isDebug() && !flags.includes("v")) {
+        if (core14.isDebug() && !flags.includes("v")) {
           args.push("-v");
         }
         let destArg = dest;
@@ -68544,7 +68544,7 @@ var require_tool_cache = __commonJS({
           args = [flags];
         }
         args.push("-x", "-C", dest, "-f", file);
-        if (core15.isDebug()) {
+        if (core14.isDebug()) {
           args.push("-v");
         }
         const xarPath = yield io4.which("xar", true);
@@ -68589,7 +68589,7 @@ var require_tool_cache = __commonJS({
             "-Command",
             pwshCommand
           ];
-          core15.debug(`Using pwsh at path: ${pwshPath}`);
+          core14.debug(`Using pwsh at path: ${pwshPath}`);
           yield exec_1.exec(`"${pwshPath}"`, args);
         } else {
           const powershellCommand = [
@@ -68609,7 +68609,7 @@ var require_tool_cache = __commonJS({
             powershellCommand
           ];
           const powershellPath = yield io4.which("powershell", true);
-          core15.debug(`Using powershell at path: ${powershellPath}`);
+          core14.debug(`Using powershell at path: ${powershellPath}`);
           yield exec_1.exec(`"${powershellPath}"`, args);
         }
       });
@@ -68618,7 +68618,7 @@ var require_tool_cache = __commonJS({
       return __awaiter(this, void 0, void 0, function* () {
         const unzipPath = yield io4.which("unzip", true);
         const args = [file];
-        if (!core15.isDebug()) {
+        if (!core14.isDebug()) {
           args.unshift("-q");
         }
         args.unshift("-o");
@@ -68629,8 +68629,8 @@ var require_tool_cache = __commonJS({
       return __awaiter(this, void 0, void 0, function* () {
         version = semver5.clean(version) || version;
         arch2 = arch2 || os6.arch();
-        core15.debug(`Caching tool ${tool} ${version} ${arch2}`);
-        core15.debug(`source dir: ${sourceDir}`);
+        core14.debug(`Caching tool ${tool} ${version} ${arch2}`);
+        core14.debug(`source dir: ${sourceDir}`);
         if (!fs6.statSync(sourceDir).isDirectory()) {
           throw new Error("sourceDir is not a directory");
         }
@@ -68648,14 +68648,14 @@ var require_tool_cache = __commonJS({
       return __awaiter(this, void 0, void 0, function* () {
         version = semver5.clean(version) || version;
         arch2 = arch2 || os6.arch();
-        core15.debug(`Caching tool ${tool} ${version} ${arch2}`);
-        core15.debug(`source file: ${sourceFile}`);
+        core14.debug(`Caching tool ${tool} ${version} ${arch2}`);
+        core14.debug(`source file: ${sourceFile}`);
         if (!fs6.statSync(sourceFile).isFile()) {
           throw new Error("sourceFile is not a file");
         }
         const destFolder = yield _createToolPath(tool, version, arch2);
         const destPath = path10.join(destFolder, targetFile);
-        core15.debug(`destination file ${destPath}`);
+        core14.debug(`destination file ${destPath}`);
         yield io4.cp(sourceFile, destPath);
         _completeToolPath(tool, version, arch2);
         return destFolder;
@@ -68679,12 +68679,12 @@ var require_tool_cache = __commonJS({
       if (versionSpec) {
         versionSpec = semver5.clean(versionSpec) || "";
         const cachePath = path10.join(_getCacheDirectory(), toolName, versionSpec, arch2);
-        core15.debug(`checking cache: ${cachePath}`);
+        core14.debug(`checking cache: ${cachePath}`);
         if (fs6.existsSync(cachePath) && fs6.existsSync(`${cachePath}.complete`)) {
-          core15.debug(`Found tool in cache ${toolName} ${versionSpec} ${arch2}`);
+          core14.debug(`Found tool in cache ${toolName} ${versionSpec} ${arch2}`);
           toolPath = cachePath;
         } else {
-          core15.debug("not found");
+          core14.debug("not found");
         }
       }
       return toolPath;
@@ -68715,7 +68715,7 @@ var require_tool_cache = __commonJS({
         const http = new httpm2.HttpClient("tool-cache");
         const headers = {};
         if (auth) {
-          core15.debug("set auth");
+          core14.debug("set auth");
           headers.authorization = auth;
         }
         const response = yield http.getJson(treeUrl, headers);
@@ -68736,7 +68736,7 @@ var require_tool_cache = __commonJS({
           try {
             releases = JSON.parse(versionsRaw);
           } catch (_a) {
-            core15.debug("Invalid json");
+            core14.debug("Invalid json");
           }
         }
         return releases;
@@ -68762,7 +68762,7 @@ var require_tool_cache = __commonJS({
     function _createToolPath(tool, version, arch2) {
       return __awaiter(this, void 0, void 0, function* () {
         const folderPath = path10.join(_getCacheDirectory(), tool, semver5.clean(version) || version, arch2 || "");
-        core15.debug(`destination ${folderPath}`);
+        core14.debug(`destination ${folderPath}`);
         const markerPath = `${folderPath}.complete`;
         yield io4.rmRF(folderPath);
         yield io4.rmRF(markerPath);
@@ -68774,19 +68774,19 @@ var require_tool_cache = __commonJS({
       const folderPath = path10.join(_getCacheDirectory(), tool, semver5.clean(version) || version, arch2 || "");
       const markerPath = `${folderPath}.complete`;
       fs6.writeFileSync(markerPath, "");
-      core15.debug("finished caching tool");
+      core14.debug("finished caching tool");
     }
     function isExplicitVersion(versionSpec) {
       const c = semver5.clean(versionSpec) || "";
-      core15.debug(`isExplicit: ${c}`);
+      core14.debug(`isExplicit: ${c}`);
       const valid = semver5.valid(c) != null;
-      core15.debug(`explicit? ${valid}`);
+      core14.debug(`explicit? ${valid}`);
       return valid;
     }
     exports.isExplicitVersion = isExplicitVersion;
     function evaluateVersions(versions, versionSpec) {
       let version = "";
-      core15.debug(`evaluating ${versions.length} versions`);
+      core14.debug(`evaluating ${versions.length} versions`);
       versions = versions.sort((a, b) => {
         if (semver5.gt(a, b)) {
           return 1;
@@ -68802,9 +68802,9 @@ var require_tool_cache = __commonJS({
         }
       }
       if (version) {
-        core15.debug(`matched: ${version}`);
+        core14.debug(`matched: ${version}`);
       } else {
-        core15.debug("match not found");
+        core14.debug("match not found");
       }
       return version;
     }
@@ -68863,7 +68863,7 @@ var require_internal_glob_options_helper2 = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getOptions = void 0;
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     function getOptions(copy) {
       const result = {
         followSymbolicLinks: true,
@@ -68874,19 +68874,19 @@ var require_internal_glob_options_helper2 = __commonJS({
       if (copy) {
         if (typeof copy.followSymbolicLinks === "boolean") {
           result.followSymbolicLinks = copy.followSymbolicLinks;
-          core15.debug(`followSymbolicLinks '${result.followSymbolicLinks}'`);
+          core14.debug(`followSymbolicLinks '${result.followSymbolicLinks}'`);
         }
         if (typeof copy.implicitDescendants === "boolean") {
           result.implicitDescendants = copy.implicitDescendants;
-          core15.debug(`implicitDescendants '${result.implicitDescendants}'`);
+          core14.debug(`implicitDescendants '${result.implicitDescendants}'`);
         }
         if (typeof copy.matchDirectories === "boolean") {
           result.matchDirectories = copy.matchDirectories;
-          core15.debug(`matchDirectories '${result.matchDirectories}'`);
+          core14.debug(`matchDirectories '${result.matchDirectories}'`);
         }
         if (typeof copy.omitBrokenSymbolicLinks === "boolean") {
           result.omitBrokenSymbolicLinks = copy.omitBrokenSymbolicLinks;
-          core15.debug(`omitBrokenSymbolicLinks '${result.omitBrokenSymbolicLinks}'`);
+          core14.debug(`omitBrokenSymbolicLinks '${result.omitBrokenSymbolicLinks}'`);
         }
       }
       return result;
@@ -69552,7 +69552,7 @@ var require_internal_globber2 = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DefaultGlobber = void 0;
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     var fs6 = __importStar(require("fs"));
     var globOptionsHelper = __importStar(require_internal_glob_options_helper2());
     var path10 = __importStar(require("path"));
@@ -69605,7 +69605,7 @@ var require_internal_globber2 = __commonJS({
           }
           const stack = [];
           for (const searchPath of patternHelper.getSearchPaths(patterns)) {
-            core15.debug(`Search path '${searchPath}'`);
+            core14.debug(`Search path '${searchPath}'`);
             try {
               yield __await(fs6.promises.lstat(searchPath));
             } catch (err) {
@@ -69673,7 +69673,7 @@ var require_internal_globber2 = __commonJS({
             } catch (err) {
               if (err.code === "ENOENT") {
                 if (options.omitBrokenSymbolicLinks) {
-                  core15.debug(`Broken symlink '${item.path}'`);
+                  core14.debug(`Broken symlink '${item.path}'`);
                   return void 0;
                 }
                 throw new Error(`No information found for the path '${item.path}'. This may indicate a broken symbolic link.`);
@@ -69689,7 +69689,7 @@ var require_internal_globber2 = __commonJS({
               traversalChain.pop();
             }
             if (traversalChain.some((x) => x === realPath)) {
-              core15.debug(`Symlink cycle detected for path '${item.path}' and realpath '${realPath}'`);
+              core14.debug(`Symlink cycle detected for path '${item.path}' and realpath '${realPath}'`);
               return void 0;
             }
             traversalChain.push(realPath);
@@ -69784,7 +69784,7 @@ var require_internal_hash_files = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.hashFiles = void 0;
     var crypto = __importStar(require("crypto"));
-    var core15 = __importStar(require_core());
+    var core14 = __importStar(require_core());
     var fs6 = __importStar(require("fs"));
     var stream = __importStar(require("stream"));
     var util = __importStar(require("util"));
@@ -69800,13 +69800,13 @@ var require_internal_hash_files = __commonJS({
         try {
           for (var _c = __asyncValues(globber.globGenerator()), _d; _d = yield _c.next(), !_d.done; ) {
             const file = _d.value;
-            core15.debug(file);
+            core14.debug(file);
             if (!file.startsWith(`${githubWorkspace}${path10.sep}`)) {
-              core15.debug(`Ignore '${file}' since it is not under GITHUB_WORKSPACE.`);
+              core14.debug(`Ignore '${file}' since it is not under GITHUB_WORKSPACE.`);
               continue;
             }
             if (fs6.statSync(file).isDirectory()) {
-              core15.debug(`Skip directory '${file}'.`);
+              core14.debug(`Skip directory '${file}'.`);
               continue;
             }
             const hash = crypto.createHash("sha256");
@@ -69831,10 +69831,10 @@ var require_internal_hash_files = __commonJS({
         }
         result.end();
         if (hasMatch) {
-          core15.debug(`Found ${count} files to hash.`);
+          core14.debug(`Found ${count} files to hash.`);
           return result.digest("hex");
         } else {
-          core15.debug(`No matches found for glob`);
+          core14.debug(`No matches found for glob`);
           return "";
         }
       });
@@ -69899,11 +69899,7 @@ var require_glob2 = __commonJS({
 });
 
 // src/main.ts
-var core14 = __toESM(require_core());
-
-// src/poetry/install.ts
-var core2 = __toESM(require_core());
-var exec = __toESM(require_exec());
+var core13 = __toESM(require_core());
 
 // node_modules/setup-python/src/cache-distributions/cache-distributor.ts
 var cache = __toESM(require_cache());
@@ -69944,14 +69940,9 @@ var CacheDistributor = class {
 var cache_distributor_default = CacheDistributor;
 
 // src/poetry/install.ts
+var exec = __toESM(require_exec());
 function installDependencies(option) {
   return __async(this, null, function* () {
-    const primaryKey = core2.getState("cache-primary-key" /* STATE_CACHE_PRIMARY_KEY */);
-    const matchedKey = core2.getState("cache-matched-key" /* CACHE_MATCHED_KEY */);
-    if (primaryKey && primaryKey !== matchedKey) {
-      core2.info("Already cached python dependencies.");
-      return;
-    }
     let args = [];
     if (option.allExtras == "true")
       args.push("--all-extras");
@@ -69974,8 +69965,8 @@ function installDependencies(option) {
 }
 
 // src/poetry/setup.ts
-var io = __toESM(require_io());
 var exec6 = __toESM(require_exec());
+var io = __toESM(require_io());
 
 // src/poetry/config.ts
 var exec3 = __toESM(require_exec());
@@ -70010,7 +70001,7 @@ var import_node_os = require("node:os");
 var fs = __toESM(require("node:fs"));
 var exec5 = __toESM(require_exec());
 var cache2 = __toESM(require_cache());
-var core3 = __toESM(require_core());
+var core2 = __toESM(require_core());
 
 // src/util.ts
 var IS_WINDOWS = process.platform === "win32";
@@ -70073,33 +70064,33 @@ function getCacheDirectories() {
     const poetryBinFile = IS_WINDOWS ? `${pipxVariables["PIPX_BIN_DIR"]}\\poetry.exe` : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
     const poetryVenvDir = `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
     return {
-      POETRY_BIN_FILE: core3.toPlatformPath(poetryBinFile),
-      POETRY_VENV_DIR: core3.toPlatformPath(poetryVenvDir)
+      POETRY_BIN_FILE: core2.toPlatformPath(poetryBinFile),
+      POETRY_VENV_DIR: core2.toPlatformPath(poetryVenvDir)
     };
   });
 }
 function recreatePoetrySymlink(poetryBinFile, poetryVenvDir) {
   fs.unlinkSync(poetryBinFile);
-  const poetryExe = core3.toPlatformPath(`${poetryVenvDir}/Scripts/poetry.exe`);
+  const poetryExe = core2.toPlatformPath(`${poetryVenvDir}/Scripts/poetry.exe`);
   fs.symlinkSync(poetryExe, poetryBinFile);
 }
 function handleMatchResult(matchedKey, searchKey) {
   if (matchedKey) {
-    core3.saveState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */, matchedKey);
-    core3.info(`Poetry installation restored from key: ${matchedKey}`);
+    core2.saveState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */, matchedKey);
+    core2.info(`Poetry installation restored from key: ${matchedKey}`);
   } else {
-    core3.info("Poetry installation cache is not found.");
+    core2.info("Poetry installation cache is not found.");
   }
-  core3.setOutput("poetry-cache-hit", matchedKey === searchKey);
+  core2.setOutput("poetry-cache-hit", matchedKey === searchKey);
 }
 function tryRestoringCache(poetryVersion) {
   return __async(this, null, function* () {
-    core3.info("Skip to restore Poetry install on Windows.");
+    core2.info("Skip to restore Poetry install on Windows.");
     const searchKey = yield createCacheSearchKey(poetryVersion);
     const { POETRY_BIN_FILE, POETRY_VENV_DIR } = yield getCacheDirectories();
     const cachePath = [POETRY_BIN_FILE, POETRY_VENV_DIR];
-    core3.saveState("poetry-cache-paths" /* CACHE_PATHS */, cachePath);
-    core3.saveState("poetry-cache-search-key" /* CACHE_SEARCH_KEY */, searchKey);
+    core2.saveState("poetry-cache-paths" /* CACHE_PATHS */, cachePath);
+    core2.saveState("poetry-cache-search-key" /* CACHE_SEARCH_KEY */, searchKey);
     const matchedKey = yield cache2.restoreCache(cachePath, searchKey);
     if (matchedKey && IS_WINDOWS)
       recreatePoetrySymlink(POETRY_BIN_FILE, POETRY_VENV_DIR);
@@ -70133,10 +70124,10 @@ function setupPoetry(version, config) {
 var import_node_fs = __toESM(require("node:fs"));
 var import_node_os2 = __toESM(require("node:os"));
 var io3 = __toESM(require_io());
-var core13 = __toESM(require_core());
+var core12 = __toESM(require_core());
 
 // node_modules/setup-python/src/setup-python.ts
-var core12 = __toESM(require_core());
+var core11 = __toESM(require_core());
 
 // node_modules/setup-python/src/find-python.ts
 var os = __toESM(require("os"));
@@ -70144,7 +70135,7 @@ var path3 = __toESM(require("path"));
 
 // node_modules/setup-python/src/utils.ts
 var cache3 = __toESM(require_cache());
-var core4 = __toESM(require_core());
+var core3 = __toESM(require_core());
 var import_fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
 var semver = __toESM(require_semver4());
@@ -70204,7 +70195,7 @@ function isCacheFeatureAvailable() {
         "Caching is only supported on GHES version >= 3.5. If you are on a version >= 3.5, please check with your GHES admin if the Actions cache service is enabled or not."
       );
     } else {
-      core4.warning(
+      core3.warning(
         "The runner was not able to contact the cache service. Caching will be skipped"
       );
     }
@@ -70221,12 +70212,12 @@ async function getLinuxOSReleaseInfo() {
     }
   );
   const [osRelease, osVersion] = stdout.trim().split("\n");
-  core4.debug(`OS Release: ${osRelease}, Version: ${osVersion}`);
+  core3.debug(`OS Release: ${osRelease}, Version: ${osVersion}`);
   return `${osVersion}-${osRelease}`;
 }
 function logWarning(message) {
   const warningPrefix = "[warning]";
-  core4.info(`${warningPrefix}${message}`);
+  core3.info(`${warningPrefix}${message}`);
 }
 
 // node_modules/setup-python/src/find-python.ts
@@ -70234,10 +70225,10 @@ var semver2 = __toESM(require_semver4());
 
 // node_modules/setup-python/src/install-python.ts
 var path2 = __toESM(require("path"));
-var core5 = __toESM(require_core());
+var core4 = __toESM(require_core());
 var tc = __toESM(require_tool_cache());
 var exec8 = __toESM(require_exec());
-var TOKEN = core5.getInput("token");
+var TOKEN = core4.getInput("token");
 var AUTH = !TOKEN ? void 0 : `token ${TOKEN}`;
 var MANIFEST_REPO_OWNER = "actions";
 var MANIFEST_REPO_NAME = "python-versions";
@@ -70256,7 +70247,7 @@ async function findReleaseFromManifest(semanticVersionSpec, architecture, manife
   return foundRelease;
 }
 function getManifest() {
-  core5.debug(
+  core4.debug(
     `Getting manifest from ${MANIFEST_REPO_OWNER}/${MANIFEST_REPO_NAME}@${MANIFEST_REPO_BRANCH}`
   );
   return tc.getManifestFromRepo(
@@ -70276,10 +70267,10 @@ async function installPython(workingDirectory) {
     silent: true,
     listeners: {
       stdout: (data) => {
-        core5.info(data.toString().trim());
+        core4.info(data.toString().trim());
       },
       stderr: (data) => {
-        core5.error(data.toString().trim());
+        core4.error(data.toString().trim());
       }
     }
   };
@@ -70291,21 +70282,21 @@ async function installPython(workingDirectory) {
 }
 async function installCpythonFromRelease(release) {
   const downloadUrl = release.files[0].download_url;
-  core5.info(`Download from "${downloadUrl}"`);
+  core4.info(`Download from "${downloadUrl}"`);
   const pythonPath = await tc.downloadTool(downloadUrl, void 0, AUTH);
-  core5.info("Extract downloaded archive");
+  core4.info("Extract downloaded archive");
   let pythonExtractedFolder;
   if (IS_WINDOWS2) {
     pythonExtractedFolder = await tc.extractZip(pythonPath);
   } else {
     pythonExtractedFolder = await tc.extractTar(pythonPath);
   }
-  core5.info("Execute installation script");
+  core4.info("Execute installation script");
   await installPython(pythonExtractedFolder);
 }
 
 // node_modules/setup-python/src/find-python.ts
-var core6 = __toESM(require_core());
+var core5 = __toESM(require_core());
 var tc2 = __toESM(require_tool_cache());
 function binDir(installDir) {
   if (IS_WINDOWS2) {
@@ -70318,7 +70309,7 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
   let manifest = null;
   const desugaredVersionSpec = desugarDevVersion(version);
   let semanticVersionSpec = pythonVersionToSemantic(desugaredVersionSpec);
-  core6.debug(`Semantic version spec of ${version} is ${semanticVersionSpec}`);
+  core5.debug(`Semantic version spec of ${version} is ${semanticVersionSpec}`);
   if (checkLatest) {
     manifest = await getManifest();
     const resolvedVersion = (await findReleaseFromManifest(
@@ -70328,9 +70319,9 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
     ))?.version;
     if (resolvedVersion) {
       semanticVersionSpec = resolvedVersion;
-      core6.info(`Resolved as '${semanticVersionSpec}'`);
+      core5.info(`Resolved as '${semanticVersionSpec}'`);
     } else {
-      core6.info(
+      core5.info(
         `Failed to resolve version ${semanticVersionSpec} from manifest`
       );
     }
@@ -70341,7 +70332,7 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
     architecture
   );
   if (!installDir) {
-    core6.info(
+    core5.info(
       `Version ${semanticVersionSpec} was not found in the local cache`
     );
     const foundRelease = await findReleaseFromManifest(
@@ -70350,7 +70341,7 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
       manifest
     );
     if (foundRelease && foundRelease.files && foundRelease.files.length > 0) {
-      core6.info(`Version ${semanticVersionSpec} is available for downloading`);
+      core5.info(`Version ${semanticVersionSpec} is available for downloading`);
       await installCpythonFromRelease(foundRelease);
       installDir = tc2.find("Python", semanticVersionSpec, architecture);
     }
@@ -70370,22 +70361,22 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
     `python${binaryExtension}`
   );
   if (updateEnvironment) {
-    core6.exportVariable("pythonLocation", installDir);
-    core6.exportVariable("PKG_CONFIG_PATH", installDir + "/lib/pkgconfig");
-    core6.exportVariable("pythonLocation", installDir);
-    core6.exportVariable("Python_ROOT_DIR", installDir);
-    core6.exportVariable("Python2_ROOT_DIR", installDir);
-    core6.exportVariable("Python3_ROOT_DIR", installDir);
-    core6.exportVariable("PKG_CONFIG_PATH", installDir + "/lib/pkgconfig");
+    core5.exportVariable("pythonLocation", installDir);
+    core5.exportVariable("PKG_CONFIG_PATH", installDir + "/lib/pkgconfig");
+    core5.exportVariable("pythonLocation", installDir);
+    core5.exportVariable("Python_ROOT_DIR", installDir);
+    core5.exportVariable("Python2_ROOT_DIR", installDir);
+    core5.exportVariable("Python3_ROOT_DIR", installDir);
+    core5.exportVariable("PKG_CONFIG_PATH", installDir + "/lib/pkgconfig");
     if (IS_LINUX2) {
       const libPath = process.env.LD_LIBRARY_PATH ? `:${process.env.LD_LIBRARY_PATH}` : "";
       const pyLibPath = path3.join(installDir, "lib");
       if (!libPath.split(":").includes(pyLibPath)) {
-        core6.exportVariable("LD_LIBRARY_PATH", pyLibPath + libPath);
+        core5.exportVariable("LD_LIBRARY_PATH", pyLibPath + libPath);
       }
     }
-    core6.addPath(installDir);
-    core6.addPath(_binDir);
+    core5.addPath(installDir);
+    core5.addPath(_binDir);
     if (IS_WINDOWS2) {
       const version2 = path3.basename(path3.dirname(installDir));
       const major3 = semver2.major(version2);
@@ -70396,12 +70387,12 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
         `Python${major3}${minor3}`,
         "Scripts"
       );
-      core6.addPath(userScriptsDir);
+      core5.addPath(userScriptsDir);
     }
   }
   const installed = versionFromPath(installDir);
-  core6.setOutput("python-version", installed);
-  core6.setOutput("python-path", pythonPath);
+  core5.setOutput("python-version", installed);
+  core5.setOutput("python-path", pythonPath);
   return { impl: "CPython", version: installed };
 }
 function desugarDevVersion(versionSpec) {
@@ -70423,7 +70414,7 @@ var path5 = __toESM(require("path"));
 
 // node_modules/setup-python/src/install-pypy.ts
 var path4 = __toESM(require("path"));
-var core7 = __toESM(require_core());
+var core6 = __toESM(require_core());
 var tc3 = __toESM(require_tool_cache());
 var semver3 = __toESM(require_semver4());
 var httpm = __toESM(require_lib());
@@ -70448,9 +70439,9 @@ async function installPyPy(pypyVersion, pythonVersion, architecture, releases) {
   }
   const { foundAsset, resolvedPythonVersion, resolvedPyPyVersion } = releaseData;
   let downloadUrl = `${foundAsset.download_url}`;
-  core7.info(`Downloading PyPy from "${downloadUrl}" ...`);
+  core6.info(`Downloading PyPy from "${downloadUrl}" ...`);
   const pypyPath = await tc3.downloadTool(downloadUrl);
-  core7.info("Extracting downloaded archive...");
+  core6.info("Extracting downloaded archive...");
   if (IS_WINDOWS2) {
     downloadDir = await tc3.extractZip(pypyPath);
   } else {
@@ -70491,7 +70482,7 @@ async function createPyPySymlink(pypyBinaryPath, pythonVersion) {
   const pypyBinaryPostfix = pythonBinaryPostfix === 2 ? "" : "3";
   const pypyMajorMinorBinaryPostfix = `${pythonBinaryPostfix}.${pythonMinor}`;
   let binaryExtension = IS_WINDOWS2 ? ".exe" : "";
-  core7.info("Creating symlinks...");
+  core6.info("Creating symlinks...");
   createSymlinkInFolder(
     pypyBinaryPath,
     `pypy${pypyBinaryPostfix}${binaryExtension}`,
@@ -70512,7 +70503,7 @@ async function createPyPySymlink(pypyBinaryPath, pythonVersion) {
   );
 }
 async function installPip(pythonLocation) {
-  core7.info("Installing and updating pip");
+  core6.info("Installing and updating pip");
   const pythonBinary = path4.join(pythonLocation, "python");
   await exec10.exec(`${pythonBinary} -m ensurepip`);
   await exec10.exec(
@@ -70581,7 +70572,7 @@ function findAssetForMacOrLinux(releases, architecture, platform) {
 
 // node_modules/setup-python/src/find-pypy.ts
 var semver4 = __toESM(require_semver4());
-var core8 = __toESM(require_core());
+var core7 = __toESM(require_core());
 var tc4 = __toESM(require_tool_cache());
 async function findPyPyVersion(versionSpec, architecture, updateEnvironment, checkLatest) {
   let resolvedPyPyVersion = "";
@@ -70599,13 +70590,13 @@ async function findPyPyVersion(versionSpec, architecture, updateEnvironment, che
         architecture
       );
       if (releaseData) {
-        core8.info(
+        core7.info(
           `Resolved as PyPy ${releaseData.resolvedPyPyVersion} with Python (${releaseData.resolvedPythonVersion})`
         );
         pypyVersionSpec.pythonVersion = releaseData.resolvedPythonVersion;
         pypyVersionSpec.pypyVersion = releaseData.resolvedPyPyVersion;
       } else {
-        core8.info(
+        core7.info(
           `Failed to resolve PyPy ${pypyVersionSpec.pypyVersion} with Python (${pypyVersionSpec.pythonVersion}) from manifest`
         );
       }
@@ -70637,16 +70628,16 @@ async function findPyPyVersion(versionSpec, architecture, updateEnvironment, che
   );
   const pythonLocation = getPyPyBinaryPath(installDir);
   if (updateEnvironment) {
-    core8.exportVariable("pythonLocation", installDir);
-    core8.exportVariable("Python_ROOT_DIR", installDir);
-    core8.exportVariable("Python2_ROOT_DIR", installDir);
-    core8.exportVariable("Python3_ROOT_DIR", installDir);
-    core8.exportVariable("PKG_CONFIG_PATH", pythonLocation + "/lib/pkgconfig");
-    core8.addPath(pythonLocation);
-    core8.addPath(_binDir);
+    core7.exportVariable("pythonLocation", installDir);
+    core7.exportVariable("Python_ROOT_DIR", installDir);
+    core7.exportVariable("Python2_ROOT_DIR", installDir);
+    core7.exportVariable("Python3_ROOT_DIR", installDir);
+    core7.exportVariable("PKG_CONFIG_PATH", pythonLocation + "/lib/pkgconfig");
+    core7.addPath(pythonLocation);
+    core7.addPath(_binDir);
   }
-  core8.setOutput("python-version", "pypy" + resolvedPyPyVersion.trim());
-  core8.setOutput("python-path", pythonPath);
+  core7.setOutput("python-version", "pypy" + resolvedPyPyVersion.trim());
+  core7.setOutput("python-path", pythonPath);
   return { resolvedPyPyVersion, resolvedPythonVersion };
 }
 function findPyPyToolCache(pythonVersion, pypyVersion, architecture) {
@@ -70667,7 +70658,7 @@ function findPyPyToolCache(pythonVersion, pypyVersion, architecture) {
     }
   }
   if (!installDir) {
-    core8.info(
+    core7.info(
       `PyPy version ${pythonVersion} (${pypyVersion}) was not found in the local cache`
     );
   }
@@ -70721,7 +70712,7 @@ var import_fs3 = __toESM(require("fs"));
 
 // node_modules/setup-python/src/cache-distributions/pip-cache.ts
 var glob = __toESM(require_glob2());
-var core9 = __toESM(require_core());
+var core8 = __toESM(require_core());
 var exec12 = __toESM(require_exec());
 var child_process = __toESM(require("child_process"));
 var import_util2 = __toESM(require("util"));
@@ -70755,7 +70746,7 @@ var PipCache = class extends cache_distributor_default {
     if (resolvedPath.includes("~")) {
       resolvedPath = path6.join(import_os.default.homedir(), resolvedPath.slice(1));
     }
-    core9.debug(`global cache directory path is ${resolvedPath}`);
+    core8.debug(`global cache directory path is ${resolvedPath}`);
     return [resolvedPath];
   }
   async computeKeys() {
@@ -70782,7 +70773,7 @@ var pip_cache_default = PipCache;
 var glob2 = __toESM(require_glob2());
 var os3 = __toESM(require("os"));
 var path7 = __toESM(require("path"));
-var core10 = __toESM(require_core());
+var core9 = __toESM(require_core());
 var PipenvCache = class extends cache_distributor_default {
   constructor(pythonVersion, patterns = "**/Pipfile.lock") {
     super("pipenv", patterns);
@@ -70797,7 +70788,7 @@ var PipenvCache = class extends cache_distributor_default {
       virtualEnvRelativePath = ".local/share/virtualenvs";
     }
     const resolvedPath = path7.join(os3.homedir(), virtualEnvRelativePath);
-    core10.debug(`global cache directory path is ${resolvedPath}`);
+    core9.debug(`global cache directory path is ${resolvedPath}`);
     return [resolvedPath];
   }
   async computeKeys() {
@@ -70817,7 +70808,7 @@ var glob3 = __toESM(require_glob2());
 var io2 = __toESM(require_io());
 var path8 = __toESM(require("path"));
 var exec14 = __toESM(require_exec());
-var core11 = __toESM(require_core());
+var core10 = __toESM(require_core());
 var PoetryCache = class extends cache_distributor_default {
   constructor(pythonVersion, patterns = "**/poetry.lock") {
     super("poetry", patterns);
@@ -70837,7 +70828,7 @@ var PoetryCache = class extends cache_distributor_default {
     }
     const pythonLocation = await io2.which("python");
     if (pythonLocation) {
-      core11.debug(`pythonLocation is ${pythonLocation}`);
+      core10.debug(`pythonLocation is ${pythonLocation}`);
       const {
         exitCode,
         stderr
@@ -70904,7 +70895,7 @@ function isPyPyVersion(versionSpec) {
   return versionSpec.startsWith("pypy");
 }
 async function cacheDependencies(cache4, pythonVersion) {
-  const cacheDependencyPath = core12.getInput("cache-dependency-path") || void 0;
+  const cacheDependencyPath = core11.getInput("cache-dependency-path") || void 0;
   const cacheDistributor = getCacheDistributor(
     cache4,
     pythonVersion,
@@ -70913,10 +70904,10 @@ async function cacheDependencies(cache4, pythonVersion) {
   await cacheDistributor.restoreCache();
 }
 function resolveVersionInput() {
-  let version = core12.getInput("python-version");
-  let versionFile = core12.getInput("python-version-file");
+  let version = core11.getInput("python-version");
+  let versionFile = core11.getInput("python-version-file");
   if (version && versionFile) {
-    core12.warning(
+    core11.warning(
       "Both python-version and python-version-file inputs are specified, only python-version will be used."
     );
   }
@@ -70930,7 +70921,7 @@ function resolveVersionInput() {
       );
     }
     version = import_fs3.default.readFileSync(versionFile, "utf8");
-    core12.info(`Resolved ${versionFile} as ${version}`);
+    core11.info(`Resolved ${versionFile} as ${version}`);
     return version;
   }
   logWarning(
@@ -70939,7 +70930,7 @@ function resolveVersionInput() {
   versionFile = ".python-version";
   if (import_fs3.default.existsSync(versionFile)) {
     version = import_fs3.default.readFileSync(versionFile, "utf8");
-    core12.info(`Resolved ${versionFile} as ${version}`);
+    core11.info(`Resolved ${versionFile} as ${version}`);
     return version;
   }
   logWarning(`${versionFile} doesn't exist.`);
@@ -70952,16 +70943,16 @@ async function run() {
   if (process.env.AGENT_TOOLSDIRECTORY?.trim()) {
     process.env["RUNNER_TOOL_CACHE"] = process.env["AGENT_TOOLSDIRECTORY"];
   }
-  core12.debug(
+  core11.debug(
     `Python is expected to be installed into ${process.env["RUNNER_TOOL_CACHE"]}`
   );
   try {
     const version = resolveVersionInput();
-    const checkLatest = core12.getBooleanInput("check-latest");
+    const checkLatest = core11.getBooleanInput("check-latest");
     if (version) {
       let pythonVersion;
-      const arch2 = core12.getInput("architecture") || os4.arch();
-      const updateEnvironment = core12.getBooleanInput("update-environment");
+      const arch2 = core11.getInput("architecture") || os4.arch();
+      const updateEnvironment = core11.getBooleanInput("update-environment");
       if (isPyPyVersion(version)) {
         const installed = await findPyPyVersion(
           version,
@@ -70970,7 +70961,7 @@ async function run() {
           checkLatest
         );
         pythonVersion = `${installed.resolvedPyPyVersion}-${installed.resolvedPythonVersion}`;
-        core12.info(
+        core11.info(
           `Successfully set up PyPy ${installed.resolvedPyPyVersion} with Python (${installed.resolvedPythonVersion})`
         );
       } else {
@@ -70981,21 +70972,21 @@ async function run() {
           checkLatest
         );
         pythonVersion = installed.version;
-        core12.info(`Successfully set up ${installed.impl} (${pythonVersion})`);
+        core11.info(`Successfully set up ${installed.impl} (${pythonVersion})`);
       }
-      const cache4 = core12.getInput("cache");
+      const cache4 = core11.getInput("cache");
       if (cache4 && isCacheFeatureAvailable()) {
         await cacheDependencies(cache4, pythonVersion);
       }
     } else {
-      core12.warning(
+      core11.warning(
         "The `python-version` input is not set.  The version of Python currently in `PATH` will be used."
       );
     }
     const matchersPath = path9.join(__dirname, "../..", ".github");
-    core12.info(`##[add-matcher]${path9.join(matchersPath, "python.json")}`);
+    core11.info(`##[add-matcher]${path9.join(matchersPath, "python.json")}`);
   } catch (err) {
-    core12.setFailed(err.message);
+    core11.setFailed(err.message);
   }
 }
 
@@ -71018,9 +71009,9 @@ function createHackDependencyFile(option) {
     if (option.onlyRoot == "true")
       key = option.onlyRoot;
     if (key) {
-      const tempDir = core13.toPlatformPath(`${import_node_os2.default.homedir()}/.setup-poetry-env`);
+      const tempDir = core12.toPlatformPath(`${import_node_os2.default.homedir()}/.setup-poetry-env`);
       yield io3.mkdirP(tempDir);
-      const keyPath = core13.toPlatformPath(`${tempDir}/temp-key.txt`);
+      const keyPath = core12.toPlatformPath(`${tempDir}/temp-key.txt`);
       import_node_fs.default.writeFileSync(keyPath, key);
       return keyPath;
     } else {
@@ -71059,43 +71050,44 @@ function setupPython(poetryInstallOption, inputs) {
 function run2() {
   return __async(this, null, function* () {
     try {
-      core14.info("----Setup Poetry----");
-      yield setupPoetry(core14.getInput("poetry-version"), {
-        cacheDir: core14.getInput("poetry-cash-dir"),
-        installerMaxWorkers: core14.getInput("poetry-installer-max-workers"),
-        installerParallel: core14.getInput("poetry-installer-parallel"),
-        pypiToken: core14.getInput("poetry-pypi-token"),
-        virtualenvsCreate: core14.getInput("poetry-virtualenvs-create"),
-        virtualenvsInProject: core14.getInput("poetry-virtualenvs-in-project"),
-        virtualenvsPath: core14.getInput("poetry-virtualenvs-path")
+      core13.info("----Setup Poetry----");
+      yield setupPoetry(core13.getInput("poetry-version"), {
+        cacheDir: core13.getInput("poetry-cash-dir"),
+        installerMaxWorkers: core13.getInput("poetry-installer-max-workers"),
+        installerParallel: core13.getInput("poetry-installer-parallel"),
+        pypiToken: core13.getInput("poetry-pypi-token"),
+        virtualenvsCreate: core13.getInput("poetry-virtualenvs-create"),
+        virtualenvsInProject: core13.getInput("poetry-virtualenvs-in-project"),
+        virtualenvsPath: core13.getInput("poetry-virtualenvs-path")
       });
       const poetryInstallOption = {
-        additionalArgs: core14.getInput("poetry-install-additional-args"),
-        allExtras: core14.getInput("poetry-install--all-extras"),
-        extras: core14.getInput("poetry-install--extras"),
-        noRoot: core14.getInput("poetry-install--no-root"),
-        only: core14.getInput("poetry-install--only"),
-        onlyRoot: core14.getInput("poetry-install--only-root"),
-        with: core14.getInput("poetry-install--with"),
-        without: core14.getInput("poetry-install--without")
+        additionalArgs: core13.getInput("poetry-install-additional-args"),
+        allExtras: core13.getInput("poetry-install--all-extras"),
+        extras: core13.getInput("poetry-install--extras"),
+        noRoot: core13.getInput("poetry-install--no-root"),
+        only: core13.getInput("poetry-install--only"),
+        onlyRoot: core13.getInput("poetry-install--only-root"),
+        with: core13.getInput("poetry-install--with"),
+        without: core13.getInput("poetry-install--without")
       };
-      core14.info("----Run actions/setup-python----");
+      core13.info("----Run actions/setup-python----");
       yield setupPython(poetryInstallOption, {
-        architecture: core14.getInput("python-architecture"),
-        cache: core14.getInput("cache-dependencies") == "true" ? "poetry" : "",
-        cacheDependencyPath: core14.getInput("python-cache-dependency-path"),
-        checkLatest: core14.getInput("python-check-latest"),
-        token: core14.getInput("token"),
-        updateEnvironment: core14.getInput("python-update-environment"),
-        version: core14.getInput("python-version"),
-        versionFile: core14.getInput("python-version-file")
+        architecture: core13.getInput("python-architecture"),
+        cache: core13.getInput("cache-dependencies") == "true" ? "poetry" : "",
+        cacheDependencyPath: core13.getInput("python-cache-dependency-path"),
+        checkLatest: core13.getInput("python-check-latest"),
+        token: core13.getInput("token"),
+        updateEnvironment: core13.getInput("python-update-environment"),
+        version: core13.getInput("python-version"),
+        versionFile: core13.getInput("python-version-file")
       });
-      if (core14.getInput("poetry-install-dependencies") == "true")
-        core14.info("----Installing dependencies----");
+      const matchedKey = core13.getState("cache-matched-key" /* CACHE_MATCHED_KEY */);
+      if (!matchedKey && core13.getInput("poetry-install-dependencies") == "true")
+        core13.info("----Installing dependencies----");
       yield installDependencies(poetryInstallOption);
     } catch (error2) {
       if (error2 instanceof Error)
-        core14.setFailed(error2.message);
+        core13.setFailed(error2.message);
     }
   });
 }

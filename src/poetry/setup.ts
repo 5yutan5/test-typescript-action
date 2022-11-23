@@ -1,5 +1,5 @@
-import * as io from "@actions/io";
 import * as exec from "@actions/exec";
+import * as io from "@actions/io";
 
 import { Configuration, configurePoetry } from "./config";
 import { tryRestoringCache } from "./restore";
