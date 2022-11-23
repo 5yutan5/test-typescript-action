@@ -2170,10 +2170,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       command_1.issueCommand("save-state", { name }, utils_1.toCommandValue(value));
     }
     exports.saveState = saveState3;
-    function getState2(name) {
+    function getState(name) {
       return process.env[`STATE_${name}`] || "";
     }
-    exports.getState = getState2;
+    exports.getState = getState;
     function getIDToken(aud) {
       return __awaiter(this, void 0, void 0, function* () {
         return yield oidc_utils_1.OidcClient.getIDToken(aud);
@@ -69901,44 +69901,6 @@ var require_glob2 = __commonJS({
 // src/main.ts
 var core13 = __toESM(require_core());
 
-// node_modules/setup-python/src/cache-distributions/cache-distributor.ts
-var cache = __toESM(require_cache());
-var core = __toESM(require_core());
-var CacheDistributor = class {
-  constructor(packageManager, cacheDependencyPath) {
-    this.packageManager = packageManager;
-    this.cacheDependencyPath = cacheDependencyPath;
-    this.CACHE_KEY_PREFIX = "setup-python";
-  }
-  async restoreCache() {
-    const { primaryKey, restoreKey } = await this.computeKeys();
-    if (primaryKey.endsWith("-")) {
-      throw new Error(
-        `No file in ${process.cwd()} matched to [${this.cacheDependencyPath.split("\n").join(",")}], make sure you have checked out the target repository`
-      );
-    }
-    const cachePath = await this.getCacheGlobalDirectories();
-    core.saveState("cache-paths" /* CACHE_PATHS */, cachePath);
-    core.saveState("cache-primary-key" /* STATE_CACHE_PRIMARY_KEY */, primaryKey);
-    const matchedKey = await cache.restoreCache(
-      cachePath,
-      primaryKey,
-      restoreKey
-    );
-    this.handleMatchResult(matchedKey, primaryKey);
-  }
-  handleMatchResult(matchedKey, primaryKey) {
-    if (matchedKey) {
-      core.saveState("cache-matched-key" /* CACHE_MATCHED_KEY */, matchedKey);
-      core.info(`Cache restored from key: ${matchedKey}`);
-    } else {
-      core.info(`${this.packageManager} cache is not found`);
-    }
-    core.setOutput("cache-hit", matchedKey === primaryKey);
-  }
-};
-var cache_distributor_default = CacheDistributor;
-
 // src/poetry/install.ts
 var exec = __toESM(require_exec());
 function installDependencies(option) {
@@ -70000,8 +69962,8 @@ function configurePoetry(config) {
 var import_node_os = require("node:os");
 var fs = __toESM(require("node:fs"));
 var exec5 = __toESM(require_exec());
-var cache2 = __toESM(require_cache());
-var core2 = __toESM(require_core());
+var cache = __toESM(require_cache());
+var core = __toESM(require_core());
 
 // src/util.ts
 var IS_WINDOWS = process.platform === "win32";
@@ -70064,34 +70026,34 @@ function getCacheDirectories() {
     const poetryBinFile = IS_WINDOWS ? `${pipxVariables["PIPX_BIN_DIR"]}\\poetry.exe` : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
     const poetryVenvDir = `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
     return {
-      POETRY_BIN_FILE: core2.toPlatformPath(poetryBinFile),
-      POETRY_VENV_DIR: core2.toPlatformPath(poetryVenvDir)
+      POETRY_BIN_FILE: core.toPlatformPath(poetryBinFile),
+      POETRY_VENV_DIR: core.toPlatformPath(poetryVenvDir)
     };
   });
 }
 function recreatePoetrySymlink(poetryBinFile, poetryVenvDir) {
   fs.unlinkSync(poetryBinFile);
-  const poetryExe = core2.toPlatformPath(`${poetryVenvDir}/Scripts/poetry.exe`);
+  const poetryExe = core.toPlatformPath(`${poetryVenvDir}/Scripts/poetry.exe`);
   fs.symlinkSync(poetryExe, poetryBinFile);
 }
 function handleMatchResult(matchedKey, searchKey) {
   if (matchedKey) {
-    core2.saveState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */, matchedKey);
-    core2.info(`Poetry installation restored from key: ${matchedKey}`);
+    core.saveState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */, matchedKey);
+    core.info(`Poetry installation restored from key: ${matchedKey}`);
   } else {
-    core2.info("Poetry installation cache is not found.");
+    core.info("Poetry installation cache is not found.");
   }
-  core2.setOutput("poetry-cache-hit", matchedKey === searchKey);
+  core.setOutput("poetry-cache-hit", matchedKey === searchKey);
 }
 function tryRestoringCache(poetryVersion) {
   return __async(this, null, function* () {
-    core2.info("Skip to restore Poetry install on Windows.");
+    core.info("Skip to restore Poetry install on Windows.");
     const searchKey = yield createCacheSearchKey(poetryVersion);
     const { POETRY_BIN_FILE, POETRY_VENV_DIR } = yield getCacheDirectories();
     const cachePath = [POETRY_BIN_FILE, POETRY_VENV_DIR];
-    core2.saveState("poetry-cache-paths" /* CACHE_PATHS */, cachePath);
-    core2.saveState("poetry-cache-search-key" /* CACHE_SEARCH_KEY */, searchKey);
-    const matchedKey = yield cache2.restoreCache(cachePath, searchKey);
+    core.saveState("poetry-cache-paths" /* CACHE_PATHS */, cachePath);
+    core.saveState("poetry-cache-search-key" /* CACHE_SEARCH_KEY */, searchKey);
+    const matchedKey = yield cache.restoreCache(cachePath, searchKey);
     if (matchedKey && IS_WINDOWS)
       recreatePoetrySymlink(POETRY_BIN_FILE, POETRY_VENV_DIR);
     handleMatchResult(matchedKey, searchKey);
@@ -70134,8 +70096,8 @@ var os = __toESM(require("os"));
 var path3 = __toESM(require("path"));
 
 // node_modules/setup-python/src/utils.ts
-var cache3 = __toESM(require_cache());
-var core3 = __toESM(require_core());
+var cache2 = __toESM(require_cache());
+var core2 = __toESM(require_core());
 var import_fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
 var semver = __toESM(require_semver4());
@@ -70189,13 +70151,13 @@ function isGhes() {
   return ghUrl.hostname.toUpperCase() !== "GITHUB.COM";
 }
 function isCacheFeatureAvailable() {
-  if (!cache3.isFeatureAvailable()) {
+  if (!cache2.isFeatureAvailable()) {
     if (isGhes()) {
       throw new Error(
         "Caching is only supported on GHES version >= 3.5. If you are on a version >= 3.5, please check with your GHES admin if the Actions cache service is enabled or not."
       );
     } else {
-      core3.warning(
+      core2.warning(
         "The runner was not able to contact the cache service. Caching will be skipped"
       );
     }
@@ -70212,12 +70174,12 @@ async function getLinuxOSReleaseInfo() {
     }
   );
   const [osRelease, osVersion] = stdout.trim().split("\n");
-  core3.debug(`OS Release: ${osRelease}, Version: ${osVersion}`);
+  core2.debug(`OS Release: ${osRelease}, Version: ${osVersion}`);
   return `${osVersion}-${osRelease}`;
 }
 function logWarning(message) {
   const warningPrefix = "[warning]";
-  core3.info(`${warningPrefix}${message}`);
+  core2.info(`${warningPrefix}${message}`);
 }
 
 // node_modules/setup-python/src/find-python.ts
@@ -70225,10 +70187,10 @@ var semver2 = __toESM(require_semver4());
 
 // node_modules/setup-python/src/install-python.ts
 var path2 = __toESM(require("path"));
-var core4 = __toESM(require_core());
+var core3 = __toESM(require_core());
 var tc = __toESM(require_tool_cache());
 var exec8 = __toESM(require_exec());
-var TOKEN = core4.getInput("token");
+var TOKEN = core3.getInput("token");
 var AUTH = !TOKEN ? void 0 : `token ${TOKEN}`;
 var MANIFEST_REPO_OWNER = "actions";
 var MANIFEST_REPO_NAME = "python-versions";
@@ -70247,7 +70209,7 @@ async function findReleaseFromManifest(semanticVersionSpec, architecture, manife
   return foundRelease;
 }
 function getManifest() {
-  core4.debug(
+  core3.debug(
     `Getting manifest from ${MANIFEST_REPO_OWNER}/${MANIFEST_REPO_NAME}@${MANIFEST_REPO_BRANCH}`
   );
   return tc.getManifestFromRepo(
@@ -70267,10 +70229,10 @@ async function installPython(workingDirectory) {
     silent: true,
     listeners: {
       stdout: (data) => {
-        core4.info(data.toString().trim());
+        core3.info(data.toString().trim());
       },
       stderr: (data) => {
-        core4.error(data.toString().trim());
+        core3.error(data.toString().trim());
       }
     }
   };
@@ -70282,21 +70244,21 @@ async function installPython(workingDirectory) {
 }
 async function installCpythonFromRelease(release) {
   const downloadUrl = release.files[0].download_url;
-  core4.info(`Download from "${downloadUrl}"`);
+  core3.info(`Download from "${downloadUrl}"`);
   const pythonPath = await tc.downloadTool(downloadUrl, void 0, AUTH);
-  core4.info("Extract downloaded archive");
+  core3.info("Extract downloaded archive");
   let pythonExtractedFolder;
   if (IS_WINDOWS2) {
     pythonExtractedFolder = await tc.extractZip(pythonPath);
   } else {
     pythonExtractedFolder = await tc.extractTar(pythonPath);
   }
-  core4.info("Execute installation script");
+  core3.info("Execute installation script");
   await installPython(pythonExtractedFolder);
 }
 
 // node_modules/setup-python/src/find-python.ts
-var core5 = __toESM(require_core());
+var core4 = __toESM(require_core());
 var tc2 = __toESM(require_tool_cache());
 function binDir(installDir) {
   if (IS_WINDOWS2) {
@@ -70309,7 +70271,7 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
   let manifest = null;
   const desugaredVersionSpec = desugarDevVersion(version);
   let semanticVersionSpec = pythonVersionToSemantic(desugaredVersionSpec);
-  core5.debug(`Semantic version spec of ${version} is ${semanticVersionSpec}`);
+  core4.debug(`Semantic version spec of ${version} is ${semanticVersionSpec}`);
   if (checkLatest) {
     manifest = await getManifest();
     const resolvedVersion = (await findReleaseFromManifest(
@@ -70319,9 +70281,9 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
     ))?.version;
     if (resolvedVersion) {
       semanticVersionSpec = resolvedVersion;
-      core5.info(`Resolved as '${semanticVersionSpec}'`);
+      core4.info(`Resolved as '${semanticVersionSpec}'`);
     } else {
-      core5.info(
+      core4.info(
         `Failed to resolve version ${semanticVersionSpec} from manifest`
       );
     }
@@ -70332,7 +70294,7 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
     architecture
   );
   if (!installDir) {
-    core5.info(
+    core4.info(
       `Version ${semanticVersionSpec} was not found in the local cache`
     );
     const foundRelease = await findReleaseFromManifest(
@@ -70341,7 +70303,7 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
       manifest
     );
     if (foundRelease && foundRelease.files && foundRelease.files.length > 0) {
-      core5.info(`Version ${semanticVersionSpec} is available for downloading`);
+      core4.info(`Version ${semanticVersionSpec} is available for downloading`);
       await installCpythonFromRelease(foundRelease);
       installDir = tc2.find("Python", semanticVersionSpec, architecture);
     }
@@ -70361,22 +70323,22 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
     `python${binaryExtension}`
   );
   if (updateEnvironment) {
-    core5.exportVariable("pythonLocation", installDir);
-    core5.exportVariable("PKG_CONFIG_PATH", installDir + "/lib/pkgconfig");
-    core5.exportVariable("pythonLocation", installDir);
-    core5.exportVariable("Python_ROOT_DIR", installDir);
-    core5.exportVariable("Python2_ROOT_DIR", installDir);
-    core5.exportVariable("Python3_ROOT_DIR", installDir);
-    core5.exportVariable("PKG_CONFIG_PATH", installDir + "/lib/pkgconfig");
+    core4.exportVariable("pythonLocation", installDir);
+    core4.exportVariable("PKG_CONFIG_PATH", installDir + "/lib/pkgconfig");
+    core4.exportVariable("pythonLocation", installDir);
+    core4.exportVariable("Python_ROOT_DIR", installDir);
+    core4.exportVariable("Python2_ROOT_DIR", installDir);
+    core4.exportVariable("Python3_ROOT_DIR", installDir);
+    core4.exportVariable("PKG_CONFIG_PATH", installDir + "/lib/pkgconfig");
     if (IS_LINUX2) {
       const libPath = process.env.LD_LIBRARY_PATH ? `:${process.env.LD_LIBRARY_PATH}` : "";
       const pyLibPath = path3.join(installDir, "lib");
       if (!libPath.split(":").includes(pyLibPath)) {
-        core5.exportVariable("LD_LIBRARY_PATH", pyLibPath + libPath);
+        core4.exportVariable("LD_LIBRARY_PATH", pyLibPath + libPath);
       }
     }
-    core5.addPath(installDir);
-    core5.addPath(_binDir);
+    core4.addPath(installDir);
+    core4.addPath(_binDir);
     if (IS_WINDOWS2) {
       const version2 = path3.basename(path3.dirname(installDir));
       const major3 = semver2.major(version2);
@@ -70387,12 +70349,12 @@ async function useCpythonVersion(version, architecture, updateEnvironment, check
         `Python${major3}${minor3}`,
         "Scripts"
       );
-      core5.addPath(userScriptsDir);
+      core4.addPath(userScriptsDir);
     }
   }
   const installed = versionFromPath(installDir);
-  core5.setOutput("python-version", installed);
-  core5.setOutput("python-path", pythonPath);
+  core4.setOutput("python-version", installed);
+  core4.setOutput("python-path", pythonPath);
   return { impl: "CPython", version: installed };
 }
 function desugarDevVersion(versionSpec) {
@@ -70414,7 +70376,7 @@ var path5 = __toESM(require("path"));
 
 // node_modules/setup-python/src/install-pypy.ts
 var path4 = __toESM(require("path"));
-var core6 = __toESM(require_core());
+var core5 = __toESM(require_core());
 var tc3 = __toESM(require_tool_cache());
 var semver3 = __toESM(require_semver4());
 var httpm = __toESM(require_lib());
@@ -70439,9 +70401,9 @@ async function installPyPy(pypyVersion, pythonVersion, architecture, releases) {
   }
   const { foundAsset, resolvedPythonVersion, resolvedPyPyVersion } = releaseData;
   let downloadUrl = `${foundAsset.download_url}`;
-  core6.info(`Downloading PyPy from "${downloadUrl}" ...`);
+  core5.info(`Downloading PyPy from "${downloadUrl}" ...`);
   const pypyPath = await tc3.downloadTool(downloadUrl);
-  core6.info("Extracting downloaded archive...");
+  core5.info("Extracting downloaded archive...");
   if (IS_WINDOWS2) {
     downloadDir = await tc3.extractZip(pypyPath);
   } else {
@@ -70482,7 +70444,7 @@ async function createPyPySymlink(pypyBinaryPath, pythonVersion) {
   const pypyBinaryPostfix = pythonBinaryPostfix === 2 ? "" : "3";
   const pypyMajorMinorBinaryPostfix = `${pythonBinaryPostfix}.${pythonMinor}`;
   let binaryExtension = IS_WINDOWS2 ? ".exe" : "";
-  core6.info("Creating symlinks...");
+  core5.info("Creating symlinks...");
   createSymlinkInFolder(
     pypyBinaryPath,
     `pypy${pypyBinaryPostfix}${binaryExtension}`,
@@ -70503,7 +70465,7 @@ async function createPyPySymlink(pypyBinaryPath, pythonVersion) {
   );
 }
 async function installPip(pythonLocation) {
-  core6.info("Installing and updating pip");
+  core5.info("Installing and updating pip");
   const pythonBinary = path4.join(pythonLocation, "python");
   await exec10.exec(`${pythonBinary} -m ensurepip`);
   await exec10.exec(
@@ -70572,7 +70534,7 @@ function findAssetForMacOrLinux(releases, architecture, platform) {
 
 // node_modules/setup-python/src/find-pypy.ts
 var semver4 = __toESM(require_semver4());
-var core7 = __toESM(require_core());
+var core6 = __toESM(require_core());
 var tc4 = __toESM(require_tool_cache());
 async function findPyPyVersion(versionSpec, architecture, updateEnvironment, checkLatest) {
   let resolvedPyPyVersion = "";
@@ -70590,13 +70552,13 @@ async function findPyPyVersion(versionSpec, architecture, updateEnvironment, che
         architecture
       );
       if (releaseData) {
-        core7.info(
+        core6.info(
           `Resolved as PyPy ${releaseData.resolvedPyPyVersion} with Python (${releaseData.resolvedPythonVersion})`
         );
         pypyVersionSpec.pythonVersion = releaseData.resolvedPythonVersion;
         pypyVersionSpec.pypyVersion = releaseData.resolvedPyPyVersion;
       } else {
-        core7.info(
+        core6.info(
           `Failed to resolve PyPy ${pypyVersionSpec.pypyVersion} with Python (${pypyVersionSpec.pythonVersion}) from manifest`
         );
       }
@@ -70628,16 +70590,16 @@ async function findPyPyVersion(versionSpec, architecture, updateEnvironment, che
   );
   const pythonLocation = getPyPyBinaryPath(installDir);
   if (updateEnvironment) {
-    core7.exportVariable("pythonLocation", installDir);
-    core7.exportVariable("Python_ROOT_DIR", installDir);
-    core7.exportVariable("Python2_ROOT_DIR", installDir);
-    core7.exportVariable("Python3_ROOT_DIR", installDir);
-    core7.exportVariable("PKG_CONFIG_PATH", pythonLocation + "/lib/pkgconfig");
-    core7.addPath(pythonLocation);
-    core7.addPath(_binDir);
+    core6.exportVariable("pythonLocation", installDir);
+    core6.exportVariable("Python_ROOT_DIR", installDir);
+    core6.exportVariable("Python2_ROOT_DIR", installDir);
+    core6.exportVariable("Python3_ROOT_DIR", installDir);
+    core6.exportVariable("PKG_CONFIG_PATH", pythonLocation + "/lib/pkgconfig");
+    core6.addPath(pythonLocation);
+    core6.addPath(_binDir);
   }
-  core7.setOutput("python-version", "pypy" + resolvedPyPyVersion.trim());
-  core7.setOutput("python-path", pythonPath);
+  core6.setOutput("python-version", "pypy" + resolvedPyPyVersion.trim());
+  core6.setOutput("python-path", pythonPath);
   return { resolvedPyPyVersion, resolvedPythonVersion };
 }
 function findPyPyToolCache(pythonVersion, pypyVersion, architecture) {
@@ -70658,7 +70620,7 @@ function findPyPyToolCache(pythonVersion, pypyVersion, architecture) {
     }
   }
   if (!installDir) {
-    core7.info(
+    core6.info(
       `PyPy version ${pythonVersion} (${pypyVersion}) was not found in the local cache`
     );
   }
@@ -70718,6 +70680,46 @@ var child_process = __toESM(require("child_process"));
 var import_util2 = __toESM(require("util"));
 var path6 = __toESM(require("path"));
 var import_os = __toESM(require("os"));
+
+// node_modules/setup-python/src/cache-distributions/cache-distributor.ts
+var cache3 = __toESM(require_cache());
+var core7 = __toESM(require_core());
+var CacheDistributor = class {
+  constructor(packageManager, cacheDependencyPath) {
+    this.packageManager = packageManager;
+    this.cacheDependencyPath = cacheDependencyPath;
+    this.CACHE_KEY_PREFIX = "setup-python";
+  }
+  async restoreCache() {
+    const { primaryKey, restoreKey } = await this.computeKeys();
+    if (primaryKey.endsWith("-")) {
+      throw new Error(
+        `No file in ${process.cwd()} matched to [${this.cacheDependencyPath.split("\n").join(",")}], make sure you have checked out the target repository`
+      );
+    }
+    const cachePath = await this.getCacheGlobalDirectories();
+    core7.saveState("cache-paths" /* CACHE_PATHS */, cachePath);
+    core7.saveState("cache-primary-key" /* STATE_CACHE_PRIMARY_KEY */, primaryKey);
+    const matchedKey = await cache3.restoreCache(
+      cachePath,
+      primaryKey,
+      restoreKey
+    );
+    this.handleMatchResult(matchedKey, primaryKey);
+  }
+  handleMatchResult(matchedKey, primaryKey) {
+    if (matchedKey) {
+      core7.saveState("cache-matched-key" /* CACHE_MATCHED_KEY */, matchedKey);
+      core7.info(`Cache restored from key: ${matchedKey}`);
+    } else {
+      core7.info(`${this.packageManager} cache is not found`);
+    }
+    core7.setOutput("cache-hit", matchedKey === primaryKey);
+  }
+};
+var cache_distributor_default = CacheDistributor;
+
+// node_modules/setup-python/src/cache-distributions/pip-cache.ts
 var PipCache = class extends cache_distributor_default {
   constructor(pythonVersion, cacheDependencyPath = "**/requirements.txt") {
     super("pip", cacheDependencyPath);
@@ -71081,10 +71083,7 @@ function run2() {
         version: core13.getInput("python-version"),
         versionFile: core13.getInput("python-version-file")
       });
-      const primaryKey = core13.getState("cache-primary-key" /* STATE_CACHE_PRIMARY_KEY */);
-      const matchedKey = core13.getState("cache-matched-key" /* CACHE_MATCHED_KEY */);
-      console.log(primaryKey, matchedKey);
-      if (!primaryKey && core13.getInput("poetry-install-dependencies") == "true")
+      if (core13.getInput("poetry-install-dependencies") == "true")
         core13.info("----Installing dependencies----");
       yield installDependencies(poetryInstallOption);
     } catch (error2) {
