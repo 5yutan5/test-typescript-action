@@ -32,8 +32,8 @@ async function createHackDependencyFile(
   if (option.onlyRoot == "true") key = option.onlyRoot;
 
   if (key) {
-    const githubWorkspace = process.env['GITHUB_WORKSPACE'] ?? process.cwd()
-    const tempDir = core.toPlatformPath(`${githubWorkspace}/.setup-poetry-env`)
+    const githubWorkspace = process.env["GITHUB_WORKSPACE"] ?? process.cwd();
+    const tempDir = core.toPlatformPath(`${githubWorkspace}/.setup-poetry-env`);
     await await io.mkdirP(tempDir);
     const keyPath = core.toPlatformPath(`${tempDir}/temp-key.txt`);
     fs.writeFileSync(keyPath, key);
@@ -48,7 +48,7 @@ function overrideInput(inputs: Inputs, hackPath: string): void {
   if (inputs.cacheDependencyPath)
     cacheDependencyPath = inputs.cacheDependencyPath;
   if (hackPath) cacheDependencyPath += "\n" + hackPath;
-  console.log(cacheDependencyPath)
+  console.log(cacheDependencyPath);
 
   setInput("architecture", inputs.architecture);
   setInput("cache", inputs.cache);
@@ -65,7 +65,7 @@ async function hackActionSetupPython(
 ): Promise<string> {
   const hackDependencyPath = await createHackDependencyFile(option);
   overrideInput(inputs, hackDependencyPath);
-  return hackDependencyPath
+  return hackDependencyPath;
 }
 
 export async function setupPython(
@@ -76,6 +76,8 @@ export async function setupPython(
   // Run `actions/setup-python`.
   await run();
   // Remove resources generated for hack.
-  fs.unlinkSync(hackFile)
-  fs.rmdirSync(path.dirname(hackFile))
+  if (hackFile) {
+    fs.unlinkSync(hackFile);
+    fs.rmdirSync(path.dirname(hackFile));
+  }
 }

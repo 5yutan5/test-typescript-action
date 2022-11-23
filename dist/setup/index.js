@@ -71049,8 +71049,10 @@ function setupPython(poetryInstallOption, inputs) {
   return __async(this, null, function* () {
     const hackFile = yield hackActionSetupPython(poetryInstallOption, inputs);
     yield run();
-    import_node_fs.default.unlinkSync(hackFile);
-    import_node_fs.default.rmdirSync(import_node_path.default.dirname(hackFile));
+    if (hackFile) {
+      import_node_fs.default.unlinkSync(hackFile);
+      import_node_fs.default.rmdirSync(import_node_path.default.dirname(hackFile));
+    }
   });
 }
 
