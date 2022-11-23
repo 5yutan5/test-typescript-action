@@ -53,10 +53,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-      - run: npm ci
       - name: Get last version of Poetry
         id: poetry
         run: |
@@ -70,7 +66,7 @@ jobs:
           from pathlib import Path
 
           path = Path("action.yml")
-          source = path.read_text().split()
+          source = path.read_text()
           target = source.split("{{ poetry-version }}")[1]
           target = target.split("\n")[1]
           match = re.search(r"default: '.*?'", target)
