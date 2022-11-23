@@ -70006,6 +70006,7 @@ function configurePoetry(config) {
 }
 
 // src/poetry/restore.ts
+var import_node_os = require("node:os");
 var exec5 = __toESM(require_exec());
 var cache2 = __toESM(require_cache());
 var core3 = __toESM(require_core());
@@ -70026,7 +70027,7 @@ function getPythonVersion() {
     ]);
     if (exitCode && stderr)
       throw new Error("Could not get python version");
-    return stdout.replace("Python ", "").replace("\r", "");
+    return stdout.replace("Python ", "").replace(import_node_os.EOL, "");
   });
 }
 function getPipxVersion() {
@@ -70036,14 +70037,14 @@ function getPipxVersion() {
     ]);
     if (exitCode && stderr)
       throw new Error("Could not get pipx version");
-    return stdout.replace("\r", "");
+    return stdout.replace(import_node_os.EOL, "");
   });
 }
 function createCacheSearchKey(poetryVersion) {
   return __async(this, null, function* () {
     const pythonVersion = yield getPythonVersion();
     const pipxVersion = yield getPipxVersion();
-    return `setup-poetry-env-${process.env["RUNNER_OS"]}` + `-system-python-${pythonVersion}`.replace("\n", "") + `-pipx-${pipxVersion}`.replace("\n", "") + `-poetry-${poetryVersion}`;
+    return `setup-poetry-env-${process.env["RUNNER_OS"]}-system-python-${pythonVersion}-pipx-${pipxVersion}-poetry-${poetryVersion}`;
   });
 }
 function getPipxVariables() {
@@ -70055,7 +70056,7 @@ function getPipxVariables() {
       throw new Error(
         "Could not get a list of variables used in pipx.constants."
       );
-    const lines = stdout.trim().replace("\r", "").split("\n");
+    const lines = stdout.trim().split(import_node_os.EOL);
     lines.splice(-2, 2);
     const variables = {};
     for (const line of lines) {
@@ -70121,7 +70122,7 @@ function setupPoetry(version, config) {
 
 // src/setup-python.ts
 var import_node_fs = __toESM(require("node:fs"));
-var import_node_os = __toESM(require("node:os"));
+var import_node_os2 = __toESM(require("node:os"));
 var io3 = __toESM(require_io());
 var core13 = __toESM(require_core());
 
@@ -71008,7 +71009,7 @@ function createHackDependencyFile(option) {
     if (option.onlyRoot == "true")
       key = option.onlyRoot;
     if (key) {
-      const tempDir = core13.toPlatformPath(`${import_node_os.default.homedir()}/.setup-poetry-env`);
+      const tempDir = core13.toPlatformPath(`${import_node_os2.default.homedir()}/.setup-poetry-env`);
       yield io3.mkdirP(tempDir);
       const keyPath = core13.toPlatformPath(`${tempDir}/temp-key.txt`);
       import_node_fs.default.writeFileSync(keyPath, key);

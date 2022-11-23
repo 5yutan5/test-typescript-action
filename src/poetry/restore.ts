@@ -1,6 +1,8 @@
+import { EOL } from 'node:os';
 import * as exec from "@actions/exec";
 import * as cache from "@actions/cache";
 import * as core from "@actions/core";
+
 import { IS_WINDOWS, State } from "../util";
 
 async function getPythonVersion(): Promise<string> {
@@ -8,7 +10,7 @@ async function getPythonVersion(): Promise<string> {
     "--version",
   ]);
   if (exitCode && stderr) throw new Error("Could not get python version");
-  return stdout.replace("Python ", "").replace("\r", "");
+  return stdout.replace("Python ", "").replace(EOL, "");
 }
 
 async function getPipxVersion(): Promise<string> {
@@ -16,7 +18,7 @@ async function getPipxVersion(): Promise<string> {
     "--version",
   ]);
   if (exitCode && stderr) throw new Error("Could not get pipx version");
-  return stdout.replace("\r", "");
+  return stdout.replace(EOL, "");
 }
 
 async function createCacheSearchKey(poetryVersion: string): Promise<string> {
@@ -25,8 +27,8 @@ async function createCacheSearchKey(poetryVersion: string): Promise<string> {
   return (
     "setup-poetry-env" +
     `-${process.env["RUNNER_OS"]}` +
-    `-system-python-${pythonVersion}`.replace("\n", "") +
-    `-pipx-${pipxVersion}`.replace("\n", "") +
+    `-system-python-${pythonVersion}` +
+    `-pipx-${pipxVersion}` +
     `-poetry-${poetryVersion}`
   );
 }
@@ -41,7 +43,7 @@ async function getPipxVariables() {
       "Could not get a list of variables used in pipx.constants."
     );
 
-  const lines = stdout.trim().replace("\r", "").split("\n");
+  const lines = stdout.trim().split(EOL);
   lines.splice(-2, 2);
   const variables: any = {};
 
