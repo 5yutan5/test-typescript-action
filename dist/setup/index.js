@@ -71081,8 +71081,10 @@ function run2() {
         version: core13.getInput("python-version"),
         versionFile: core13.getInput("python-version-file")
       });
+      const primaryKey = core13.getState("cache-primary-key" /* STATE_CACHE_PRIMARY_KEY */);
       const matchedKey = core13.getState("cache-matched-key" /* CACHE_MATCHED_KEY */);
-      if (!matchedKey && core13.getInput("poetry-install-dependencies") == "true")
+      console.log(primaryKey, matchedKey);
+      if (!primaryKey && core13.getInput("poetry-install-dependencies") == "true")
         core13.info("----Installing dependencies----");
       yield installDependencies(poetryInstallOption);
     } catch (error2) {
