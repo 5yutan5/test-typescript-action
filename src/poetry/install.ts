@@ -23,7 +23,7 @@ export async function installDependencies(
   if (option.with && !option.only) args.push("--with", option.with);
   if (option.without && !option.only) args.push("--without", option.with);
 
-  if (option.onlyRoot == "true") args = [];
+  if (option.onlyRoot == "true") args = ["--only-root"];
 
   const exitCode = await exec.exec("poetry", ["install"].concat(args));
   if (exitCode) throw new Error("Failed to install python dependencies.");

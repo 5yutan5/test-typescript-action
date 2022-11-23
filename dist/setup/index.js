@@ -69919,7 +69919,7 @@ function installDependencies(option) {
     if (option.without && !option.only)
       args.push("--without", option.with);
     if (option.onlyRoot == "true")
-      args = [];
+      args = ["--only-root"];
     const exitCode = yield exec.exec("poetry", ["install"].concat(args));
     if (exitCode)
       throw new Error("Failed to install python dependencies.");
