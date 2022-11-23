@@ -19,7 +19,7 @@ jobs:
         id: setup-python
         run: |
           pip install lastversion
-          VERSION=$(python -m lastversion github.com/actions/setup-python)
+          VERSION=$(python -m lastversion https://github.com/actions/setup-python)
           echo version=$VERSION >> $GITHUB_OUTPUT
           echo $VERSION
       - name: Update actions/setup-python
