@@ -48,7 +48,6 @@ function overrideInput(inputs: Inputs, hackPath: string): void {
   if (inputs.cacheDependencyPath)
     cacheDependencyPath = inputs.cacheDependencyPath;
   if (hackPath) cacheDependencyPath += "\n" + hackPath;
-  console.log(cacheDependencyPath);
 
   setInput("architecture", inputs.architecture);
   setInput("cache", inputs.cache);

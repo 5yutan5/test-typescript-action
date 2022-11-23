@@ -71029,7 +71029,6 @@ function overrideInput(inputs, hackPath) {
     cacheDependencyPath = inputs.cacheDependencyPath;
   if (hackPath)
     cacheDependencyPath += "\n" + hackPath;
-  console.log(cacheDependencyPath);
   setInput("architecture", inputs.architecture);
   setInput("cache", inputs.cache);
   setInput("cache-dependency-path", cacheDependencyPath);
