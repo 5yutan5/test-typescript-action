@@ -33,9 +33,10 @@ async function createHackDependencyFile(
 
   if (key) {
     const tempDir = core.toPlatformPath(`${os.homedir()}/.setup-poetry-env`);
-    await io.mkdirP(tempDir);
+    await await io.mkdirP(tempDir);
     const keyPath = core.toPlatformPath(`${tempDir}/temp-key.txt`);
     fs.writeFileSync(keyPath, key);
+    console.log(keyPath)
     return keyPath;
   } else {
     return "";
