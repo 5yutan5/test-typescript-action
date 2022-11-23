@@ -41,7 +41,6 @@ jobs:
           python-version: 3.x
           cache-dependencies: 'false'
           poetry-install-dependencies: 'false'
-      - run: poetry install
 
   test-this-action-no-dependency-cache:
     runs-on: 'ubuntu-latest'
