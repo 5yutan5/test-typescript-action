@@ -41,8 +41,8 @@ async function run(): Promise<void> {
       versionFile: core.getInput("python-version-file"),
     });
 
-    const matchedKey = core.getState(State.CACHE_MATCHED_KEY);
-    if (!matchedKey && core.getInput("poetry-install-dependencies") == "true")
+    const primaryKey = core.getState(State.STATE_CACHE_PRIMARY_KEY);
+    if (!primaryKey && core.getInput("poetry-install-dependencies") == "true")
       core.info("----Installing dependencies----");
       await installDependencies(poetryInstallOption);
   } catch (error) {
