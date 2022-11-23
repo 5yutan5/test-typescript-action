@@ -2735,7 +2735,7 @@ var require_toolrunner = __commonJS({
     var io = __importStar(require_io());
     var ioUtil = __importStar(require_io_util());
     var timers_1 = require("timers");
-    var IS_WINDOWS2 = process.platform === "win32";
+    var IS_WINDOWS3 = process.platform === "win32";
     var ToolRunner = class extends events.EventEmitter {
       constructor(toolPath, args, options) {
         super();
@@ -2755,7 +2755,7 @@ var require_toolrunner = __commonJS({
         const toolPath = this._getSpawnFileName();
         const args = this._getSpawnArgs(options);
         let cmd = noPrefix ? "" : "[command]";
-        if (IS_WINDOWS2) {
+        if (IS_WINDOWS3) {
           if (this._isCmdFile()) {
             cmd += toolPath;
             for (const a of args) {
@@ -2797,7 +2797,7 @@ var require_toolrunner = __commonJS({
         }
       }
       _getSpawnFileName() {
-        if (IS_WINDOWS2) {
+        if (IS_WINDOWS3) {
           if (this._isCmdFile()) {
             return process.env["COMSPEC"] || "cmd.exe";
           }
@@ -2805,7 +2805,7 @@ var require_toolrunner = __commonJS({
         return this.toolPath;
       }
       _getSpawnArgs(options) {
-        if (IS_WINDOWS2) {
+        if (IS_WINDOWS3) {
           if (this._isCmdFile()) {
             let argline = `/D /S /C "${this._windowsQuoteCmdArg(this.toolPath)}`;
             for (const a of this.args) {
@@ -2936,7 +2936,7 @@ var require_toolrunner = __commonJS({
       }
       exec() {
         return __awaiter(this, void 0, void 0, function* () {
-          if (!ioUtil.isRooted(this.toolPath) && (this.toolPath.includes("/") || IS_WINDOWS2 && this.toolPath.includes("\\"))) {
+          if (!ioUtil.isRooted(this.toolPath) && (this.toolPath.includes("/") || IS_WINDOWS3 && this.toolPath.includes("\\"))) {
             this.toolPath = path.resolve(process.cwd(), this.options.cwd || process.cwd(), this.toolPath);
           }
           this.toolPath = yield io.which(this.toolPath, true);
@@ -3359,14 +3359,14 @@ var require_internal_path_helper = __commonJS({
     exports.safeTrimTrailingSeparator = exports.normalizeSeparators = exports.hasRoot = exports.hasAbsoluteRoot = exports.ensureAbsoluteRoot = exports.dirname = void 0;
     var path = __importStar(require("path"));
     var assert_1 = __importDefault(require("assert"));
-    var IS_WINDOWS2 = process.platform === "win32";
+    var IS_WINDOWS3 = process.platform === "win32";
     function dirname(p) {
       p = safeTrimTrailingSeparator(p);
-      if (IS_WINDOWS2 && /^\\\\[^\\]+(\\[^\\]+)?$/.test(p)) {
+      if (IS_WINDOWS3 && /^\\\\[^\\]+(\\[^\\]+)?$/.test(p)) {
         return p;
       }
       let result = path.dirname(p);
-      if (IS_WINDOWS2 && /^\\\\[^\\]+\\[^\\]+\\$/.test(result)) {
+      if (IS_WINDOWS3 && /^\\\\[^\\]+\\[^\\]+\\$/.test(result)) {
         result = safeTrimTrailingSeparator(result);
       }
       return result;
@@ -3378,7 +3378,7 @@ var require_internal_path_helper = __commonJS({
       if (hasAbsoluteRoot(itemPath)) {
         return itemPath;
       }
-      if (IS_WINDOWS2) {
+      if (IS_WINDOWS3) {
         if (itemPath.match(/^[A-Z]:[^\\/]|^[A-Z]:$/i)) {
           let cwd = process.cwd();
           assert_1.default(cwd.match(/^[A-Z]:\\/i), `Expected current directory to start with an absolute drive root. Actual '${cwd}'`);
@@ -3401,7 +3401,7 @@ var require_internal_path_helper = __commonJS({
         }
       }
       assert_1.default(hasAbsoluteRoot(root), `ensureAbsoluteRoot parameter 'root' must have an absolute root`);
-      if (root.endsWith("/") || IS_WINDOWS2 && root.endsWith("\\")) {
+      if (root.endsWith("/") || IS_WINDOWS3 && root.endsWith("\\")) {
       } else {
         root += path.sep;
       }
@@ -3411,7 +3411,7 @@ var require_internal_path_helper = __commonJS({
     function hasAbsoluteRoot(itemPath) {
       assert_1.default(itemPath, `hasAbsoluteRoot parameter 'itemPath' must not be empty`);
       itemPath = normalizeSeparators(itemPath);
-      if (IS_WINDOWS2) {
+      if (IS_WINDOWS3) {
         return itemPath.startsWith("\\\\") || /^[A-Z]:\\/i.test(itemPath);
       }
       return itemPath.startsWith("/");
@@ -3420,7 +3420,7 @@ var require_internal_path_helper = __commonJS({
     function hasRoot(itemPath) {
       assert_1.default(itemPath, `isRooted parameter 'itemPath' must not be empty`);
       itemPath = normalizeSeparators(itemPath);
-      if (IS_WINDOWS2) {
+      if (IS_WINDOWS3) {
         return itemPath.startsWith("\\") || /^[A-Z]:/i.test(itemPath);
       }
       return itemPath.startsWith("/");
@@ -3428,7 +3428,7 @@ var require_internal_path_helper = __commonJS({
     exports.hasRoot = hasRoot;
     function normalizeSeparators(p) {
       p = p || "";
-      if (IS_WINDOWS2) {
+      if (IS_WINDOWS3) {
         p = p.replace(/\//g, "\\");
         const isUnc = /^\\\\+[^\\]/.test(p);
         return (isUnc ? "\\" : "") + p.replace(/\\\\+/g, "\\");
@@ -3447,7 +3447,7 @@ var require_internal_path_helper = __commonJS({
       if (p === path.sep) {
         return p;
       }
-      if (IS_WINDOWS2 && /^[A-Z]:\\$/i.test(p)) {
+      if (IS_WINDOWS3 && /^[A-Z]:\\$/i.test(p)) {
         return p;
       }
       return p.substr(0, p.length - 1);
@@ -3508,17 +3508,17 @@ var require_internal_pattern_helper = __commonJS({
     exports.partialMatch = exports.match = exports.getSearchPaths = void 0;
     var pathHelper = __importStar(require_internal_path_helper());
     var internal_match_kind_1 = require_internal_match_kind();
-    var IS_WINDOWS2 = process.platform === "win32";
+    var IS_WINDOWS3 = process.platform === "win32";
     function getSearchPaths(patterns) {
       patterns = patterns.filter((x) => !x.negate);
       const searchPathMap = {};
       for (const pattern of patterns) {
-        const key = IS_WINDOWS2 ? pattern.searchPath.toUpperCase() : pattern.searchPath;
+        const key = IS_WINDOWS3 ? pattern.searchPath.toUpperCase() : pattern.searchPath;
         searchPathMap[key] = "candidate";
       }
       const result = [];
       for (const pattern of patterns) {
-        const key = IS_WINDOWS2 ? pattern.searchPath.toUpperCase() : pattern.searchPath;
+        const key = IS_WINDOWS3 ? pattern.searchPath.toUpperCase() : pattern.searchPath;
         if (searchPathMap[key] === "included") {
           continue;
         }
@@ -4415,7 +4415,7 @@ var require_internal_path = __commonJS({
     var path = __importStar(require("path"));
     var pathHelper = __importStar(require_internal_path_helper());
     var assert_1 = __importDefault(require("assert"));
-    var IS_WINDOWS2 = process.platform === "win32";
+    var IS_WINDOWS3 = process.platform === "win32";
     var Path = class {
       constructor(itemPath) {
         this.segments = [];
@@ -4454,7 +4454,7 @@ var require_internal_path = __commonJS({
       }
       toString() {
         let result = this.segments[0];
-        let skipSlash = result.endsWith(path.sep) || IS_WINDOWS2 && /^[A-Z]:$/i.test(result);
+        let skipSlash = result.endsWith(path.sep) || IS_WINDOWS3 && /^[A-Z]:$/i.test(result);
         for (let i = 1; i < this.segments.length; i++) {
           if (skipSlash) {
             skipSlash = false;
@@ -4514,7 +4514,7 @@ var require_internal_pattern = __commonJS({
     var minimatch_1 = require_minimatch();
     var internal_match_kind_1 = require_internal_match_kind();
     var internal_path_1 = require_internal_path();
-    var IS_WINDOWS2 = process.platform === "win32";
+    var IS_WINDOWS3 = process.platform === "win32";
     var Pattern = class {
       constructor(patternOrNegate, isImplicitPattern = false, segments, homedir) {
         this.negate = false;
@@ -4542,17 +4542,17 @@ var require_internal_pattern = __commonJS({
         let foundGlob = false;
         const searchSegments = this.segments.map((x) => Pattern.getLiteral(x)).filter((x) => !foundGlob && !(foundGlob = x === ""));
         this.searchPath = new internal_path_1.Path(searchSegments).toString();
-        this.rootRegExp = new RegExp(Pattern.regExpEscape(searchSegments[0]), IS_WINDOWS2 ? "i" : "");
+        this.rootRegExp = new RegExp(Pattern.regExpEscape(searchSegments[0]), IS_WINDOWS3 ? "i" : "");
         this.isImplicitPattern = isImplicitPattern;
         const minimatchOptions = {
           dot: true,
           nobrace: true,
-          nocase: IS_WINDOWS2,
+          nocase: IS_WINDOWS3,
           nocomment: true,
           noext: true,
           nonegate: true
         };
-        pattern = IS_WINDOWS2 ? pattern.replace(/\\/g, "/") : pattern;
+        pattern = IS_WINDOWS3 ? pattern.replace(/\\/g, "/") : pattern;
         this.minimatch = new minimatch_1.Minimatch(pattern, minimatchOptions);
       }
       match(itemPath) {
@@ -4574,10 +4574,10 @@ var require_internal_pattern = __commonJS({
         if (pathHelper.dirname(itemPath) === itemPath) {
           return this.rootRegExp.test(itemPath);
         }
-        return this.minimatch.matchOne(itemPath.split(IS_WINDOWS2 ? /\\+/ : /\/+/), this.minimatch.set[0], true);
+        return this.minimatch.matchOne(itemPath.split(IS_WINDOWS3 ? /\\+/ : /\/+/), this.minimatch.set[0], true);
       }
       static globEscape(s) {
-        return (IS_WINDOWS2 ? s : s.replace(/\\/g, "\\\\")).replace(/(\[)(?=[^/]+\])/g, "[[]").replace(/\?/g, "[?]").replace(/\*/g, "[*]");
+        return (IS_WINDOWS3 ? s : s.replace(/\\/g, "\\\\")).replace(/(\[)(?=[^/]+\])/g, "[[]").replace(/\?/g, "[?]").replace(/\*/g, "[*]");
       }
       static fixupPattern(pattern, homedir) {
         assert_1.default(pattern, "pattern cannot be empty");
@@ -4592,13 +4592,13 @@ var require_internal_pattern = __commonJS({
           assert_1.default(homedir, "Unable to determine HOME directory");
           assert_1.default(pathHelper.hasAbsoluteRoot(homedir), `Expected HOME directory to be a rooted path. Actual '${homedir}'`);
           pattern = Pattern.globEscape(homedir) + pattern.substr(1);
-        } else if (IS_WINDOWS2 && (pattern.match(/^[A-Z]:$/i) || pattern.match(/^[A-Z]:[^\\]/i))) {
+        } else if (IS_WINDOWS3 && (pattern.match(/^[A-Z]:$/i) || pattern.match(/^[A-Z]:[^\\]/i))) {
           let root = pathHelper.ensureAbsoluteRoot("C:\\dummy-root", pattern.substr(0, 2));
           if (pattern.length > 2 && !root.endsWith("\\")) {
             root += "\\";
           }
           pattern = Pattern.globEscape(root) + pattern.substr(2);
-        } else if (IS_WINDOWS2 && (pattern === "\\" || pattern.match(/^\\[^\\]/))) {
+        } else if (IS_WINDOWS3 && (pattern === "\\" || pattern.match(/^\\[^\\]/))) {
           let root = pathHelper.ensureAbsoluteRoot("C:\\dummy-root", "\\");
           if (!root.endsWith("\\")) {
             root += "\\";
@@ -4613,7 +4613,7 @@ var require_internal_pattern = __commonJS({
         let literal = "";
         for (let i = 0; i < segment.length; i++) {
           const c = segment[i];
-          if (c === "\\" && !IS_WINDOWS2 && i + 1 < segment.length) {
+          if (c === "\\" && !IS_WINDOWS3 && i + 1 < segment.length) {
             literal += segment[++i];
             continue;
           } else if (c === "*" || c === "?") {
@@ -4623,7 +4623,7 @@ var require_internal_pattern = __commonJS({
             let closed = -1;
             for (let i2 = i + 1; i2 < segment.length; i2++) {
               const c2 = segment[i2];
-              if (c2 === "\\" && !IS_WINDOWS2 && i2 + 1 < segment.length) {
+              if (c2 === "\\" && !IS_WINDOWS3 && i2 + 1 < segment.length) {
                 set += segment[++i2];
                 continue;
               } else if (c2 === "]") {
@@ -4800,7 +4800,7 @@ var require_internal_globber = __commonJS({
     var internal_match_kind_1 = require_internal_match_kind();
     var internal_pattern_1 = require_internal_pattern();
     var internal_search_state_1 = require_internal_search_state();
-    var IS_WINDOWS2 = process.platform === "win32";
+    var IS_WINDOWS3 = process.platform === "win32";
     var DefaultGlobber = class {
       constructor(options) {
         this.patterns = [];
@@ -4888,7 +4888,7 @@ var require_internal_globber = __commonJS({
       static create(patterns, options) {
         return __awaiter(this, void 0, void 0, function* () {
           const result = new DefaultGlobber(options);
-          if (IS_WINDOWS2) {
+          if (IS_WINDOWS3) {
             patterns = patterns.replace(/\r\n/g, "\n");
             patterns = patterns.replace(/\r/g, "\n");
           }
@@ -6365,11 +6365,11 @@ var require_cacheUtils = __commonJS({
     var constants_1 = require_constants();
     function createTempDirectory() {
       return __awaiter(this, void 0, void 0, function* () {
-        const IS_WINDOWS2 = process.platform === "win32";
+        const IS_WINDOWS3 = process.platform === "win32";
         let tempDirectory = process.env["RUNNER_TEMP"] || "";
         if (!tempDirectory) {
           let baseLocation;
-          if (IS_WINDOWS2) {
+          if (IS_WINDOWS3) {
             baseLocation = process.env["USERPROFILE"] || "C:\\";
           } else {
             if (process.platform === "darwin") {
@@ -64848,7 +64848,7 @@ var require_tar = __commonJS({
     var path = __importStar(require("path"));
     var utils = __importStar(require_cacheUtils());
     var constants_1 = require_constants();
-    var IS_WINDOWS2 = process.platform === "win32";
+    var IS_WINDOWS3 = process.platform === "win32";
     function getTarPath(args, compressionMethod) {
       return __awaiter(this, void 0, void 0, function* () {
         switch (process.platform) {
@@ -64895,10 +64895,10 @@ var require_tar = __commonJS({
         case constants_1.CompressionMethod.Zstd:
           return [
             "--use-compress-program",
-            IS_WINDOWS2 ? "zstd -d --long=30" : "unzstd --long=30"
+            IS_WINDOWS3 ? "zstd -d --long=30" : "unzstd --long=30"
           ];
         case constants_1.CompressionMethod.ZstdWithoutLong:
-          return ["--use-compress-program", IS_WINDOWS2 ? "zstd -d" : "unzstd"];
+          return ["--use-compress-program", IS_WINDOWS3 ? "zstd -d" : "unzstd"];
         default:
           return ["-z"];
       }
@@ -64942,10 +64942,10 @@ var require_tar = __commonJS({
             case constants_1.CompressionMethod.Zstd:
               return [
                 "--use-compress-program",
-                IS_WINDOWS2 ? "zstd -T0 --long=30" : "zstdmt --long=30"
+                IS_WINDOWS3 ? "zstd -T0 --long=30" : "zstdmt --long=30"
               ];
             case constants_1.CompressionMethod.ZstdWithoutLong:
-              return ["--use-compress-program", IS_WINDOWS2 ? "zstd -T0" : "zstdmt"];
+              return ["--use-compress-program", IS_WINDOWS3 ? "zstd -T0" : "zstdmt"];
             default:
               return ["-z"];
           }
@@ -65278,8 +65278,6 @@ function cachePoetryInstallation() {
 function run2() {
   return __async(this, null, function* () {
     try {
-      if (IS_WINDOWS)
-        core3.info("Skip to cache Poetry installation on Windows.");
       yield cachePoetryInstallation();
       hackSetupPython();
       yield Promise.resolve().then(() => (init_cache_save(), cache_save_exports));

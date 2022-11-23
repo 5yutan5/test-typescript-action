@@ -24,7 +24,6 @@ async function cachePoetryInstallation(): Promise<void> {
 
 export async function run() {
   try {
-    if (IS_WINDOWS) core.info("Skip to cache Poetry installation on Windows.");
     await cachePoetryInstallation();
 
     hackSetupPython();
