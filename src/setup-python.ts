@@ -1,5 +1,4 @@
 import fs from "node:fs";
-import os from "node:os";
 import * as io from "@actions/io";
 import * as core from "@actions/core";
 import { run } from "setup-python/src/setup-python";
@@ -32,7 +31,8 @@ async function createHackDependencyFile(
   if (option.onlyRoot == "true") key = option.onlyRoot;
 
   if (key) {
-    const tempDir = core.toPlatformPath(`${os.homedir()}/.setup-poetry-env`);
+    const githubWorkspace = process.env['GITHUB_WORKSPACE'] ?? process.cwd()
+    const tempDir = core.toPlatformPath(`${githubWorkspace}/.setup-poetry-env`)
     await await io.mkdirP(tempDir);
     const keyPath = core.toPlatformPath(`${tempDir}/temp-key.txt`);
     fs.writeFileSync(keyPath, key);
