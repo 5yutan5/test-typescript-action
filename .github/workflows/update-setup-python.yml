@@ -24,7 +24,7 @@ jobs:
           echo $VERSION
       - name: Update actions/setup-python
         run: |
-          VERSION = ${{ steps.setup-python.outputs.version }}
+          VERSION=${{ steps.setup-python.outputs.version }}
           npm i git+https://git@github.com/actions/setup-python.git#v$VERSION
 
       - name: Edit actions/setup-python
