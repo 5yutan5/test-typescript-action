@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import * as io from "@actions/io";
 import * as core from "@actions/core";
-import { run } from "setup-python/src/setup-python"
+import { run } from "setup-python/src/setup-python";
 
 import { InstallOption } from "./poetry/install";
 import { setInput } from "./util";

@@ -65256,34 +65256,34 @@ function setInput(name, value) {
 
 // src/cache-save.ts
 function hackSetupPython() {
+  const cache4 = core3.getInput("cache-dependencies") == "true" ? "poetry" : "";
+  setInput("cache", cache4);
+}
+function cachePoetryInstallation() {
   return __async(this, null, function* () {
-    const cache4 = core3.getInput("cache-dependencies") == "true" ? "poetry" : "";
-    setInput("cache", cache4);
+    const cachePaths = JSON.parse(core3.getState("poetry-cache-paths" /* CACHE_PATHS */));
+    const searchKey = core3.getState("poetry-cache-search-key" /* CACHE_SEARCH_KEY */);
+    const matchedKey = core3.getState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */);
+    if (searchKey === matchedKey) {
+      core3.info(`Cache hit occurred on the key ${searchKey}, not saving cache.`);
+      return;
+    }
+    const cacheId = yield cache3.saveCache(cachePaths, searchKey);
+    if (cacheId == -1)
+      core3.warning("Failed to cache Poetry installation.");
+    else
+      core3.info(`Poetry installation saved with the key: ${searchKey}`);
   });
 }
 function run2() {
   return __async(this, null, function* () {
     try {
+      if (IS_WINDOWS)
+        core3.info("Skip to cache Poetry installation on Windows.");
+      else
+        yield cachePoetryInstallation();
       hackSetupPython();
       yield Promise.resolve().then(() => (init_cache_save(), cache_save_exports));
-      if (IS_WINDOWS) {
-        core3.info("Skip to cache Poetry installation on Windows.");
-        return;
-      }
-      const cachePaths = JSON.parse(core3.getState("poetry-cache-paths" /* CACHE_PATHS */));
-      const searchKey = core3.getState("poetry-cache-search-key" /* CACHE_SEARCH_KEY */);
-      const matchedKey = core3.getState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */);
-      if (searchKey == matchedKey) {
-        core3.info(
-          `Cache hit occurred on the key ${searchKey}, not saving cache.`
-        );
-        return;
-      }
-      const cacheId = yield cache3.saveCache(cachePaths, searchKey);
-      if (cacheId == -1)
-        core3.warning("Failed to cache Poetry installation.");
-      else
-        core3.info(`Poetry installation saved with the key: ${searchKey}`);
     } catch (error) {
       if (error instanceof Error)
         core3.setFailed(error.message);
