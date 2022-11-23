@@ -70928,8 +70928,10 @@ function configurePoetry(config) {
       setSetting("pypi-token", config.pypiToken);
     if (config.virtualenvsCreate == "false")
       setSetting("virtualenvs.in-project", "false");
+    console.log(config.virtualenvsInProject == "true");
     if (config.virtualenvsInProject == "true")
-      setSetting("virtualenvs.in-project", "true");
+      console.log("config.virtualenvsInProject");
+    setSetting("virtualenvs.in-project", "true");
     if (config.virtualenvsPath)
       setSetting("virtualenvs.path", config.virtualenvsPath);
   });
