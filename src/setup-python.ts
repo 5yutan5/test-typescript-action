@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 import * as io from "@actions/io";
 import * as core from "@actions/core";
 import { run } from "setup-python/src/setup-python";
@@ -61,16 +62,20 @@ function overrideInput(inputs: Inputs, hackPath: string): void {
 async function hackActionSetupPython(
   option: InstallOption,
   inputs: Inputs
-): Promise<void> {
+): Promise<string> {
   const hackDependencyPath = await createHackDependencyFile(option);
   overrideInput(inputs, hackDependencyPath);
+  return hackDependencyPath
 }
 
 export async function setupPython(
   poetryInstallOption: InstallOption,
   inputs: Inputs
 ): Promise<void> {
-  await hackActionSetupPython(poetryInstallOption, inputs);
+  const hackFile = await hackActionSetupPython(poetryInstallOption, inputs);
   // Run `actions/setup-python`.
   await run();
+  // Remove resources generated for hack.
+  fs.unlinkSync(hackFile)
+  fs.rmdirSync(path.dirname(hackFile))
 }
