@@ -11,8 +11,12 @@ export interface Configuration {
 }
 
 async function setSetting(setting: string, value: string): Promise<void> {
-  const exitCode = await exec.exec("poetry", ["config", setting, value]);
-  if (exitCode)
+  const { exitCode, stderr } = await exec.getExecOutput("poetry", [
+    "config",
+    setting,
+    value,
+  ]);
+  if (exitCode && stderr)
     throw new Error(`Could not run "poetry config ${setting}" ${value}.`);
 }
 
@@ -35,5 +39,4 @@ export async function configurePoetry(config: Configuration): Promise<void> {
 
   if (config.virtualenvsPath)
     setSetting("virtualenvs.path", config.virtualenvsPath);
-  await exec.getExecOutput("poetry", ["config", "--list"])
 }

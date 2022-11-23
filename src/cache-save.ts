@@ -14,7 +14,7 @@ export async function run() {
     await import("setup-python/src/cache-save");
 
     if (IS_WINDOWS) {
-      core.info("Skip to cache Poetry installation on Windows.")
+      core.info("Skip to cache Poetry installation on Windows.");
       return;
     }
     const cachePaths = JSON.parse(core.getState(State.CACHE_PATHS)) as string[];

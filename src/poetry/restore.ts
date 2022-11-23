@@ -42,7 +42,7 @@ async function getPipxVariables() {
     );
 
   const lines = stdout.trim().split("\n");
-  lines.splice(-2, 2)
+  lines.splice(-2, 2);
   const variables: any = {};
 
   for (const line of lines) {
@@ -58,15 +58,13 @@ async function getPipxVariables() {
 
 async function getCacheDirectories(): Promise<Array<string>> {
   const pipxVariables = await getPipxVariables();
-  const poetryBinPath = core.toPlatformPath(
-    IS_WINDOWS
-      ? `${pipxVariables["PIPX_BIN_DIR"]}/poetry.exe`
-      : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`
+  const poetryBinPath = IS_WINDOWS
+    ? `${pipxVariables["PIPX_BIN_DIR"]}/poetry.exe`
+    : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
+  const poetryVenvPath = `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
+  return [poetryBinPath, poetryVenvPath].map((path) =>
+    core.toPlatformPath(path)
   );
-  const poetryVenvPath = core.toPlatformPath(
-    `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`
-  );
-  return [poetryBinPath, poetryVenvPath];
 }
 
 function handleMatchResult(matchedKey: string | undefined, searchKey: string) {
@@ -83,11 +81,12 @@ export async function tryRestoringCache(
   poetryVersion: string
 ): Promise<boolean> {
   if (IS_WINDOWS) {
-    core.info("Skip to restore Poetry install on Windows.")
+    core.info("Skip to restore Poetry install on Windows.");
     return false;
   }
   const searchKey = await createCacheSearchKey(poetryVersion);
   const cachePath = await getCacheDirectories();
+  console.log(cachePath);
   core.saveState(State.CACHE_PATHS, cachePath);
   core.saveState(State.CACHE_SEARCH_KEY, searchKey);
 
