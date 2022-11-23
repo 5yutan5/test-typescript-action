@@ -80,10 +80,7 @@ function handleMatchResult(matchedKey: string | undefined, searchKey: string) {
 export async function tryRestoringCache(
   poetryVersion: string
 ): Promise<boolean> {
-  if (IS_WINDOWS) {
     core.info("Skip to restore Poetry install on Windows.");
-    return false;
-  }
   const searchKey = await createCacheSearchKey(poetryVersion);
   const cachePath = await getCacheDirectories();
   console.log(cachePath);

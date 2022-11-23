@@ -70086,10 +70086,7 @@ function handleMatchResult(matchedKey, searchKey) {
 }
 function tryRestoringCache(poetryVersion) {
   return __async(this, null, function* () {
-    if (IS_WINDOWS) {
-      core3.info("Skip to restore Poetry install on Windows.");
-      return false;
-    }
+    core3.info("Skip to restore Poetry install on Windows.");
     const searchKey = yield createCacheSearchKey(poetryVersion);
     const cachePath = yield getCacheDirectories();
     console.log(cachePath);
