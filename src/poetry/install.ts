@@ -1,3 +1,4 @@
+import * as core from "@actions/core";
 import * as exec from "@actions/exec";
 
 export interface InstallOption {
@@ -26,5 +27,5 @@ export async function installDependencies(
   if (option.onlyRoot == "true") args = ["--only-root"];
 
   const exitCode = await exec.exec("poetry", ["install"].concat(args));
-  if (exitCode) throw new Error("Failed to install python dependencies.");
+  if (exitCode) core.warning("Maybe, failed to install python dependencies.");
 }
