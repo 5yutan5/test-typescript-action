@@ -71018,6 +71018,10 @@ function handleMatchResult(matchedKey, searchKey) {
 }
 function tryRestoringCache(poetryVersion) {
   return __async(this, null, function* () {
+    if (IS_WINDOWS) {
+      core3.info("Skip to restore Poetry install on Windows.");
+      return false;
+    }
     const searchKey = yield createCacheSearchKey(poetryVersion);
     const cachePath = yield getCacheDirectories();
     core3.saveState("poetry-cache-paths" /* CACHE_PATHS */, cachePath);

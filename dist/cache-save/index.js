@@ -65266,6 +65266,10 @@ function run2() {
     try {
       hackSetupPython();
       yield Promise.resolve().then(() => (init_cache_save(), cache_save_exports));
+      if (IS_WINDOWS) {
+        core3.info("Skip to cache Poetry installation on Windows.");
+        return;
+      }
       const cachePaths = JSON.parse(core3.getState("poetry-cache-paths" /* CACHE_PATHS */));
       const searchKey = core3.getState("poetry-cache-search-key" /* CACHE_SEARCH_KEY */);
       const matchedKey = core3.getState("poetry-cache-matched-key" /* CACHE_MATCHED_KEY */);
