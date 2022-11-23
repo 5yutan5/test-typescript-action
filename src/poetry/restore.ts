@@ -1,4 +1,5 @@
-import { EOL } from 'node:os';
+import { EOL } from "node:os";
+import * as fs from "node:fs";
 import * as exec from "@actions/exec";
 import * as cache from "@actions/cache";
 import * as core from "@actions/core";
@@ -58,15 +59,23 @@ async function getPipxVariables() {
   };
 }
 
-async function getCacheDirectories(): Promise<Array<string>> {
+async function getCacheDirectories() {
   const pipxVariables = await getPipxVariables();
-  const poetryBinPath = IS_WINDOWS
+  const poetryBinFile = IS_WINDOWS
     ? `${pipxVariables["PIPX_BIN_DIR"]}\\poetry.exe`
     : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
-  const poetryVenvPath = `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
-  return [poetryBinPath, poetryVenvPath].map((path) =>
-    core.toPlatformPath(path)
-  );
+  const poetryVenvDir = `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
+  return {
+    POETRY_BIN_FILE: core.toPlatformPath(poetryBinFile),
+    POETRY_VENV_DIR: core.toPlatformPath(poetryVenvDir),
+  };
+}
+
+// On Windows, symlink broken when restoring from cache.
+function recreatePoetrySymlink(poetryBinFile: string, poetryVenvDir: string) {
+  fs.unlinkSync(poetryBinFile);
+  const poetryExe = core.toPlatformPath(`${poetryVenvDir}/Scripts/poetry.exe`);
+  fs.symlinkSync(poetryExe, poetryBinFile);
 }
 
 function handleMatchResult(matchedKey: string | undefined, searchKey: string) {
@@ -82,14 +91,16 @@ function handleMatchResult(matchedKey: string | undefined, searchKey: string) {
 export async function tryRestoringCache(
   poetryVersion: string
 ): Promise<boolean> {
-    core.info("Skip to restore Poetry install on Windows.");
+  core.info("Skip to restore Poetry install on Windows.");
   const searchKey = await createCacheSearchKey(poetryVersion);
-  const cachePath = await getCacheDirectories();
-  console.log(cachePath);
+  const { POETRY_BIN_FILE, POETRY_VENV_DIR } = await getCacheDirectories();
+  const cachePath = [POETRY_BIN_FILE, POETRY_VENV_DIR];
   core.saveState(State.CACHE_PATHS, cachePath);
   core.saveState(State.CACHE_SEARCH_KEY, searchKey);
 
   const matchedKey = await cache.restoreCache(cachePath, searchKey);
+  if (matchedKey && IS_WINDOWS)
+    recreatePoetrySymlink(POETRY_BIN_FILE, POETRY_VENV_DIR);
 
   handleMatchResult(matchedKey, searchKey);
   return matchedKey ? true : false;
