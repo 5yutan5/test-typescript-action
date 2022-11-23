@@ -35,5 +35,5 @@ export async function configurePoetry(config: Configuration): Promise<void> {
 
   if (config.virtualenvsPath)
     setSetting("virtualenvs.path", config.virtualenvsPath);
-    await exec.exec("poetry", ["config", "--list"]);
+  await exec.exec("poetry", ["config", "--list"]);
 }
