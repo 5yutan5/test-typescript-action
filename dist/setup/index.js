@@ -1965,10 +1965,10 @@ var require_path_utils = __commonJS({
       return pth.replace(/[/]/g, "\\");
     }
     exports.toWin32Path = toWin32Path;
-    function toPlatformPath2(pth) {
+    function toPlatformPath3(pth) {
       return pth.replace(/[/\\]/g, path10.sep);
     }
-    exports.toPlatformPath = toPlatformPath2;
+    exports.toPlatformPath = toPlatformPath3;
   }
 });
 
@@ -70026,7 +70026,7 @@ function getPythonVersion() {
     ]);
     if (exitCode && stderr)
       throw new Error("Could not get python version");
-    return stdout.replace("Python ", "");
+    return stdout.replace("Python ", "").replace("\r", "");
   });
 }
 function getPipxVersion() {
@@ -70036,7 +70036,7 @@ function getPipxVersion() {
     ]);
     if (exitCode && stderr)
       throw new Error("Could not get pipx version");
-    return stdout;
+    return stdout.replace("\r", "");
   });
 }
 function createCacheSearchKey(poetryVersion) {
@@ -70055,7 +70055,7 @@ function getPipxVariables() {
       throw new Error(
         "Could not get a list of variables used in pipx.constants."
       );
-    const lines = stdout.trim().split("\n");
+    const lines = stdout.trim().replace("\r", "").split("\n");
     lines.splice(-2, 2);
     const variables = {};
     for (const line of lines) {
@@ -70069,8 +70069,10 @@ function getCacheDirectories() {
   return __async(this, null, function* () {
     const pipxVariables = yield getPipxVariables();
     const poetryBinPath = IS_WINDOWS ? `${pipxVariables["PIPX_BIN_DIR"]}\\poetry.exe` : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
-    const poetryVenvPath = IS_WINDOWS ? `${pipxVariables["PIPX_LOCAL_VENVS"]}\\poetry` : `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
-    return [poetryBinPath, poetryVenvPath];
+    const poetryVenvPath = `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
+    return [poetryBinPath, poetryVenvPath].map(
+      (path10) => core3.toPlatformPath(path10)
+    );
   });
 }
 function handleMatchResult(matchedKey, searchKey) {

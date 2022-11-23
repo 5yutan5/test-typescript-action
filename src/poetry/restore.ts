@@ -8,7 +8,7 @@ async function getPythonVersion(): Promise<string> {
     "--version",
   ]);
   if (exitCode && stderr) throw new Error("Could not get python version");
-  return stdout.replace("Python ", "");
+  return stdout.replace("Python ", "").replace("\r", "");
 }
 
 async function getPipxVersion(): Promise<string> {
@@ -16,7 +16,7 @@ async function getPipxVersion(): Promise<string> {
     "--version",
   ]);
   if (exitCode && stderr) throw new Error("Could not get pipx version");
-  return stdout;
+  return stdout.replace("\r", "");
 }
 
 async function createCacheSearchKey(poetryVersion: string): Promise<string> {
@@ -41,7 +41,7 @@ async function getPipxVariables() {
       "Could not get a list of variables used in pipx.constants."
     );
 
-  const lines = stdout.trim().split("\n");
+  const lines = stdout.trim().replace("\r", "").split("\n");
   lines.splice(-2, 2);
   const variables: any = {};
 
@@ -61,10 +61,10 @@ async function getCacheDirectories(): Promise<Array<string>> {
   const poetryBinPath = IS_WINDOWS
     ? `${pipxVariables["PIPX_BIN_DIR"]}\\poetry.exe`
     : `${pipxVariables["PIPX_BIN_DIR"]}/poetry`;
-  const poetryVenvPath = IS_WINDOWS
-    ? `${pipxVariables["PIPX_LOCAL_VENVS"]}\\poetry`
-    : `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
-  return [poetryBinPath, poetryVenvPath];
+  const poetryVenvPath = `${pipxVariables["PIPX_LOCAL_VENVS"]}/poetry`;
+  return [poetryBinPath, poetryVenvPath].map((path) =>
+    core.toPlatformPath(path)
+  );
 }
 
 function handleMatchResult(matchedKey: string | undefined, searchKey: string) {
