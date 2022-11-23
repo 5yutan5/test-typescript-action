@@ -71,7 +71,8 @@ jobs:
           target = source.split("{{ poetry-version }}")[1]
           target = target.split("\n")[1]
           match = re.search(r"default: '.*?'", target)
-          result = source.replace(match.group(), "default: new")
+          version = "${{ steps.poetry.outputs.version }}"
+          result = source.replace(match.group(), f"default: {version}")
           path.write_text(result)
 
       - uses: peter-evans/create-pull-request@v4
