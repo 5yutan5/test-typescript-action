@@ -69921,6 +69921,8 @@ function installDependencies(option) {
       args.push("--without", option.with);
     if (option.onlyRoot == "true")
       args = ["--only-root"];
+    if (option.additionalArgs)
+      args.push(option.additionalArgs);
     const exitCode = yield exec.exec("poetry", ["install"].concat(args));
     if (exitCode)
       core.warning("Maybe, failed to install python dependencies.");
