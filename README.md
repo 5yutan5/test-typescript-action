@@ -33,7 +33,7 @@ Also you can check all inputs and outputs.
 ```yml
       - uses: 5yutan5/setup-poetry-env@v1
         with:
-          python-version: 3.x
+          python-version: '3.x'
           poetry-version: '1.2.0'
 ```
 
@@ -42,7 +42,7 @@ Also you can check all inputs and outputs.
 ```yml
       - uses: 5yutan5/setup-poetry-env@v1
         with:
-          python-version: 3.x
+          python-version: '3.x'
           poetry-install-dependencies: 'false'
 ```
 
@@ -51,7 +51,7 @@ Also you can check all inputs and outputs.
 ```yml
       - uses: 5yutan5/setup-poetry-env@v1
         with:
-          python-version: 3.x
+          python-version: '3.x'
           cache-dependencies: 'false'
 ```
 
@@ -60,7 +60,7 @@ Also you can check all inputs and outputs.
 ```yml
       - uses: 5yutan5/setup-poetry-env@v1
         with:
-          python-version: 3.x
+          python-version: '3.x'
           poetry-virtualenvs-in-project: 'true'
 ```
 
@@ -72,7 +72,7 @@ Optimize each install by creating a different cache than just `poetry install`.
 ```yml
       - uses: 5yutan5/setup-poetry-env@v1
         with:
-          python-version: 3.x
+          python-version: '3.x'
           poetry-install--only-root: 'true'
 ```
 
@@ -81,7 +81,7 @@ Optimize each install by creating a different cache than just `poetry install`.
 ```yml
       - uses: 5yutan5/setup-poetry-env@v1
         with:
-          python-version: 3.x
+          python-version: '3.x'
           poetry-install-additional-args: '-vvv'
 ```
 
@@ -149,4 +149,4 @@ For more information about `poetry install` command, see the [Poetry Commands/in
 | `poetry-cache-hit` | A boolean value to indicate a cache entry of poetry installation was found | boolean |
 | `cache-hit` | Wrapper around `cache-hit` output of actions/setup-python. | boolean |
 | `python-path` | Wrapper around `python-path` output of actions/setup-python. | string |
-| python-version | Wrapper around `python-version` output of actions/setup-python. | string |
+| `python-version` | Wrapper around `python-version` output of actions/setup-python. | string |
